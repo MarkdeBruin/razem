@@ -1,2 +1,3 @@
 # razem
-SvelteKit app for splitting bills
+SvelteKit app for splitting bills 🚧 WIP 🚧
+
