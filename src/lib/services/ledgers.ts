@@ -1,6 +1,7 @@
 import type { Ledger, NewLedger } from '$lib/types';
-import { mockLedgers } from '$lib/mock/data';
 import { notFoundError } from '$lib/utils/errors';
+
+import { mockLedgers } from '$lib/mock/data';
 
 export async function getLedgers(): Promise<Ledger[]> {
 	return mockLedgers;
