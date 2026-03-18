@@ -1,6 +1,8 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-	let { data }: { data: PageData } = $props();
+	import { enhance } from '$app/forms';
+	import type { PageData, ActionData } from './$types';
+
+	let { data, form }: { data: PageData; form: ActionData } = $props();
 
 	const totalExpenses = $derived(data.expenses.reduce((sum, expense) => sum + expense.amount, 0));
 
@@ -43,8 +45,10 @@
 					(e) => e.userId === (filter === 'current' ? data.currentUser.id : otherUser.id)
 				)
 	);
-	
-	const filteredTotal = $derived(filteredExpenses.reduce((sum, expense) => sum + expense.amount, 0));
+
+	const filteredTotal = $derived(
+		filteredExpenses.reduce((sum, expense) => sum + expense.amount, 0)
+	);
 </script>
 
 <header>
@@ -68,13 +72,15 @@
 	</section>
 
 	<section>
-		<form action="">
+		<form method="POST" action="?/create" use:enhance>
 			<fieldset class="grid">
-				<input type="text" placeholder="Description" required />
-
-				<input type="number" placeholder="Amount" min="1" required />
+				<input type="text" name="description" placeholder="Description" required />
+				<input type="number" name="amount" placeholder="Amount" min="1" required />
 				<input type="submit" value="Add expense" />
 			</fieldset>
+			{#if form?.error}
+				<mark>{form.error}</mark>
+			{/if}
 		</form>
 	</section>
 

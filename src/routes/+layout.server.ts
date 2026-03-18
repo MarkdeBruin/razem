@@ -1,10 +1,9 @@
 import { getUsers } from '$lib/services/users.js';
 
-export async function load({ params }) {
-	const users = await getUsers();
+export async function load({ locals }) {
+	const currentUser = locals.currentUser;
 
-  const currentUser = users.find((u) => u.role === 'owner')!;
-	
+	const users = await getUsers();
 	const owner = users.find((u) => u.role === 'owner')!;
 	const partner = users.find((u) => u.role === 'partner')!;
 
