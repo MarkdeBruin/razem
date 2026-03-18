@@ -43,6 +43,8 @@
 					(e) => e.userId === (filter === 'current' ? data.currentUser.id : otherUser.id)
 				)
 	);
+	
+	const filteredTotal = $derived(filteredExpenses.reduce((sum, expense) => sum + expense.amount, 0));
 </script>
 
 <header>
@@ -107,7 +109,7 @@
 			<tfoot>
 				<tr>
 					<th scope="row">Total</th>
-					<td>{totalExpenses}</td>
+					<td>{filteredTotal}</td>
 				</tr>
 			</tfoot>
 		</table>
