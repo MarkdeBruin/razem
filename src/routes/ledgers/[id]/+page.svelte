@@ -4,12 +4,45 @@
 
 	const totalExpenses = $derived(data.expenses.reduce((sum, expense) => sum + expense.amount, 0));
 
+	function totalByUser(userId: string): number {
+		return data.expenses
+			.filter((expense) => expense.userId === userId)
+			.reduce((sum, expense) => sum + expense.amount, 0);
+	}
+
+	const ownerTotal = $derived(totalByUser(data.owner.id));
+	const partnerTotal = $derived(totalByUser(data.partner.id));
+
+	const ownerShare = $derived(totalExpenses * data.ledger.ownerFraction);
+	const partnerShare = $derived(totalExpenses * (1 - data.ledger.ownerFraction));
+
+	const ownerBalance = $derived(ownerTotal - ownerShare);
+	const partnerBalance = $derived(partnerTotal - partnerShare);
+
+	const currentBalance = $derived(
+		data.currentUser.id === data.owner.id ? ownerBalance : partnerBalance
+	);
+	const otherBalance = $derived(
+		data.currentUser.id === data.owner.id ? partnerBalance : ownerBalance
+	);
+	const otherUser = $derived(data.currentUser.id === data.owner.id ? data.partner : data.owner);
+
 	function formatSplit(ownerFraction: number): string {
 		const owner = Math.round(ownerFraction * 100);
 		const partner = 100 - owner;
-		
+
 		return `${owner}/${partner}`;
 	}
+
+	let filter = $state<'all' | 'current' | 'other'>('all');
+
+	const filteredExpenses = $derived(
+		filter === 'all'
+			? data.expenses
+			: data.expenses.filter(
+					(e) => e.userId === (filter === 'current' ? data.currentUser.id : otherUser.id)
+				)
+	);
 </script>
 
 <header>
@@ -19,15 +52,15 @@
 <main>
 	<section class="grid">
 		<dl>
-			<dt>Balance Mark</dt>
-			<dd>+ €692</dd>
+			<dt>{data.currentUser.name}</dt>
+			<dd>{currentBalance}</dd>
 		</dl>
 		<dl>
-			<dt>Balance Anna</dt>
-			<dd>-€692</dd>
+			<dt>{otherUser.name}</dt>
+			<dd>{otherBalance}</dd>
 		</dl>
 		<dl>
-			<dt>Split Mark/Anna</dt>
+			<dt>Split {data.owner.name}/{data.partner.name}</dt>
 			<dd>{formatSplit(data.ledger.ownerFraction)} <u>Edit</u></dd>
 		</dl>
 	</section>
@@ -46,12 +79,12 @@
 	<section>
 		<fieldset>
 			<legend>Filter expenses</legend>
-			<input type="radio" id="all" name="expenses" checked />
+			<input type="radio" id="all" name="expenses" bind:group={filter} value="all" />
 			<label for="all">All</label>
-			<input type="radio" id="owner" name="expenses" />
-			<label for="owner">Mark’s</label>
-			<input type="radio" id="partner" name="expenses" />
-			<label for="partner">Anna’s</label>
+			<input type="radio" id="current" name="expenses" bind:group={filter} value="current" />
+			<label for="current">{data.currentUser.name}'s</label>
+			<input type="radio" id="other" name="expenses" bind:group={filter} value="other" />
+			<label for="other">{otherUser.name}'s</label>
 		</fieldset>
 	</section>
 
@@ -64,7 +97,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#each data.expenses as expense}
+				{#each filteredExpenses as expense}
 					<tr>
 						<th scope="row">{expense.description}</th>
 						<td>{expense.amount}</td>
@@ -91,7 +124,9 @@
 				<input type="submit" value="Create template" />
 			</fieldset>
 			<small
-				>This will include all {data.expenses.length} expenses and the {formatSplit(data.ledger.ownerFraction)} split setting.</small
+				>This will include all {data.expenses.length} expenses and the {formatSplit(
+					data.ledger.ownerFraction
+				)} split setting.</small
 			>
 		</form>
 	</details>
