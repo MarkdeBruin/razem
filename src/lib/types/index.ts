@@ -1,8 +1,8 @@
 export type User = {
-  id: string;
-  name: string;
-  email: string;
-  role: 'owner' | 'partner';
+	id: string;
+	name: string;
+	email: string;
+	role: 'owner' | 'partner';
 };
 
 export type Ledger = {
@@ -10,6 +10,7 @@ export type Ledger = {
 	name: string;
 	ownerFraction: number; // fraction paid by owner (0–1)
 };
+export type NewLedger = Omit<Ledger, 'id'>;
 
 export type Expense = {
 	id: string;
@@ -18,13 +19,15 @@ export type Expense = {
 	userId: string;
 	ledgerId: string;
 };
+export type NewExpense = Omit<Expense, 'id'>;
 
 export type TemplateExpense = {
 	id: string;
 	description: string;
 	amount: number;
-  userId: string;
+	userId: string;
 };
+export type NewTemplateExpense = Omit<TemplateExpense, 'id'>;
 
 export type LedgerTemplate = {
 	id: string;
@@ -32,3 +35,4 @@ export type LedgerTemplate = {
 	ownerFraction: number; // fraction paid by owner (0–1)
 	expenses: TemplateExpense[];
 };
+export type NewLedgerTemplate = Omit<LedgerTemplate, 'id'>;

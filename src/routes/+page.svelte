@@ -1,3 +1,8 @@
+<script lang="ts">
+	import type { PageData } from './$types';
+	let { data }: { data: PageData } = $props();
+</script>
+
 <header>
 	<hgroup class="grid">
 		<h1>Ledgers</h1>
@@ -7,8 +12,10 @@
 
 <main>
 	<ul>
-		<li><a href="/ledgers/3">Mar 26</a></li>
-		<li><a href="/ledgers/2">Feb 26</a></li>
-		<li><a href="/ledgers/1">Jan 26</a></li>
+		{#each data.ledgers as ledger}
+			<li>
+				<a href="/ledgers/{ledger.id}">{ledger.name}</a>
+			</li>
+		{/each}
 	</ul>
 </main>
