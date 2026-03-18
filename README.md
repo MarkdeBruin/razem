@@ -1,3 +1,3 @@
 # razem
-SvelteKit app for splitting bills 🚧 WIP 🚧
+SvelteKit app for splitting expenses with your partner 🚧 WIP 🚧
 

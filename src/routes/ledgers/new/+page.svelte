@@ -15,8 +15,8 @@
 				</label>
 
 				<label>
-					<input type="radio" id="monthly-bills" name="template" value="monthly-bills" />
-					Monthly bills
+					<input type="radio" id="monthly-expenses" name="template" value="monthly-expenses" />
+					Monthly expenses
 				</label>
 
 				<label>

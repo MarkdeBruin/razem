@@ -11,7 +11,7 @@ export type Ledger = {
 	ownerFraction: number; // fraction paid by owner (0–1)
 };
 
-export type Bill = {
+export type Expense = {
 	id: string;
 	description: string;
 	amount: number;
@@ -19,7 +19,7 @@ export type Bill = {
 	ledgerId: string;
 };
 
-export type TemplateBill = {
+export type TemplateExpense = {
 	id: string;
 	description: string;
 	amount: number;
@@ -30,5 +30,5 @@ export type LedgerTemplate = {
 	id: string;
 	name: string;
 	ownerFraction: number; // fraction paid by owner (0–1)
-	bills: TemplateBill[];
+	expenses: TemplateExpense[];
 };

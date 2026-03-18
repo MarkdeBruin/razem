@@ -24,19 +24,19 @@
 				<input type="text" placeholder="Description" required />
 
 				<input type="number" placeholder="Amount" min="1" required />
-				<input type="submit" value="Add bill" />
+				<input type="submit" value="Add expense" />
 			</fieldset>
 		</form>
 	</section>
 
 	<section>
 		<fieldset>
-			<legend>Filter bills</legend>
-			<input type="radio" id="all" name="bills" checked />
+			<legend>Filter expenses</legend>
+			<input type="radio" id="all" name="expenses" checked />
 			<label for="all">All</label>
-			<input type="radio" id="owner" name="bills" />
+			<input type="radio" id="owner" name="expenses" />
 			<label for="owner">Mark’s</label>
-			<input type="radio" id="partner" name="bills" />
+			<input type="radio" id="partner" name="expenses" />
 			<label for="partner">Anna’s</label>
 		</fieldset>
 	</section>
@@ -45,7 +45,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th scope="col">Bill</th>
+					<th scope="col">Expense</th>
 					<th scope="col">Amount (€)</th>
 				</tr>
 			</thead>
@@ -86,7 +86,7 @@
 
 				<input type="submit" value="Create template" />
 			</fieldset>
-			<small>This will include all 4 bills and the 50/50 split setting.</small>
+			<small>This will include all 4 expenses and the 50/50 split setting.</small>
 		</form>
 	</details>
 	<hr />
