@@ -1,12 +1,14 @@
 import { getLedger } from '$lib/services/ledgers';
 import { getExpenses, createExpense } from '$lib/services/expenses';
-import { fail } from '@sveltejs/kit';
+import { error, fail } from '@sveltejs/kit';
 
 export async function load({ params }) {
-	return {
-		ledger: await getLedger(params.id),
-		expenses: await getExpenses(params.id)
-	};
+  const ledger = await getLedger(params.id);
+	const expenses = await getExpenses(params.id)
+	
+	if (!ledger) error(404, { message: 'Ledger not found' });
+
+	return { ledger, expenses };
 }
 
 export const actions = {
@@ -24,8 +26,8 @@ export const actions = {
 			amount,
 			userId: locals.currentUser.id,
 			ledgerId: params.id
-    });
-		
+		});
+
 		return { success: true };
 	}
 };

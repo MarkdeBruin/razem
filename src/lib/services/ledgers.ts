@@ -7,12 +7,8 @@ export async function getLedgers(): Promise<Ledger[]> {
 	return mockLedgers;
 }
 
-export async function getLedger(id: string): Promise<Ledger> {
-	const ledger = mockLedgers.find((ledger) => ledger.id === id);
-
-	if (!ledger) throw notFoundError('Ledger', id);
-
-	return ledger;
+export async function getLedger(id: string): Promise<Ledger | undefined> {
+	return mockLedgers.find((ledger) => ledger.id === id);
 }
 
 export async function createLedger(ledger: NewLedger): Promise<Ledger> {
