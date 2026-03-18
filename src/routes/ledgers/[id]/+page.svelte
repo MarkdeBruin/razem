@@ -1,5 +1,19 @@
+<script lang="ts">
+	import type { PageData } from './$types';
+	let { data }: { data: PageData } = $props();
+
+	const totalExpenses = $derived(data.expenses.reduce((sum, expense) => sum + expense.amount, 0));
+
+	function formatSplit(ownerFraction: number): string {
+		const owner = Math.round(ownerFraction * 100);
+		const partner = 100 - owner;
+		
+		return `${owner}/${partner}`;
+	}
+</script>
+
 <header>
-	<h1>Mar 2026</h1>
+	<h1>{data.ledger.name}</h1>
 </header>
 
 <main>
@@ -14,7 +28,7 @@
 		</dl>
 		<dl>
 			<dt>Split Mark/Anna</dt>
-			<dd>50/50 <u>Edit</u></dd>
+			<dd>{formatSplit(data.ledger.ownerFraction)} <u>Edit</u></dd>
 		</dl>
 	</section>
 
@@ -50,27 +64,17 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<th scope="row">Rent</th>
-					<td>1200</td>
-				</tr>
-				<tr>
-					<th scope="row">Eneco</th>
-					<td>100</td>
-				</tr>
-				<tr>
-					<th scope="row">Water</th>
-					<td>22</td>
-				</tr>
-				<tr>
-					<th scope="row">Internet</th>
-					<td>62</td>
-				</tr>
+				{#each data.expenses as expense}
+					<tr>
+						<th scope="row">{expense.description}</th>
+						<td>{expense.amount}</td>
+					</tr>
+				{/each}
 			</tbody>
 			<tfoot>
 				<tr>
 					<th scope="row">Total</th>
-					<td>1384</td>
+					<td>{totalExpenses}</td>
 				</tr>
 			</tfoot>
 		</table>
@@ -86,7 +90,9 @@
 
 				<input type="submit" value="Create template" />
 			</fieldset>
-			<small>This will include all 4 expenses and the 50/50 split setting.</small>
+			<small
+				>This will include all {data.expenses.length} expenses and the {formatSplit(data.ledger.ownerFraction)} split setting.</small
+			>
 		</form>
 	</details>
 	<hr />

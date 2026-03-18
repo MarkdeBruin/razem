@@ -14,9 +14,10 @@ export const mockExpenses: Expense[] = [
 	{ id: 'exp-1', description: 'Rent', amount: 1200, userId: 'user-1', ledgerId: 'ledger-1' },
 	{ id: 'exp-2', description: 'Groceries', amount: 150, userId: 'user-2', ledgerId: 'ledger-1' },
 	{ id: 'exp-3', description: 'Utilities', amount: 80, userId: 'user-1', ledgerId: 'ledger-1' },
-	{ id: 'exp-4', description: 'Internet', amount: 40, userId: 'user-2', ledgerId: 'ledger-1' },
-	{ id: 'exp-5', description: 'Rent', amount: 1200, userId: 'user-1', ledgerId: 'ledger-2' },
-	{ id: 'exp-6', description: 'Groceries', amount: 130, userId: 'user-2', ledgerId: 'ledger-2' }
+  { id: 'exp-4', description: 'Internet', amount: 40, userId: 'user-2', ledgerId: 'ledger-1' },
+	{ id: 'exp-5', description: 'AH', amount: 20, userId: 'user-2', ledgerId: 'ledger-1' },
+	{ id: 'exp-6', description: 'Rent', amount: 1200, userId: 'user-1', ledgerId: 'ledger-2' },
+	{ id: 'exp-7', description: 'Groceries', amount: 130, userId: 'user-2', ledgerId: 'ledger-2' }
 ];
 
 export const mockTemplates: LedgerTemplate[] = [
