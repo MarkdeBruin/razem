@@ -51,12 +51,12 @@ export const actions = {
 			userId
 		}));
 
-		await createLedgerTemplate({
+		const newTemplate = await createLedgerTemplate({
 			name: name,
-			ownerFraction: 0.5,
+			ownerFraction: ledger.ownerFraction,
 			expenses: templateExpenses
-		});
-
-		return { success: true };
+    });
+	
+		return { success: true, id: newTemplate.id };
 	}
 } satisfies Actions;

@@ -14,7 +14,7 @@ export async function getLedgerTemplate(id: string): Promise<LedgerTemplate | un
 export async function createLedgerTemplate(template: NewLedgerTemplate): Promise<LedgerTemplate> {
 	const newTemplate: LedgerTemplate = {
 		...template,
-		id: `ledger-${crypto.randomUUID()}`
+		id: `template-${crypto.randomUUID()}`
 	};
 
 	mockTemplates.push(newTemplate);

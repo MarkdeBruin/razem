@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import type { PageData, ActionData } from './$types';
+	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
 
@@ -53,6 +53,7 @@
 	let expenseError = $state<string | null>(null);
 
 	let templateSuccess = $state(false);
+	let templateSuccessId = $state<string | null>(null);
 	let templateError = $state<string | null>(null);
 </script>
 
@@ -87,6 +88,7 @@
 					} else {
 						expenseError = null;
 						templateSuccess = false;
+						templateSuccessId = null;
 					}
 					await update();
 				};
@@ -145,7 +147,7 @@
 	<details name="example">
 		<summary><strong>Turn ledger into template</strong></summary>
 		{#if templateSuccess}
-			<mark>Template created</mark>
+			<mark>Template created — <a href="/ledgers/templates/{templateSuccessId}">View template</a></mark>
 		{:else}
 			<form
 				method="POST"
@@ -154,6 +156,7 @@
 					return async ({ update, result }) => {
 						if (result.type === 'success') {
 							templateSuccess = true;
+							templateSuccessId = result.data?.id as string;
 						}
 						if (result.type === 'failure') {
 							templateError = (result.data?.error as string) ?? null;
