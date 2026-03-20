@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { PageProps } from './$types';
-	let { data }: PageProps = $props();
+	let { data, form }: PageProps = $props();
 </script>
 
 <header><h1>New ledger</h1></header>
@@ -27,13 +27,18 @@
 				</label>
 			{/each}
 		</fieldset>
-		
-		<hr>
-		
+
+		<hr />
+
 		<small>You can add new templates via ledger detail pages.</small>
-		
-		<hr>
-		
+
+		<hr />
+
 		<input type="submit" value="Add ledger" />
+
+		{#if form?.error}
+			<hr />
+			<mark>{form.error}</mark>
+		{/if}
 	</form>
 </main>
