@@ -49,6 +49,11 @@
 	const filteredTotal = $derived(
 		filteredExpenses.reduce((sum, expense) => sum + expense.amount, 0)
 	);
+
+	let expenseError = $state<string | null>(null);
+
+	let templateSuccess = $state(false);
+	let templateError = $state<string | null>(null);
 </script>
 
 <header>
@@ -72,14 +77,28 @@
 	</section>
 
 	<section>
-		<form method="POST" action="?/create-expense" use:enhance>
+		<form
+			method="POST"
+			action="?/create-expense"
+			use:enhance={() => {
+				return async ({ update, result }) => {
+					if (result.type === 'failure') {
+						expenseError = (result.data?.error as string) ?? null;
+					} else {
+						expenseError = null;
+						templateSuccess = false;
+					}
+					await update();
+				};
+			}}
+		>
 			<fieldset class="grid">
 				<input type="text" name="description" placeholder="Description" required />
 				<input type="number" name="amount" placeholder="Amount" min="1" required />
 				<input type="submit" value="Add expense" />
 			</fieldset>
-			{#if form?.error}
-				<mark>{form.error}</mark>
+			{#if expenseError}
+				<mark>{expenseError}</mark>
 			{/if}
 		</form>
 	</section>
@@ -123,5 +142,33 @@
 </main>
 
 <footer>
-   <a href="{data.ledger.id}/create-template">Turn ledger into template</a> 
+	<details name="example">
+		<summary><strong>Turn ledger into template</strong></summary>
+		{#if templateSuccess}
+			<mark>Template created</mark>
+		{:else}
+			<form
+				method="POST"
+				action="?/create-template"
+				use:enhance={() => {
+					return async ({ update, result }) => {
+						if (result.type === 'success') {
+							templateSuccess = true;
+						}
+						if (result.type === 'failure') {
+							templateError = result.data?.error as string ?? null;
+						}
+						await update();
+					};
+				}}
+			>
+				<input type="text" name="name" placeholder="Name" required />
+				<input type="submit" value="Create template" />
+				{#if templateError}
+					<mark>{templateError}</mark>
+				{/if}
+			</form>
+		{/if}
+	</details>
+	<hr />
 </footer>
