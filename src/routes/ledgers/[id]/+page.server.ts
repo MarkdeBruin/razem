@@ -1,18 +1,19 @@
 import { getLedger } from '$lib/services/ledgers';
 import { getExpenses, createExpense } from '$lib/services/expenses';
 import { error, fail } from '@sveltejs/kit';
+import type { Actions } from './$types.js';
 
 export async function load({ params }) {
-  const ledger = await getLedger(params.id);
-	const expenses = await getExpenses(params.id)
-	
+	const ledger = await getLedger(params.id);
+	const expenses = await getExpenses(params.id);
+
 	if (!ledger) error(404, { message: 'Ledger not found' });
 
 	return { ledger, expenses };
 }
 
 export const actions = {
-	create: async ({ locals, params, request }) => {
+	'create-expense': async ({ locals, params, request }) => {
 		const data = await request.formData();
 
 		const description = data.get('description') as string;
@@ -30,4 +31,4 @@ export const actions = {
 
 		return { success: true };
 	}
-};
+} satisfies Actions;

@@ -72,7 +72,7 @@
 	</section>
 
 	<section>
-		<form method="POST" action="?/create" use:enhance>
+		<form method="POST" action="?/create-expense" use:enhance>
 			<fieldset class="grid">
 				<input type="text" name="description" placeholder="Description" required />
 				<input type="number" name="amount" placeholder="Amount" min="1" required />
@@ -123,20 +123,5 @@
 </main>
 
 <footer>
-	<details name="example">
-		<summary><strong>Turn ledger into template</strong></summary>
-		<form action="">
-			<fieldset class="grid">
-				<input type="text" placeholder="Name" required />
-
-				<input type="submit" value="Create template" />
-			</fieldset>
-			<small
-				>This will include all {data.expenses.length} expenses and the {formatSplit(
-					data.ledger.ownerFraction
-				)} split setting.</small
-			>
-		</form>
-	</details>
-	<hr />
+   <a href="{data.ledger.id}/create-template">Turn ledger into template</a> 
 </footer>
