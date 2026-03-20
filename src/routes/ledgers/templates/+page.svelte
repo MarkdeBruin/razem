@@ -1,6 +1,6 @@
 <script lang="ts">
-    import type { PageData } from "./$types";
-	let { data }: { data: PageData } = $props();
+	import type { PageProps } from './$types';
+	let { data }: PageProps = $props();
 </script>
 
 <header>

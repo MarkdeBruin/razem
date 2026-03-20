@@ -1,6 +1,7 @@
-import { getUsers } from '$lib/services/users.js';
+import { getUsers } from '$lib/services/users';
+import type { LayoutServerLoad } from './$types';
 
-export async function load({ locals }) {
+export const load: LayoutServerLoad = async ({ locals }) => {
 	const currentUser = locals.currentUser;
 
 	const users = await getUsers();

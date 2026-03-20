@@ -1,3 +1,8 @@
+<script lang="ts">
+	import type { PageProps } from './$types';
+	let { data }: PageProps = $props();
+</script>
+
 <header><h1>New ledger</h1></header>
 
 <main>

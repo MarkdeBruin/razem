@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import type { PageData } from './$types';
+	import type { PageProps } from './$types';
 
-	let { data }: { data: PageData } = $props();
+	let { data }: PageProps = $props();
 
 	const totalExpenses = $derived(data.expenses.reduce((sum, expense) => sum + expense.amount, 0));
 

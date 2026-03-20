@@ -3,16 +3,16 @@ import { getExpenses, createExpense } from '$lib/services/expenses';
 import { createLedgerTemplate } from '$lib/services/ledgerTemplates.js';
 import type { TemplateExpense } from '$lib/types';
 import { error, fail } from '@sveltejs/kit';
-import type { Actions } from './$types.js';
+import type { Actions, PageServerLoad } from './$types.js';
 
-export async function load({ params }) {
+export const load: PageServerLoad = async ({ params }) => {
 	const ledger = await getLedger(params.id);
 	const expenses = await getExpenses(params.id);
 
 	if (!ledger) error(404, { message: 'Ledger not found' });
 
 	return { ledger, expenses };
-}
+};
 
 export const actions = {
 	'create-expense': async ({ locals, params, request }) => {
@@ -55,8 +55,8 @@ export const actions = {
 			name: name,
 			ownerFraction: ledger.ownerFraction,
 			expenses: templateExpenses
-    });
-	
+		});
+
 		return { success: true, id: newTemplate.id };
 	}
 } satisfies Actions;
