@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import type { PageProps } from './$types';
 	let { data }: PageProps = $props();
 </script>
@@ -6,33 +7,33 @@
 <header><h1>New ledger</h1></header>
 
 <main>
-	<form action="">
+	<form method="POST" use:enhance>
 		<label>
 			<span>Ledger name</span>
-			<input type="text" required />
+			<input type="text" name="name" required />
 		</label>
 
 		<fieldset>
 			<legend>Choose a template</legend>
-				<label>
-					<input type="radio" id="blank" name="template" value="blank" checked />
-					Blank ledge
-				</label>
+			<label>
+				<input type="radio" id="blank" name="template" value="blank" checked />
+				Blank ledger — no expenses and 50/50 split.
+			</label>
 
+			{#each data.templates as template}
 				<label>
-					<input type="radio" id="monthly-expenses" name="template" value="monthly-expenses" />
-					Monthly expenses
+					<input type="radio" name="template" value={template.id} />
+					{template.name} <a href="/ledgers/templates/{template.id}">View template</a>
 				</label>
-
-				<label>
-					<input type="radio" id="holidays" name="template" value="holidays" />
-					Holidays
-				</label>
+			{/each}
 		</fieldset>
 		
+		<hr>
+		
 		<small>You can add new templates via ledger detail pages.</small>
-
-
+		
+		<hr>
+		
 		<input type="submit" value="Add ledger" />
 	</form>
 </main>
