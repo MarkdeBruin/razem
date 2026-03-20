@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import type { PageData, ActionData } from './$types';
 
-	let { data, form }: { data: PageData; form: ActionData } = $props();
+	let { data }: { data: PageData } = $props();
 
 	const totalExpenses = $derived(data.expenses.reduce((sum, expense) => sum + expense.amount, 0));
 
@@ -156,7 +156,7 @@
 							templateSuccess = true;
 						}
 						if (result.type === 'failure') {
-							templateError = result.data?.error as string ?? null;
+							templateError = (result.data?.error as string) ?? null;
 						}
 						await update();
 					};
