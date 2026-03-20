@@ -25,7 +25,7 @@
 				</label>
 		</fieldset>
 		
-		<small>You can add new templates via the menu icon on a ledger detail page.</small>
+		<small>You can add new templates via ledger detail pages.</small>
 
 
 		<input type="submit" value="Add ledger" />
