@@ -50,7 +50,7 @@
 		filteredExpenses.reduce((sum, expense) => sum + expense.amount, 0)
 	);
 
-	let expenseError = $state<string | null>(null);
+	let createExpenseError = $state<string | null>(null);
 
 	let templateSuccess = $state(false);
 	let templateSuccessId = $state<string | null>(null);
@@ -84,9 +84,9 @@
 			use:enhance={() => {
 				return async ({ update, result }) => {
 					if (result.type === 'failure') {
-						expenseError = (result.data?.error as string) ?? null;
+						createExpenseError = (result.data?.error as string) ?? null;
 					} else {
-						expenseError = null;
+						createExpenseError = null;
 						templateSuccess = false;
 						templateSuccessId = null;
 					}
@@ -99,8 +99,8 @@
 				<input type="number" name="amount" placeholder="Amount" min="1" required />
 				<input type="submit" value="Add expense" />
 			</fieldset>
-			{#if expenseError}
-				<mark>{expenseError}</mark>
+			{#if createExpenseError}
+				<mark>{createExpenseError}</mark>
 			{/if}
 		</form>
 	</section>
@@ -123,6 +123,7 @@
 				<tr>
 					<th scope="col">Expense</th>
 					<th scope="col">Amount (€)</th>
+					<th scope="col">Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -130,6 +131,12 @@
 					<tr>
 						<th scope="row">{expense.description}</th>
 						<td>{expense.amount}</td>
+						<td>
+							<form method="POST" action="?/delete-expense" use:enhance>
+								<input type="hidden" name="id" value={expense.id} />
+								<button type="submit">Delete expense</button>
+							</form>
+						</td>
 					</tr>
 				{/each}
 			</tbody>
@@ -137,6 +144,7 @@
 				<tr>
 					<th scope="row">Total</th>
 					<td>{filteredTotal}</td>
+					<td></td>
 				</tr>
 			</tfoot>
 		</table>

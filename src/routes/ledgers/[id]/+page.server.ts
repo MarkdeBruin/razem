@@ -1,5 +1,5 @@
 import { getLedger, deleteLedger } from '$lib/services/ledgers';
-import { getExpenses, createExpense } from '$lib/services/expenses';
+import { getExpenses, createExpense, deleteExpense } from '$lib/services/expenses';
 import { createLedgerTemplate } from '$lib/services/ledgerTemplates.js';
 import type { TemplateExpense } from '$lib/types';
 import { error, fail, redirect } from '@sveltejs/kit';
@@ -33,6 +33,17 @@ export const actions = {
 
 		return { success: true };
 	},
+	'delete-expense': async ({ request }) => {
+		const data = await request.formData();
+
+		const id = data.get('id') as string;
+    if (!id) return fail(422, { error: 'Id is required' });
+    
+    await deleteExpense(id);
+		
+    return { success: true };
+	},
+
 	'create-template': async ({ params, request }) => {
 		const data = await request.formData();
 
@@ -59,6 +70,7 @@ export const actions = {
 
 		return { success: true, id: newTemplate.id };
 	},
+
 	'delete-ledger': async ({ params }) => {
 		await deleteLedger(params.id);
 		redirect(303, '/');
