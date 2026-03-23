@@ -118,7 +118,7 @@
 	</section>
 
 	<section class="overflow-auto">
-		<table>
+		<table class="striped">
 			<thead>
 				<tr>
 					<th scope="col">Expense</th>
@@ -134,7 +134,7 @@
 						<td>
 							<form method="POST" action="?/delete-expense" use:enhance>
 								<input type="hidden" name="id" value={expense.id} />
-								<button type="submit">Delete expense</button>
+								<button type="submit" class="outline secondary">Delete</button>
 							</form>
 						</td>
 					</tr>
@@ -176,7 +176,7 @@
 				}}
 			>
 				<input type="text" name="name" placeholder="Name" required />
-				<input type="submit" value="Create template" />
+				<input type="submit" value="Create template" class="outline secondary" />
 				{#if templateError}
 					<mark>{templateError}</mark>
 				{/if}
@@ -187,7 +187,7 @@
 	<details name="action">
 		<summary><strong>Danger zone</strong></summary>
 		<form method="POST" action="?/delete-ledger" use:enhance>
-			<button type="submit">Delete ledger</button>
+			<button type="submit" class="outline secondary">Delete ledger</button>
 		</form>
 	</details>
 	<hr />

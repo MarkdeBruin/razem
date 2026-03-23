@@ -22,7 +22,7 @@
 					<h2><a href="/ledgers/{ledger.id}">{ledger.name}</a></h2>
 					<form method="POST" action="?/delete-ledger" use:enhance>
 						<input type="hidden" name="id" value={ledger.id} />
-						<button type="submit">Delete ledger</button>
+						<button type="submit" class="outline secondary">Delete ledger</button>
 					</form>
 				</li>
 			{/each}
