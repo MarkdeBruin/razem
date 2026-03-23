@@ -73,7 +73,7 @@
 		</dl>
 		<dl>
 			<dt>Split {data.owner.name}/{data.partner.name}</dt>
-			<dd>{formatSplit(data.ledger.ownerFraction)} <u>Edit</u></dd>
+			<dd>{formatSplit(data.ledger.ownerFraction)} <a href="{data.ledger.id}/edit">Edit</a></dd>
 		</dl>
 	</section>
 
@@ -183,12 +183,6 @@
 			</form>
 		{/if}
 	</details>
-	<hr />
-	<details name="action">
-		<summary><strong>Danger zone</strong></summary>
-		<form method="POST" action="?/delete-ledger" use:enhance>
-			<button type="submit" class="outline secondary">Delete ledger</button>
-		</form>
-	</details>
+
 	<hr />
 </footer>

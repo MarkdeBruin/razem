@@ -1,0 +1,37 @@
+import { getLedger, updateLedger, deleteLedger } from '$lib/services/ledgers';
+import { error, fail, redirect } from '@sveltejs/kit';
+import type { Actions, PageServerLoad } from './$types.js';
+import type { NewLedger } from '$lib/types/index.js';
+
+export const load: PageServerLoad = async ({ params }) => {
+	const ledger = await getLedger(params.id);
+
+	if (!ledger) error(404, { message: 'Ledger not found' });
+
+	return { ledger };
+};
+
+export const actions = {
+	'update': async ({ params, request }) => {
+    const data = await request.formData();
+		
+    const name = data.get('name') as string;
+    if (!name) return fail(422, { error: 'Name is required' });
+    
+    const ownerFraction = Number(data.get('owner-fraction'));
+    if (!ownerFraction) return fail(422, { error: 'Fraction is required' });
+    
+    const updatedLedger: NewLedger = {
+      name: name,
+      ownerFraction: ownerFraction
+    }
+    
+    await updateLedger(params.id, updatedLedger)
+
+		redirect(303, `/ledgers/${params.id}`);
+  },
+  'delete': async ({ params }) => {
+		await deleteLedger(params.id);
+		redirect(303, '/');
+	}
+} satisfies Actions;
