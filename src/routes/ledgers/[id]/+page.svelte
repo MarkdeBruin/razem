@@ -144,10 +144,12 @@
 </main>
 
 <footer>
-	<details name="example">
+	<details name="actions">
 		<summary><strong>Turn ledger into template</strong></summary>
 		{#if templateSuccess}
-			<mark>Template created — <a href="/ledgers/templates/{templateSuccessId}">View template</a></mark>
+			<mark
+				>Template created — <a href="/ledgers/templates/{templateSuccessId}">View template</a></mark
+			>
 		{:else}
 			<form
 				method="POST"
@@ -172,6 +174,13 @@
 				{/if}
 			</form>
 		{/if}
+	</details>
+	<hr />
+	<details name="action">
+		<summary><strong>Danger zone</strong></summary>
+		<form method="POST" action="?/delete-ledger" use:enhance>
+			<button type="submit">Delete ledger</button>
+		</form>
 	</details>
 	<hr />
 </footer>
