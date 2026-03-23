@@ -18,7 +18,7 @@ export const actions = {
     const name = data.get('name') as string;
     if (!name) return fail(422, { error: 'Name is required' });
     
-    const ownerFraction = Number(data.get('owner-fraction'));
+    const ownerFraction = Number(data.get('owner-percentage')) / 100;
     if (!ownerFraction) return fail(422, { error: 'Fraction is required' });
     
     const updatedLedger: NewLedger = {

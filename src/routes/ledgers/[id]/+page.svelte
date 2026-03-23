@@ -65,11 +65,11 @@
 	<section class="grid">
 		<dl>
 			<dt>{data.currentUser.name}</dt>
-			<dd>{currentBalance}</dd>
+			<dd>{Math.round(currentBalance)}</dd>
 		</dl>
 		<dl>
 			<dt>{otherUser.name}</dt>
-			<dd>{otherBalance}</dd>
+			<dd>{Math.round(otherBalance)}</dd>
 		</dl>
 		<dl>
 			<dt>Split {data.owner.name}/{data.partner.name}</dt>
@@ -96,7 +96,7 @@
 		>
 			<fieldset class="grid">
 				<input type="text" name="description" placeholder="Description" required />
-				<input type="number" name="amount" placeholder="Amount" min="1" required />
+				<input type="number" name="amount" placeholder="Amount" min="1" inputmode="numeric" required />
 				<input type="submit" value="Add expense" />
 			</fieldset>
 			{#if createExpenseError}
