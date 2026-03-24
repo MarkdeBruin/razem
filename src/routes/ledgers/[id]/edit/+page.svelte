@@ -6,7 +6,6 @@
 
 	// svelte-ignore state_referenced_locally
 	let fraction = data.ledger.ownerFraction;
-
 	let ownerPercentage = $state(Math.round(fraction * 100));
 	let partnerPercentage = $state(Math.round((1 - fraction) * 100));
 </script>
@@ -14,7 +13,7 @@
 <header><h1>Edit ledger</h1></header>
 
 <main>
-	<form method="POST" action="?/update" use:enhance>
+	<form method="POST" use:enhance>
 		<fieldset class="grid">
 			<label>
 				Name
@@ -68,18 +67,6 @@
 				/>
 			</label>
 		</fieldset>
-
 		<input type="submit" value="Save changes" />
 	</form>
 </main>
-
-<footer>
-	<hr />
-	<details name="action">
-		<summary><strong>Danger zone</strong></summary>
-		<form method="POST" action="?/delete" use:enhance>
-			<button type="submit" class="outline secondary">Delete ledger</button>
-		</form>
-	</details>
-	<hr />
-</footer>

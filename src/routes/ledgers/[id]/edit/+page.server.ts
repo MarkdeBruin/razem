@@ -12,7 +12,7 @@ export const load: PageServerLoad = async ({ params }) => {
 };
 
 export const actions = {
-	update: async ({ params, request }) => {
+	default: async ({ params, request }) => {
 		const data = await request.formData();
 
 		const name = data.get('name') as string;
@@ -29,9 +29,5 @@ export const actions = {
 		await updateLedger(params.id, updatedLedger);
 
 		redirect(303, `/ledgers/${params.id}`);
-	},
-	delete: async ({ params }) => {
-		await deleteLedger(params.id);
-		redirect(303, '/');
 	}
 } satisfies Actions;

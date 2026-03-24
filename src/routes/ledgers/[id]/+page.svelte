@@ -186,4 +186,6 @@
 	</details>
 
 	<hr />
+	
+	<a href="/ledgers/{data.ledger.id}/delete">Delete ledger</a>
 </footer>
