@@ -6,7 +6,7 @@
 <header>
 	<hgroup>
 		<h1>Ledger templates</h1>
-		<p>You can create templates via a leder’s page</p>
+		<p>You can create templates via a ledger’s page</p>
 	</hgroup>
 </header>
 

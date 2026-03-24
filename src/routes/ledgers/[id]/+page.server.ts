@@ -1,15 +1,13 @@
 import { getLedger } from '$lib/services/ledgers';
 import { getExpenses, createExpense, deleteExpense } from '$lib/services/expenses';
-import { createLedgerTemplate } from '$lib/services/ledgerTemplates.js';
-import type { TemplateExpense } from '$lib/types';
 import { error, fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types.js';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const ledger = await getLedger(params.id);
-	const expenses = await getExpenses(params.id);
-
 	if (!ledger) error(404, { message: 'Ledger not found' });
+
+	const expenses = await getExpenses(params.id);
 
 	return { ledger, expenses };
 };
@@ -19,8 +17,8 @@ export const actions = {
 		const data = await request.formData();
 
 		const description = data.get('description') as string;
-    if (!description) return fail(422, { expenseDescMissing: true });
-    
+		if (!description) return fail(422, { expenseDescMissing: true });
+
 		const amount = Number(data.get('amount'));
 		if (!amount || amount <= 0) return fail(422, { expenseAmountMissing: true });
 
@@ -40,32 +38,5 @@ export const actions = {
 		await deleteExpense(id);
 
 		return { success: true };
-	},
-
-	'create-template': async ({ params, request }) => {
-		const data = await request.formData();
-
-		const name = data.get('name') as string;
-		if (!name) return fail(422, { templateNameMissing: true });
-
-		const ledger = await getLedger(params.id);
-		if (!ledger) error(404, { message: 'Ledger not found' });
-
-		const expenses = await getExpenses(params.id);
-
-		const templateExpenses: TemplateExpense[] = expenses.map(({ description, amount, userId }) => ({
-			id: `texp-${crypto.randomUUID()}`,
-			description,
-			amount,
-			userId
-		}));
-
-		const newTemplate = await createLedgerTemplate({
-			name: name,
-			ownerFraction: ledger.ownerFraction,
-			expenses: templateExpenses
-		});
-
-		return { success: true, id: newTemplate.id };
 	}
 } satisfies Actions;

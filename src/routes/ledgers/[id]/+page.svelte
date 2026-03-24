@@ -49,9 +49,6 @@
 	const filteredTotal = $derived(
 		filteredExpenses.reduce((sum, expense) => sum + expense.amount, 0)
 	);
-
-	let templateSuccess = $state(false);
-	let templateSuccessId = $state<string | null>(null);
 </script>
 
 <header>
@@ -75,19 +72,7 @@
 	</section>
 
 	<section>
-		<form
-			method="POST"
-			action="?/create-expense"
-			use:enhance={() => {
-				return async ({ update, result }) => {
-					if (result.type === 'success') {
-						templateSuccess = false;
-						templateSuccessId = null;
-					}
-					await update();
-				};
-			}}
-		>
+		<form method="POST" action="?/create-expense" use:enhance>
 			<fieldset class="grid">
 				<div>
 					<input type="text" name="description" placeholder="Description" required />
@@ -156,36 +141,8 @@
 </main>
 
 <footer>
-	<details name="actions">
-		<summary><strong>Turn ledger into template</strong></summary>
-		{#if templateSuccess}
-			<mark
-				>Template created — <a href="/ledgers/templates/{templateSuccessId}">View template</a></mark
-			>
-		{:else}
-			<form
-				method="POST"
-				action="?/create-template"
-				use:enhance={() => {
-					return async ({ update, result }) => {
-						if (result.type === 'success') {
-							templateSuccess = true;
-							templateSuccessId = result.data?.id as string;
-						}
-						await update();
-					};
-				}}
-			>
-				<input type="text" name="name" placeholder="Name" required />
-				<input type="submit" value="Create template" class="outline secondary" />
-				{#if form?.templateNameMissing}
-					<mark>Name is required</mark>
-				{/if}
-			</form>
-		{/if}
-	</details>
-
-	<hr />
-	
-	<a href="/ledgers/{data.ledger.id}/delete">Delete ledger</a>
+	<ul>
+		<li><a href="/ledgers/{data.ledger.id}/delete">Delete ledger</a></li>
+		<li><a href="/ledgers/templates/new?from={data.ledger.id}">Turn ledger into template</a></li>
+	</ul>
 </footer>
