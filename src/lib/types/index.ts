@@ -42,3 +42,5 @@ export type ExpenseCategory = {
   name: string;
   keywords: string[];
 }
+
+export type NewExpenseCategory = Omit<ExpenseCategory, 'id'>;
