@@ -36,3 +36,9 @@ export type LedgerTemplate = {
 	expenses: TemplateExpense[];
 };
 export type NewLedgerTemplate = Omit<LedgerTemplate, 'id'>;
+
+export type ExpenseCategory = {
+  id: string;
+  name: string;
+  keywords: string[];
+}

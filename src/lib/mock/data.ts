@@ -1,4 +1,4 @@
-import type { User, Ledger, Expense, LedgerTemplate } from '$lib/types';
+import type { User, Ledger, Expense, LedgerTemplate, ExpenseCategory } from '$lib/types';
 
 export const mockUsers: User[] = [
 	{ id: 'user-1', name: 'Mark', email: 'mark@example.com', role: 'owner' },
@@ -14,7 +14,7 @@ export const mockExpenses: Expense[] = [
 	{ id: 'exp-1', description: 'Rent', amount: 1200, userId: 'user-1', ledgerId: 'ledger-1' },
 	{ id: 'exp-2', description: 'Groceries', amount: 150, userId: 'user-1', ledgerId: 'ledger-1' },
 	{ id: 'exp-3', description: 'Utilities', amount: 80, userId: 'user-1', ledgerId: 'ledger-1' },
-  { id: 'exp-4', description: 'Internet', amount: 40, userId: 'user-1', ledgerId: 'ledger-1' },
+	{ id: 'exp-4', description: 'Internet', amount: 40, userId: 'user-1', ledgerId: 'ledger-1' },
 	{ id: 'exp-5', description: 'AH', amount: 20, userId: 'user-2', ledgerId: 'ledger-1' },
 	{ id: 'exp-6', description: 'Rent', amount: 1200, userId: 'user-1', ledgerId: 'ledger-2' },
 	{ id: 'exp-7', description: 'Groceries', amount: 130, userId: 'user-2', ledgerId: 'ledger-2' }
@@ -31,4 +31,11 @@ export const mockTemplates: LedgerTemplate[] = [
 			{ id: 'texp-3', description: 'Internet', amount: 40, userId: 'user-2' }
 		]
 	}
+];
+
+export const mockCategories: ExpenseCategory[] = [
+	{ id: 'cat-1', name: 'Housing', keywords: ['rent', 'eneco', 'water', 'internet'] },
+	{ id: 'cat-2', name: 'Groceries', keywords: ['ah', 'lidl', 'oriental'] },
+  { id: 'cat-3', name: 'Leisure', keywords: ['dinner', 'lunch', 'trip', 'date'] },
+	{ id: 'cat-4', name: 'Other', keywords: ['bol', 'amazon'] },
 ];

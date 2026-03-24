@@ -6,10 +6,17 @@
 </script>
 
 <header>
-	<hgroup class="grid">
-		<h1>Ledgers</h1>
-		{#if data.ledgers.length > 0}<a href="/ledgers/new">+ Add ledger</a>{/if}
-	</hgroup>
+	<nav>
+		<ul>
+			<li><h1>Ledgers</h1></li>
+		</ul>
+		<ul>
+			<li>
+				{#if data.ledgers.length > 0}<a href="/ledgers/new">+ Add ledger</a>{/if}
+			</li>
+			<li><a href="/settings/expense-categories">Expense categories</a></li>
+		</ul>
+	</nav>
 </header>
 
 <main>
