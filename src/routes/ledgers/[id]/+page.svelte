@@ -100,9 +100,9 @@
 			<input type="radio" id="all" name="expenses" bind:group={filter} value="all" />
 			<label for="all">All</label>
 			<input type="radio" id="current" name="expenses" bind:group={filter} value="current" />
-			<label for="current">{data.currentUser.name}'s</label>
+			<label for="current">{data.currentUser.name}’s</label>
 			<input type="radio" id="other" name="expenses" bind:group={filter} value="other" />
-			<label for="other">{otherUser.name}'s</label>
+			<label for="other">{otherUser.name}’s</label>
 		</fieldset>
 	</section>
 
