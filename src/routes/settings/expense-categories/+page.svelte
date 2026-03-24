@@ -14,7 +14,7 @@
 	<ul>
 		{#each data.categories as category}
 			<li>
-				<a href="settings/catagories/{category.id}">{category.name}</a>
+				<a href="catagories/{category.id}">{category.name}</a>
 				{#if category.keywords.length > 0}
 					<ul>
 						<small>Keywords:</small>
