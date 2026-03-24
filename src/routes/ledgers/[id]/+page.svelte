@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import type { PageProps } from './$types';
 
-	let { data }: PageProps = $props();
+	let { data, form }: PageProps = $props();
 
 	const totalExpenses = $derived(data.expenses.reduce((sum, expense) => sum + expense.amount, 0));
 
@@ -50,11 +50,8 @@
 		filteredExpenses.reduce((sum, expense) => sum + expense.amount, 0)
 	);
 
-	let createExpenseError = $state<string | null>(null);
-
 	let templateSuccess = $state(false);
 	let templateSuccessId = $state<string | null>(null);
-	let templateError = $state<string | null>(null);
 </script>
 
 <header>
@@ -83,10 +80,7 @@
 			action="?/create-expense"
 			use:enhance={() => {
 				return async ({ update, result }) => {
-					if (result.type === 'failure') {
-						createExpenseError = (result.data?.error as string) ?? null;
-					} else {
-						createExpenseError = null;
+					if (result.type === 'success') {
 						templateSuccess = false;
 						templateSuccessId = null;
 					}
@@ -95,13 +89,23 @@
 			}}
 		>
 			<fieldset class="grid">
-				<input type="text" name="description" placeholder="Description" required />
-				<input type="number" name="amount" placeholder="Amount" min="1" inputmode="numeric" required />
+				<div>
+					<input type="text" name="description" placeholder="Description" required />
+					{#if form?.expenseDescMissing}<small>Description is required</small>{/if}
+				</div>
+				<div>
+					<input
+						type="number"
+						name="amount"
+						placeholder="Amount"
+						min="1"
+						inputmode="numeric"
+						required
+					/>
+					{#if form?.expenseAmountMissing}<small>Amount is required</small>{/if}
+				</div>
 				<input type="submit" value="Add expense" />
 			</fieldset>
-			{#if createExpenseError}
-				<mark>{createExpenseError}</mark>
-			{/if}
 		</form>
 	</section>
 
@@ -168,17 +172,14 @@
 							templateSuccess = true;
 							templateSuccessId = result.data?.id as string;
 						}
-						if (result.type === 'failure') {
-							templateError = (result.data?.error as string) ?? null;
-						}
 						await update();
 					};
 				}}
 			>
 				<input type="text" name="name" placeholder="Name" required />
 				<input type="submit" value="Create template" class="outline secondary" />
-				{#if templateError}
-					<mark>{templateError}</mark>
+				{#if form?.templateNameMissing}
+					<mark>Name is required</mark>
 				{/if}
 			</form>
 		{/if}

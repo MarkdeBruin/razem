@@ -19,10 +19,10 @@ export const actions = {
 		const data = await request.formData();
 
 		const description = data.get('description') as string;
+    if (!description) return fail(422, { expenseDescMissing: true });
+    
 		const amount = Number(data.get('amount'));
-
-		if (!description) return fail(422, { error: 'Description is required' });
-		if (!amount || amount <= 0) return fail(422, { error: 'Amount must be greater than 0' });
+		if (!amount || amount <= 0) return fail(422, { expenseAmountMissing: true });
 
 		await createExpense({
 			description,
@@ -35,9 +35,7 @@ export const actions = {
 	},
 	'delete-expense': async ({ request }) => {
 		const data = await request.formData();
-
 		const id = data.get('id') as string;
-		if (!id) return fail(422, { error: 'Id is required' });
 
 		await deleteExpense(id);
 
@@ -48,7 +46,7 @@ export const actions = {
 		const data = await request.formData();
 
 		const name = data.get('name') as string;
-		if (!name) return fail(422, { error: 'Name is required' });
+		if (!name) return fail(422, { templateNameMissing: true });
 
 		const ledger = await getLedger(params.id);
 		if (!ledger) error(404, { message: 'Ledger not found' });
