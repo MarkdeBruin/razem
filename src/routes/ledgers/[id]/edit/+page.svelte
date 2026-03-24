@@ -18,7 +18,8 @@
 		<fieldset class="grid">
 			<label>
 				Name
-				<input type="text" name="name" value={data.ledger.name} />
+				<input type="text" name="name" value={data.ledger.name} required />
+				{#if form?.nameMissing}<small>Name is required</small>{/if}
 			</label>
 			<label>
 				{data.owner.name}’s share
@@ -29,16 +30,24 @@
 					step="1"
 					inputmode="numeric"
 					name="owner-percentage"
+					required
 					bind:value={ownerPercentage}
 					oninput={() => {
 						if (ownerPercentage === null || isNaN(ownerPercentage)) return;
 						ownerPercentage = Math.min(100, Math.max(0, ownerPercentage));
 						partnerPercentage = Math.round(100 - ownerPercentage);
 					}}
+					onblur={() => {
+						if (ownerPercentage === null || isNaN(ownerPercentage)) {
+							ownerPercentage = 0;
+							partnerPercentage = 100;
+						}
+					}}
 				/>
+				{#if form?.fractionMissing}<small>{data.owner.name}’s share is required</small>{/if}
 			</label>
 			<label>
-				<span>{data.partner.name}‘s share</span>
+				<span>{data.partner.name}’s share</span>
 				<input
 					type="number"
 					min="0"
@@ -50,16 +59,17 @@
 						partnerPercentage = Math.min(100, Math.max(0, partnerPercentage));
 						ownerPercentage = Math.round(100 - partnerPercentage);
 					}}
+					onblur={() => {
+						if (partnerPercentage === null || isNaN(partnerPercentage)) {
+							partnerPercentage = 0;
+							ownerPercentage = 100;
+						}
+					}}
 				/>
 			</label>
 		</fieldset>
 
 		<input type="submit" value="Save changes" />
-
-		{#if form?.error}
-			<hr />
-			<mark>{form?.error}</mark>
-		{/if}
 	</form>
 </main>
 

@@ -12,25 +12,25 @@ export const load: PageServerLoad = async ({ params }) => {
 };
 
 export const actions = {
-	'update': async ({ params, request }) => {
-    const data = await request.formData();
-		
-    const name = data.get('name') as string;
-    if (!name) return fail(422, { error: 'Name is required' });
-    
-    const ownerFraction = Number(data.get('owner-percentage')) / 100;
-    if (!ownerFraction) return fail(422, { error: 'Fraction is required' });
-    
-    const updatedLedger: NewLedger = {
-      name: name,
-      ownerFraction: ownerFraction
-    }
-    
-    await updateLedger(params.id, updatedLedger)
+	update: async ({ params, request }) => {
+		const data = await request.formData();
+
+		const name = data.get('name') as string;
+		if (!name) return fail(422, { nameMissing: true });
+
+		const ownerFraction = Number(data.get('owner-percentage')) / 100;
+		if (!ownerFraction) return fail(422, { fractionMissing: true });
+
+		const updatedLedger: NewLedger = {
+			name: name,
+			ownerFraction: ownerFraction
+		};
+
+		await updateLedger(params.id, updatedLedger);
 
 		redirect(303, `/ledgers/${params.id}`);
-  },
-  'delete': async ({ params }) => {
+	},
+	delete: async ({ params }) => {
 		await deleteLedger(params.id);
 		redirect(303, '/');
 	}
