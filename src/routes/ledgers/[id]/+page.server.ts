@@ -16,10 +16,10 @@ export const actions = {
 	'create-expense': async ({ locals, params, request }) => {
 		const data = await request.formData();
 
-		const description = data.get('description') as string;
+		const description = data.get('exp-description') as string;
 		if (!description) return fail(422, { expenseDescMissing: true });
 
-		const amount = Number(data.get('amount'));
+		const amount = Number(data.get('exp-amount'));
 		if (!amount || amount <= 0) return fail(422, { expenseAmountMissing: true });
 
 		await createExpense({

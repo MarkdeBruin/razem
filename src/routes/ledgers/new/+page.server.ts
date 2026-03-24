@@ -21,7 +21,7 @@ export const actions = {
     let ownerFraction = 0.5; // Default fraction (50%)
 		let templateExpenses: TemplateExpense[] = [];
 
-		const templateId = data.get('ledger- template') as string;
+		const templateId = data.get('ledger-template') as string;
 		if (templateId !== 'blank') {
 			const template = await getLedgerTemplate(templateId);
 

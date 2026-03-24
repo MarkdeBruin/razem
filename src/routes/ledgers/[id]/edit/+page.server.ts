@@ -15,7 +15,7 @@ export const actions = {
 	default: async ({ params, request }) => {
 		const data = await request.formData();
 
-		const name = data.get('name') as string;
+		const name = data.get('ledger-name') as string;
 		if (!name) return fail(422, { nameMissing: true });
 
 		const ownerFraction = Number(data.get('owner-percentage')) / 100;

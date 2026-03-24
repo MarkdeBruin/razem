@@ -75,13 +75,13 @@
 		<form method="POST" action="?/create-expense" use:enhance>
 			<fieldset class="grid">
 				<div>
-					<input type="text" name="description" placeholder="Description" required />
+					<input type="text" name="exp-description" placeholder="Description" required />
 					{#if form?.expenseDescMissing}<small>Description is required</small>{/if}
 				</div>
 				<div>
 					<input
 						type="number"
-						name="amount"
+						name="exp-amount"
 						placeholder="Amount"
 						min="1"
 						inputmode="numeric"

@@ -24,7 +24,7 @@ export const actions = {
   default: async ({ request }) => {
 		const data = await request.formData();
  
-		const name = data.get('name') as string;
+		const name = data.get('template-name') as string;
     if (!name) return fail(422, { templateNameMissing: true });
 		
     const ledgerId = data.get('ledger-id') as string

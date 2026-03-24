@@ -17,7 +17,7 @@
 		<fieldset class="grid">
 			<label>
 				Name
-				<input type="text" name="name" value={data.ledger.name} required />
+				<input type="text" name="ledger-name" value={data.ledger.name} required />
 				{#if form?.nameMissing}<small>Name is required</small>{/if}
 			</label>
 			<label>
@@ -52,6 +52,7 @@
 					min="0"
 					max="100"
 					step="1"
+					name="partner-percentage"
 					bind:value={partnerPercentage}
 					oninput={() => {
 						if (partnerPercentage === null || isNaN(partnerPercentage)) return;

@@ -16,7 +16,7 @@
 
 <main>
 	<form method="POST" use:enhance>
-		<input type="text" name="name" placeholder="Name" required />
+		<input type="text" name="template-name" placeholder="Name" required />
 		{#if form?.templateNameMissing}<mark>Name is required</mark>{/if}
 		<input type="hidden" name="ledger-id" value="{data.ledger.id}">
 		<input type="submit" value="Create template" />
