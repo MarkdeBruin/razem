@@ -13,15 +13,15 @@ export const load: PageServerLoad = async () => {
 
 export const actions = {
 	default: async ({ request }) => {
-		const data = await request.formData();
-		const name = data.get('name') as string;
-		const templateId = data.get('template') as string;
-
-		if (!name) return fail(422, { error: 'Name is required' });
+    const data = await request.formData();
+		
+		const name = data.get('ledger-name') as string;
+		if (!name) return fail(422, { nameMissing: true });
     
     let ownerFraction = 0.5; // Default fraction (50%)
 		let templateExpenses: TemplateExpense[] = [];
 
+		const templateId = data.get('ledger- template') as string;
 		if (templateId !== 'blank') {
 			const template = await getLedgerTemplate(templateId);
 
