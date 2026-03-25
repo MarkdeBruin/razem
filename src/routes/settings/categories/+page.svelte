@@ -12,7 +12,7 @@
 
 <header>
 	<hgroup>
-		<h1>Expense categories</h1>
+		<h1>Categories & Keywords</h1>
 		<p>Keywords are used to automatically select the right category when adding an expense.</p>
 	</hgroup>
 </header>
@@ -35,7 +35,7 @@
 				<legend>Category</legend>
 				{#each data.categories as category}
 					<label>
-						<input type="radio" name="exp-category" value={category.id} required />
+						<input type="radio" name="category" value={category.id} required />
 						{category.name}
 					</label>
 				{/each}

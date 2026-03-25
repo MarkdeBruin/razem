@@ -37,10 +37,8 @@ export type LedgerTemplate = {
 };
 export type NewLedgerTemplate = Omit<LedgerTemplate, 'id'>;
 
-export type ExpenseCategory = {
+export type Category = {
   id: string;
   name: string;
   keywords: string[];
 }
-
-export type NewExpenseCategory = Omit<ExpenseCategory, 'id'>;

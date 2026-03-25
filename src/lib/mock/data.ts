@@ -1,4 +1,4 @@
-import type { User, Ledger, Expense, LedgerTemplate, ExpenseCategory } from '$lib/types';
+import type { User, Ledger, Expense, LedgerTemplate, Category } from '$lib/types';
 
 export const mockUsers: User[] = [
 	{ id: 'user-1', name: 'Mark', email: 'mark@example.com', role: 'owner' },
@@ -33,7 +33,7 @@ export const mockTemplates: LedgerTemplate[] = [
 	}
 ];
 
-export const mockCategories: ExpenseCategory[] = [
+export const mockCategories: Category[] = [
 	{ id: 'cat-1', name: 'Housing', keywords: ['Rent', 'Eneco', 'Water', 'Internet'] },
 	{ id: 'cat-2', name: 'Groceries', keywords: ['AH', 'Lidl', 'Oriental'] },
   { id: 'cat-3', name: 'Leisure', keywords: ['Dinner', 'Lunch', 'Trip', 'Date'] },

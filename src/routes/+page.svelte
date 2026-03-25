@@ -12,7 +12,7 @@
 			<li>
 				{#if data.ledgers.length > 0}<a href="/ledgers/new">+ Add ledger</a>{/if}
 			</li>
-			<li><a href="/settings/expense-categories">Expense categories</a></li>
+			<li><a href="/settings/categories">Categories & Keywords</a></li>
 		</ul>
 	</nav>
 </header>
