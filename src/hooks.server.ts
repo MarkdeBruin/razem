@@ -1,9 +1,9 @@
 import type { Handle } from '@sveltejs/kit';
-import { getUsers } from '$lib/services/users';
+import { getAllUsers } from '$lib/services/users';
 
 export const handle: Handle = async ({ event, resolve }) => {
-    const users = await getUsers();
-    const currentUser = users.find((u) => u.role === 'owner')!;
+    const users = await getAllUsers();
+    const currentUser = users.find((user) => user.role === 'owner')!;
     
     event.locals.currentUser = currentUser;
 

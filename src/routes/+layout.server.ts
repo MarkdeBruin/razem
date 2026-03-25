@@ -5,8 +5,8 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 	const currentUser = locals.currentUser;
 
 	const users = await getAllUsers();
-	const owner = users.find((u) => u.role === 'owner')!;
-	const partner = users.find((u) => u.role === 'partner')!;
+	const owner = users.find((user) => user.role === 'owner')!;
+	const partner = users.find((user) => user.role === 'partner')!;
 
 	return { currentUser, owner, partner };
 }
