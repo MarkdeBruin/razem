@@ -34,8 +34,8 @@ export const mockTemplates: LedgerTemplate[] = [
 ];
 
 export const mockCategories: ExpenseCategory[] = [
-	{ id: 'cat-1', name: 'Housing', keywords: ['rent', 'eneco', 'water', 'internet'] },
-	{ id: 'cat-2', name: 'Groceries', keywords: ['ah', 'lidl', 'oriental'] },
-  { id: 'cat-3', name: 'Leisure', keywords: ['dinner', 'lunch', 'trip', 'date'] },
-	{ id: 'cat-4', name: 'Other', keywords: ['bol', 'amazon'] },
+	{ id: 'cat-1', name: 'Housing', keywords: ['Rent', 'Eneco', 'Water', 'Internet'] },
+	{ id: 'cat-2', name: 'Groceries', keywords: ['AH', 'Lidl', 'Oriental'] },
+  { id: 'cat-3', name: 'Leisure', keywords: ['Dinner', 'Lunch', 'Trip', 'Date'] },
+	{ id: 'cat-4', name: 'Other', keywords: ['Bol', 'Amazon'] },
 ];
