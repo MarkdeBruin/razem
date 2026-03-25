@@ -3,7 +3,7 @@ import { notFoundError } from '$lib/utils/errors';
 
 import { mockExpenses } from '$lib/mock/data';
 
-export async function getExpenses(ledgerId: string): Promise<Expense[]> {
+export async function getAllExpenses(ledgerId: string): Promise<Expense[]> {
 	return mockExpenses.filter((expense) => expense.ledgerId === ledgerId);
 }
 

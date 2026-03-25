@@ -1,8 +1,8 @@
-import { getLedgerTemplates } from "$lib/services/ledgerTemplates";
+import { getAllLedgerTemplates } from "$lib/services/ledgerTemplates";
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
 	return {
-		templates: await getLedgerTemplates()
+		templates: await getAllLedgerTemplates()
 	};
 }

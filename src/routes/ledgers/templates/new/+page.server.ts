@@ -1,5 +1,5 @@
 import { getLedger } from '$lib/services/ledgers';
-import { getExpenses } from '$lib/services/expenses.js';
+import { getAllExpenses } from '$lib/services/expenses.js';
 import { createLedgerTemplate } from '$lib/services/ledgerTemplates.js';
 import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types.js';
@@ -12,7 +12,7 @@ export const load: PageServerLoad = async ({ url }) => {
 		const ledger = await getLedger(ledgerId);
     if (!ledger) error(404, { message: 'Ledger not found' });
 		
-    const expenses = await getExpenses(ledgerId);
+    const expenses = await getAllExpenses(ledgerId);
     
 		return { prefill: true, ledger, expenses };
 	}
@@ -32,7 +32,7 @@ export const actions = {
 		const ledger = await getLedger(ledgerId);
     if (!ledger) error(404, { message: 'Ledger not found' });
 		
-    const expenses = await getExpenses(ledgerId);
+    const expenses = await getAllExpenses(ledgerId);
  
 		const templateExpenses: TemplateExpense[] = expenses.map(({ description, amount, userId }) => ({
 			id: `texp-${crypto.randomUUID()}`,

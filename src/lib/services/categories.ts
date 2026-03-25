@@ -2,7 +2,7 @@ import type { Category } from '$lib/types';
 import { mockCategories } from '$lib/mock/data';
 import { notFoundError } from '$lib/utils/errors';
 
-export async function getCategories(): Promise<Category[]> {
+export async function getAllCategories(): Promise<Category[]> {
 	return mockCategories;
 }
 

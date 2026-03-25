@@ -1,11 +1,11 @@
-import { getLedgers } from '$lib/services/ledgers';
+import { getAllLedgers } from '$lib/services/ledgers';
 import { deleteLedger } from '$lib/services/ledgers';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
 	return {
-		ledgers: await getLedgers()
+		ledgers: await getAllLedgers()
 	};
 };
 

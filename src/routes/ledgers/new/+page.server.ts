@@ -1,5 +1,5 @@
 import { redirect, fail } from '@sveltejs/kit';
-import { getLedgerTemplate, getLedgerTemplates } from '$lib/services/ledgerTemplates';
+import { getLedgerTemplate, getAllLedgerTemplates } from '$lib/services/ledgerTemplates';
 import { createLedger } from '$lib/services/ledgers';
 import { createExpense } from '$lib/services/expenses';
 import type { Actions, PageServerLoad } from './$types';
@@ -7,7 +7,7 @@ import type { TemplateExpense } from '$lib/types';
 
 export const load: PageServerLoad = async () => {
 	return {
-		templates: await getLedgerTemplates()
+		templates: await getAllLedgerTemplates()
 	};
 };
 

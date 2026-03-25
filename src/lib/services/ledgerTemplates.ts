@@ -3,7 +3,7 @@ import { notFoundError } from '$lib/utils/errors';
 
 import { mockTemplates } from '$lib/mock/data';
 
-export async function getLedgerTemplates(): Promise<LedgerTemplate[]> {
+export async function getAllLedgerTemplates(): Promise<LedgerTemplate[]> {
 	return mockTemplates;
 }
 

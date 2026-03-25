@@ -1,10 +1,10 @@
-import { getCategories, getAllKeywords, addKeyword } from '$lib/services/categories';
+import { getAllCategories, getAllKeywords, addKeyword } from '$lib/services/categories';
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
 	return {
-		categories: await getCategories(),
+		categories: await getAllCategories(),
 		keywords: await getAllKeywords()
 	};
 };

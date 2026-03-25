@@ -1,5 +1,5 @@
 import { getLedger } from '$lib/services/ledgers';
-import { getExpenses, createExpense, deleteExpense } from '$lib/services/expenses';
+import { getAllExpenses, createExpense, deleteExpense } from '$lib/services/expenses';
 import { error, fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types.js';
 
@@ -7,7 +7,7 @@ export const load: PageServerLoad = async ({ params }) => {
 	const ledger = await getLedger(params.id);
 	if (!ledger) error(404, { message: 'Ledger not found' });
 
-	const expenses = await getExpenses(params.id);
+	const expenses = await getAllExpenses(params.id);
 
 	return { ledger, expenses };
 };
