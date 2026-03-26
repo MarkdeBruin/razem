@@ -89,8 +89,22 @@
 					/>
 					{#if form?.expenseAmountMissing}<small>Amount is required</small>{/if}
 				</div>
-				<input type="submit" value="Add expense" />
 			</fieldset>
+			
+			<fieldset class="grid">
+				<legend>Category</legend>
+				{#each data.categories as category}
+					<label>
+						<input type="radio" name="exp-category" value={category.id} required />
+						{category.name}
+					</label>
+				{/each}
+			</fieldset>
+			{#if form?.categoryMissing}
+				<small>Please select a category</small>
+			{/if}
+			
+			<input type="submit" value="Add expense" />
 		</form>
 	</section>
 
@@ -112,6 +126,7 @@
 				<tr>
 					<th scope="col">Expense</th>
 					<th scope="col">Amount (€)</th>
+					<th scope="col">Category</th>
 					<th scope="col">Actions</th>
 				</tr>
 			</thead>
@@ -120,6 +135,7 @@
 					<tr>
 						<th scope="row">{expense.description}</th>
 						<td>{expense.amount}</td>
+						<td>{expense.categoryName}</td>
 						<td>
 							<form method="POST" action="?/delete-expense" use:enhance>
 								<input type="hidden" name="id" value={expense.id} />
@@ -133,6 +149,7 @@
 				<tr>
 					<th scope="row">Total</th>
 					<td>{filteredTotal}</td>
+					<td></td>
 					<td></td>
 				</tr>
 			</tfoot>

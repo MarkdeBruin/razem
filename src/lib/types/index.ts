@@ -18,15 +18,11 @@ export type Expense = {
 	amount: number;
 	userId: string;
 	ledgerId: string;
+  categoryId: string;
 };
 export type NewExpense = Omit<Expense, 'id'>;
 
-export type TemplateExpense = {
-	id: string;
-	description: string;
-	amount: number;
-	userId: string;
-};
+export type TemplateExpense = Omit<Expense, 'ledgerId'>;
 export type NewTemplateExpense = Omit<TemplateExpense, 'id'>;
 
 export type LedgerTemplate = {

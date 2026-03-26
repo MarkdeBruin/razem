@@ -35,11 +35,10 @@ export const actions = {
 
 		await Promise.all(
 			templateExpenses.map((expense) =>
-				createExpense({
-					description: expense.description,
-					amount: expense.amount,
-					userId: expense.userId,
-					ledgerId: newLedger.id
+        createExpense({
+          ...expense,
+          ledgerId: newLedger.id,
+
 				})
 			)
 		);

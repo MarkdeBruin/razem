@@ -11,13 +11,13 @@ export const mockLedgers: Ledger[] = [
 ];
 
 export const mockExpenses: Expense[] = [
-	{ id: 'exp-1', description: 'Rent', amount: 1200, userId: 'user-1', ledgerId: 'ledger-1' },
-	{ id: 'exp-2', description: 'Groceries', amount: 150, userId: 'user-1', ledgerId: 'ledger-1' },
-	{ id: 'exp-3', description: 'Utilities', amount: 80, userId: 'user-1', ledgerId: 'ledger-1' },
-	{ id: 'exp-4', description: 'Internet', amount: 40, userId: 'user-1', ledgerId: 'ledger-1' },
-	{ id: 'exp-5', description: 'AH', amount: 20, userId: 'user-2', ledgerId: 'ledger-1' },
-	{ id: 'exp-6', description: 'Rent', amount: 1200, userId: 'user-1', ledgerId: 'ledger-2' },
-	{ id: 'exp-7', description: 'Groceries', amount: 130, userId: 'user-2', ledgerId: 'ledger-2' }
+	{ id: 'exp-1', description: 'Rent', amount: 1200, userId: 'user-1', ledgerId: 'ledger-1', categoryId: 'cat-1' },
+	{ id: 'exp-2', description: 'Groceries', amount: 150, userId: 'user-1', ledgerId: 'ledger-1', categoryId: 'cat-1' },
+	{ id: 'exp-3', description: 'Utilities', amount: 80, userId: 'user-1', ledgerId: 'ledger-1', categoryId: 'cat-1' },
+	{ id: 'exp-4', description: 'Internet', amount: 40, userId: 'user-1', ledgerId: 'ledger-1', categoryId: 'cat-1' },
+	{ id: 'exp-5', description: 'AH', amount: 20, userId: 'user-2', ledgerId: 'ledger-1', categoryId: 'cat-2' },
+	{ id: 'exp-6', description: 'Rent', amount: 1200, userId: 'user-1', ledgerId: 'ledger-2', categoryId: 'cat-1' },
+	{ id: 'exp-7', description: 'Bol', amount: 130, userId: 'user-2', ledgerId: 'ledger-2', categoryId: 'cat-4' }
 ];
 
 export const mockTemplates: LedgerTemplate[] = [
@@ -26,9 +26,9 @@ export const mockTemplates: LedgerTemplate[] = [
 		name: 'Monthly',
 		ownerFraction: 0.5,
 		expenses: [
-			{ id: 'texp-1', description: 'Rent', amount: 1200, userId: 'user-1' },
-			{ id: 'texp-2', description: 'Utilities', amount: 80, userId: 'user-1' },
-			{ id: 'texp-3', description: 'Internet', amount: 40, userId: 'user-2' }
+			{ id: 'texp-1', description: 'Rent', amount: 1200, userId: 'user-1', categoryId: 'cat-1' },
+			{ id: 'texp-2', description: 'Utilities', amount: 80, userId: 'user-1', categoryId: 'cat-1' },
+			{ id: 'texp-3', description: 'Internet', amount: 40, userId: 'user-2', categoryId: 'cat-1' }
 		]
 	}
 ];
