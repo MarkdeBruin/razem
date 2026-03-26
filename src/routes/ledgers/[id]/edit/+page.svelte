@@ -17,7 +17,13 @@
 		<fieldset class="grid">
 			<label>
 				Name
-				<input type="text" name="ledger-name" value={data.ledger.name} required />
+				<input
+					type="text"
+					name="ledger-name"
+					value={data.ledger.name}
+					required
+					autocapitalize="sentences"
+				/>
 				{#if form?.nameMissing}<small>Name is required</small>{/if}
 			</label>
 			<label>

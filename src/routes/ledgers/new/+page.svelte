@@ -10,7 +10,7 @@
 	<form method="POST" use:enhance>
 		<label>
 			<span>Ledger name</span>
-			<input type="text" name="ledger-name" required />
+			<input type="text" name="ledger-name" required autocapitalize="sentences" />
 			{#if form?.nameMissing}<small>Name is required</small>{/if}
 		</label>
 

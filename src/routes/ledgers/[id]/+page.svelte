@@ -4,6 +4,17 @@
 
 	let { data, form }: PageProps = $props();
 
+	let description = $state('');
+	let selectedCategoryId = $state('');
+
+	function matchCategory(input: string): string {
+		const normalized = input.toLowerCase();
+		const match = data.categories.find((c) =>
+			c.keywords.some((k) => normalized.includes(k.toLowerCase()))
+		);
+		return match?.id ?? '';
+	}
+
 	const totalExpenses = $derived(data.expenses.reduce((sum, expense) => sum + expense.amount, 0));
 
 	function totalByUser(userId: string): number {
@@ -75,7 +86,18 @@
 		<form method="POST" action="?/create-expense" use:enhance>
 			<fieldset class="grid">
 				<div>
-					<input type="text" name="exp-description" placeholder="Description" required />
+					<input
+						type="text"
+						name="exp-description"
+						placeholder="Description"
+						required
+						autocapitalize="sentences"
+						bind:value={description}
+						oninput={() => {
+							const match = matchCategory(description);
+							if (match) selectedCategoryId = match;
+						}}
+					/>
 					{#if form?.expenseDescMissing}<small>Description is required</small>{/if}
 				</div>
 				<div>
@@ -90,12 +112,18 @@
 					{#if form?.expenseAmountMissing}<small>Amount is required</small>{/if}
 				</div>
 			</fieldset>
-			
+
 			<fieldset class="grid">
 				<legend>Category</legend>
 				{#each data.categories as category}
 					<label>
-						<input type="radio" name="exp-category" value={category.id} required />
+						<input
+							type="radio"
+							name="exp-category"
+							value={category.id}
+							required
+							bind:group={selectedCategoryId}
+						/>
 						{category.name}
 					</label>
 				{/each}
@@ -103,7 +131,7 @@
 			{#if form?.categoryMissing}
 				<small>Please select a category</small>
 			{/if}
-			
+
 			<input type="submit" value="Add expense" />
 		</form>
 	</section>

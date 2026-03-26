@@ -22,7 +22,7 @@
 		<form method="POST" use:enhance>
 			<label>
 				<span>Keyword</span>
-				<input type="text" name="keyword" bind:value={rawKeyword} required />
+				<input type="text" name="keyword" bind:value={rawKeyword} required autocapitalize="sentences" />
 				{#if isDuplicate}
 					<small>"{cleanedKeyword}" already exists</small>
 				{/if}
