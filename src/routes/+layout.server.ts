@@ -1,9 +1,14 @@
+import { getAllUsers } from '$lib/services/users';
+import type { User } from '$lib/types';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ locals }) => {
 	const currentUser = locals.currentUser;
-	const owner = locals.owner;
-	const partner = locals.partner;
 
-	return { currentUser, owner, partner };
+	const users = await getAllUsers();
+	const owner = users.find((user: User) => user.role === 'owner')!;
+	const partner = users.find((user: User) => user.role === 'partner')!;
+	const otherUser = currentUser.id === owner.id ? partner : owner;
+
+	return { currentUser, owner, partner, otherUser };
 };

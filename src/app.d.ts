@@ -5,8 +5,6 @@ declare global {
 		// interface Error {}
 		interface Locals {
 			currentUser: User;
-			owner: User;
-			partner: User;
 		}
 		// interface PageData {}
 		// interface PageState {}
