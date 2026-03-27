@@ -15,31 +15,6 @@
 		return match?.id ?? '';
 	}
 
-	const totalExpenses = $derived(data.expenses.reduce((sum, expense) => sum + expense.amount, 0));
-
-	function totalByUser(userId: string): number {
-		return data.expenses
-			.filter((expense) => expense.userId === userId)
-			.reduce((sum, expense) => sum + expense.amount, 0);
-	}
-
-	const ownerTotal = $derived(totalByUser(data.owner.id));
-	const partnerTotal = $derived(totalByUser(data.partner.id));
-
-	const ownerShare = $derived(totalExpenses * data.ledger.ownerFraction);
-	const partnerShare = $derived(totalExpenses * (1 - data.ledger.ownerFraction));
-
-	const ownerBalance = $derived(ownerTotal - ownerShare);
-	const partnerBalance = $derived(partnerTotal - partnerShare);
-
-	const currentBalance = $derived(
-		data.currentUser.id === data.owner.id ? ownerBalance : partnerBalance
-	);
-	const otherBalance = $derived(
-		data.currentUser.id === data.owner.id ? partnerBalance : ownerBalance
-	);
-	const otherUser = $derived(data.currentUser.id === data.owner.id ? data.partner : data.owner);
-
 	function formatSplit(ownerFraction: number): string {
 		const owner = Math.round(ownerFraction * 100);
 		const partner = 100 - owner;
@@ -53,7 +28,8 @@
 		filter === 'all'
 			? data.expenses
 			: data.expenses.filter(
-					(e) => e.userId === (filter === 'current' ? data.currentUser.id : otherUser.id)
+					(expense) =>
+						expense.userId === (filter === 'current' ? data.currentUser.id : data.otherUser.id)
 				)
 	);
 
@@ -70,11 +46,11 @@
 	<section class="grid">
 		<dl>
 			<dt>{data.currentUser.name}</dt>
-			<dd>{Math.round(currentBalance)}</dd>
+			<dd>{Math.round(data.currentBalance)}</dd>
 		</dl>
 		<dl>
-			<dt>{otherUser.name}</dt>
-			<dd>{Math.round(otherBalance)}</dd>
+			<dt>{data.otherUser.name}</dt>
+			<dd>{Math.round(data.otherBalance)}</dd>
 		</dl>
 		<dl>
 			<dt>Split {data.owner.name}/{data.partner.name}</dt>
@@ -144,7 +120,7 @@
 			<input type="radio" id="current" name="expenses" bind:group={filter} value="current" />
 			<label for="current">{data.currentUser.name}’s</label>
 			<input type="radio" id="other" name="expenses" bind:group={filter} value="other" />
-			<label for="other">{otherUser.name}’s</label>
+			<label for="other">{data.otherUser.name}’s</label>
 		</fieldset>
 	</section>
 
