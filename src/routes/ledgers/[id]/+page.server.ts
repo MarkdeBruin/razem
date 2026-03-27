@@ -1,6 +1,7 @@
 import { getLedger } from '$lib/services/ledgers';
 import { getAllExpenses, createExpense, deleteExpense } from '$lib/services/expenses';
 import { getAllCategories } from '$lib/services/categories.js';
+import { addKeyword } from '$lib/services/categories.js';
 import { error, fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types.js';
 
@@ -72,7 +73,11 @@ export const actions = {
 			userId: locals.currentUser.id,
 			ledgerId: params.id,
 			categoryId
-		});
+    });
+		
+    if (data.get('save-keyword')) {
+      await addKeyword(description, categoryId);
+    }
 
 		return { success: true };
 	},

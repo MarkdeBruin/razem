@@ -8,12 +8,14 @@
 	let selectedCategoryId = $state('');
 
 	function matchCategory(input: string): string {
-		const normalized = input.toLowerCase();
-		const match = data.categories.find((c) =>
-			c.keywords.some((k) => normalized.includes(k.toLowerCase()))
+		const normalised = input.toLowerCase();
+		const match = data.categories.find((category) =>
+			category.keywords.some((keyword) => normalised.includes(keyword.toLowerCase()))
 		);
 		return match?.id ?? '';
 	}
+
+	let isNewKeyword = $state(false);
 
 	function formatSplit(ownerFraction: number): string {
 		const owner = Math.round(ownerFraction * 100);
@@ -38,13 +40,12 @@
 	);
 
 	const filteredByCategory = $derived(
-		data.categories
-			.map((category) => ({
-				...category,
-				total: filteredExpenses
-					.filter((expense) => expense.categoryId === category.id)
-					.reduce((sum, expense) => sum + expense.amount, 0)
-			}))
+		data.categories.map((category) => ({
+			...category,
+			total: filteredExpenses
+				.filter((expense) => expense.categoryId === category.id)
+				.reduce((sum, expense) => sum + expense.amount, 0)
+		}))
 		//.filter((category) => category.total > 0) // only show categories with expenses
 	);
 </script>
@@ -82,8 +83,13 @@
 						bind:value={description}
 						oninput={() => {
 							const match = matchCategory(description);
-							if (match) selectedCategoryId = match;
+							if (match) {
+								selectedCategoryId = match;
+								isNewKeyword = false;
+							}
 						}}
+						onblur={() =>
+							(isNewKeyword = description.trim().length > 0 && !matchCategory(description))}
 					/>
 					{#if form?.expenseDescMissing}<small>Description is required</small>{/if}
 				</div>
@@ -117,6 +123,13 @@
 			</fieldset>
 			{#if form?.categoryMissing}
 				<small>Please select a category</small>
+			{/if}
+
+			{#if isNewKeyword && selectedCategoryId}
+				<label>
+					<input type="checkbox" name="save-keyword" value="true" />
+					Auto-fill this category next time I add {description.trim()}
+				</label>
 			{/if}
 
 			<input type="submit" value="Add expense" />
