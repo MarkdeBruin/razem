@@ -36,6 +36,17 @@
 	const filteredTotal = $derived(
 		filteredExpenses.reduce((sum, expense) => sum + expense.amount, 0)
 	);
+
+	const filteredByCategory = $derived(
+		data.categories
+			.map((category) => ({
+				...category,
+				total: filteredExpenses
+					.filter((expense) => expense.categoryId === category.id)
+					.reduce((sum, expense) => sum + expense.amount, 0)
+			}))
+		//.filter((category) => category.total > 0) // only show categories with expenses
+	);
 </script>
 
 <header>
@@ -124,6 +135,19 @@
 		</fieldset>
 	</section>
 
+	<section class="grid">
+		<dl>
+			<dt>Total expenses</dt>
+			<dd>€{filteredTotal}</dd>
+		</dl>
+		{#each filteredByCategory as category}
+			<dl>
+				<dt>{category.name}</dt>
+				<dd>€{Math.round(category.total)}</dd>
+			</dl>
+		{/each}
+	</section>
+
 	<section class="overflow-auto">
 		<table class="striped">
 			<thead>
@@ -149,14 +173,6 @@
 					</tr>
 				{/each}
 			</tbody>
-			<tfoot>
-				<tr>
-					<th scope="row">Total</th>
-					<td>{filteredTotal}</td>
-					<td></td>
-					<td></td>
-				</tr>
-			</tfoot>
 		</table>
 	</section>
 </main>
