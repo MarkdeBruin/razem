@@ -18,7 +18,7 @@
 	});
 </script>
 
-<header><h1>Edit ledger</h1></header>
+<header><h1>Edit expense</h1></header>
 
 <main>
 	<form method="POST" use:enhance>

@@ -55,7 +55,7 @@ export const load: PageServerLoad = async ({ locals, parent, params }) => {
 };
 
 export const actions = {
-	'create-expense': async ({ locals, params, request }) => {
+	default: async ({ locals, params, request }) => {
 		const data = await request.formData();
 
 		const description = data.get('exp-description') as string;
@@ -78,14 +78,6 @@ export const actions = {
     if (data.get('save-keyword')) {
       await addKeyword(description, categoryId);
     }
-
-		return { success: true };
-	},
-	'delete-expense': async ({ request }) => {
-		const data = await request.formData();
-		const id = data.get('id') as string;
-
-		await deleteExpense(id);
 
 		return { success: true };
 	}

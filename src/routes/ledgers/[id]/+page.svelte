@@ -64,7 +64,7 @@
 	</section>
 
 	<section>
-		<form method="POST" action="?/create-expense" use:enhance>
+		<form method="POST" use:enhance>
 			<fieldset class="grid">
 				<div>
 					<input
@@ -81,8 +81,7 @@
 								isNewKeyword = false;
 							}
 						}}
-						onblur={() =>
-							(isNewKeyword = description.trim().length > 0 && !match)}
+						onblur={() => (isNewKeyword = description.trim().length > 0 && !match)}
 					/>
 					{#if form?.expenseDescMissing}<small>Description is required</small>{/if}
 				</div>
@@ -171,11 +170,8 @@
 						<td>{expense.amount}</td>
 						<td>{expense.categoryName}</td>
 						<td>
-						<a href="/ledgers/{data.ledger.id}/{expense.id}/edit">Edit</a>
-							<form method="POST" action="?/delete-expense" use:enhance>
-								<input type="hidden" name="id" value={expense.id} />
-								<button type="submit" class="outline secondary">Delete</button>
-							</form>
+							<a href="/ledgers/{data.ledger.id}/{expense.id}/edit">Edit</a>
+							<a href="/ledgers/{data.ledger.id}/{expense.id}/delete">Delete</a>
 						</td>
 					</tr>
 				{/each}

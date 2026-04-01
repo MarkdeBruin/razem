@@ -7,13 +7,13 @@
 
 <header>
 	<hgroup>
-		<h1>Delete {data.ledger.name}</h1>
+		<h1>Delete {data.expense.description}</h1>
 		<mark>This action is perminent!</mark>
 	</hgroup>
 </header>
 
 <main>
 	<form method="POST" use:enhance>
-		<button type="submit">Delete ledger</button>
+		<button type="submit">Delete expense</button>
 	</form>
 </main>
