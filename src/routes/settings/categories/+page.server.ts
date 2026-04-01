@@ -4,8 +4,7 @@ import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
 	return {
-		categories: await getAllCategories(),
-		keywords: await getAllKeywords()
+		categories: await getAllCategories()
 	};
 };
 

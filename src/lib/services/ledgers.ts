@@ -38,5 +38,7 @@ export async function deleteLedger(id: string): Promise<void> {
 
 	if (index === -1) throw notFoundError('Ledger', id);
 
-	mockLedgers.splice(index, 1);
+  mockLedgers.splice(index, 1);
+	
+	// TODO: Delete all expenses matching the ledgerID
 }

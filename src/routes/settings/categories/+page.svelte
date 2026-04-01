@@ -1,13 +1,11 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
 	import { enhance } from '$app/forms';
+	import { matchCategory } from '$lib/utils/categories';
 
 	let { data, form }: PageProps = $props();
-
-	let rawKeyword = $state('');
-
-	const cleanedKeyword = $derived(rawKeyword.trim().replace(/^\w/, c => c.toUpperCase()));
-	const isDuplicate = $derived(data.keywords.includes(cleanedKeyword));
+	let keyword = $state('');
+	let isDuplicate = $state(false);
 </script>
 
 <header>
@@ -22,9 +20,18 @@
 		<form method="POST" use:enhance>
 			<label>
 				<span>Keyword</span>
-				<input type="text" name="keyword" bind:value={rawKeyword} required autocapitalize="sentences" />
+				<input
+					type="text"
+					name="keyword"
+					bind:value={keyword}
+					required
+					autocapitalize="sentences"
+					oninput={() => {
+						isDuplicate = !!matchCategory(keyword, data.categories);
+					}}
+				/>
 				{#if isDuplicate}
-					<small>"{cleanedKeyword}" already exists</small>
+					<small>"{keyword}" already exists</small>
 				{/if}
 				{#if form?.keywordMissing}
 					<small>Keyword is required</small>

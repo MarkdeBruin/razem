@@ -1,21 +1,14 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { PageProps } from './$types';
+	import { matchCategory } from '$lib/utils/categories';
 
 	let { data, form }: PageProps = $props();
 
 	let description = $state('');
 	let selectedCategoryId = $state('');
-
-	function matchCategory(input: string): string {
-		const normalised = input.toLowerCase();
-		const match = data.categories.find((category) =>
-			category.keywords.some((keyword) => normalised.includes(keyword.toLowerCase()))
-		);
-		return match?.id ?? '';
-	}
-
 	let isNewKeyword = $state(false);
+	let match: string;
 
 	function formatSplit(ownerFraction: number): string {
 		const owner = Math.round(ownerFraction * 100);
@@ -82,14 +75,14 @@
 						autocapitalize="sentences"
 						bind:value={description}
 						oninput={() => {
-							const match = matchCategory(description);
+							match = matchCategory(description, data.categories);
 							if (match) {
 								selectedCategoryId = match;
 								isNewKeyword = false;
 							}
 						}}
 						onblur={() =>
-							(isNewKeyword = description.trim().length > 0 && !matchCategory(description))}
+							(isNewKeyword = description.trim().length > 0 && !match)}
 					/>
 					{#if form?.expenseDescMissing}<small>Description is required</small>{/if}
 				</div>
