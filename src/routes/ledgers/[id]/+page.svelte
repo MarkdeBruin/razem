@@ -171,6 +171,7 @@
 						<td>{expense.amount}</td>
 						<td>{expense.categoryName}</td>
 						<td>
+						<a href="/ledgers/{data.ledger.id}/{expense.id}/edit">Edit</a>
 							<form method="POST" action="?/delete-expense" use:enhance>
 								<input type="hidden" name="id" value={expense.id} />
 								<button type="submit" class="outline secondary">Delete</button>

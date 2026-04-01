@@ -5,7 +5,6 @@ import type { NewLedger } from '$lib/types/index.js';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const ledger = await getLedger(params.id);
-
 	if (!ledger) error(404, { message: 'Ledger not found' });
 
 	return { ledger };
