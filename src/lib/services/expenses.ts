@@ -7,12 +7,8 @@ export async function getAllExpenses(ledgerId: string): Promise<Expense[]> {
 	return mockExpenses.filter((expense) => expense.ledgerId === ledgerId);
 }
 
-export async function getExpense(id: string): Promise<Expense> {
-	const expense = mockExpenses.find((expense) => expense.id === id);
-
-	if (!expense) throw notFoundError('Expense', id);
-
-	return expense;
+export async function getExpense(id: string): Promise<Expense | undefined> {
+	return mockExpenses.find((expense) => expense.id === id);
 }
 
 export async function createExpense(expense: NewExpense): Promise<Expense> {
