@@ -38,7 +38,7 @@
 				{/if}
 			</label>
 
-			<fieldset class="grid">
+			<fieldset>
 				<legend>Category</legend>
 				{#each data.categories as category}
 					<label>
@@ -56,7 +56,7 @@
 	</section>
 	<hr />
 	<section>
-		<ul class="grid">
+		<ul>
 			{#each data.categories as category}
 				<li>
 					<p>{category.name}</p>

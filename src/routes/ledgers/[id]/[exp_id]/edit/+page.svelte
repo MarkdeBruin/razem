@@ -22,7 +22,7 @@
 
 <main>
 	<form method="POST" use:enhance>
-		<fieldset class="grid">
+		<fieldset>
 			<div>
 				<input
 					type="text"
@@ -56,7 +56,7 @@
 			</div>
 		</fieldset>
 
-		<fieldset class="grid">
+		<fieldset>
 			<legend>Category</legend>
 			{#each data.categories as category}
 				<label>

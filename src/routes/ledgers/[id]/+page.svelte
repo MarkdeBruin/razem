@@ -48,7 +48,7 @@
 </header>
 
 <main>
-	<section class="grid">
+	<section>
 		<dl>
 			<dt>{data.currentUser.name}</dt>
 			<dd>{Math.round(data.currentBalance)}</dd>
@@ -65,7 +65,7 @@
 
 	<section>
 		<form method="POST" use:enhance>
-			<fieldset class="grid">
+			<fieldset>
 				<div>
 					<input
 						type="text"
@@ -98,7 +98,7 @@
 				</div>
 			</fieldset>
 
-			<fieldset class="grid">
+			<fieldset>
 				<legend>Category</legend>
 				{#each data.categories as category}
 					<label>
@@ -140,7 +140,7 @@
 		</fieldset>
 	</section>
 
-	<section class="grid">
+	<section>
 		<dl>
 			<dt>Total expenses</dt>
 			<dd>€{filteredTotal}</dd>
@@ -153,8 +153,8 @@
 		{/each}
 	</section>
 
-	<section class="overflow-auto">
-		<table class="striped">
+	<section>
+		<table>
 			<thead>
 				<tr>
 					<th scope="col">Expense</th>

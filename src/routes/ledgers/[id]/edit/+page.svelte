@@ -14,7 +14,7 @@
 
 <main>
 	<form method="POST" use:enhance>
-		<fieldset class="grid">
+		<fieldset>
 			<label>
 				Name
 				<input

@@ -26,7 +26,7 @@
 				<li>
 					<a href="ledgers/{ledger.id}">{ledger.name}</a>
 					<span> | </span>
-					<a href="ledgers/{ledger.id}/delete" class="secondary">Delete ledger</a>
+					<a href="ledgers/{ledger.id}/delete">Delete ledger</a>
 				</li>
 			{/each}
 		</ul>
