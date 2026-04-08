@@ -1,0 +1,66 @@
+@layer base {
+  html {
+    font-size: 100%;
+
+    @media (min-width: 100ch) {
+      font-size: 1.1875rem;
+    }
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-mono);
+    interpolate-size: allow-keywords;
+    max-inline-size: 100vw;
+    scroll-behavior: auto;
+    text-size-adjust: none;
+    border-color: var(--color-fg);
+  }
+
+  a {
+    text-decoration: none;
+
+    &:not([class]) {
+      color: var(--color-fg);
+      text-decoration: underline;
+      text-decoration-skip-ink: auto;
+    }
+  }
+
+  :is(a, button, input, textarea, .switch, .btn) {
+    transition: 100ms ease-out;
+    transition-property: background-color, border-color, box-shadow, outline;
+    touch-action: manipulation;
+
+    /* Keyboard navigation */
+    &:where(:focus-visible) {
+      border-radius: 0.25ch;
+      outline: var(--focus-ring-size) solid var(--focus-ring-color);
+      outline-offset: var(--focus-ring-offset);
+    }
+
+    /* Default disabled styles */
+    &:where([disabled]) {
+      cursor: not-allowed;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+
+  :where(ul, ol):where([role="list"]) {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Nicer scrollbars on Chrome 29+. This is intended for Windows machines, but */
+  /* there's not a way to target Windows using CSS, so Chrome on Mac will have */
+  /* slightly thinner scrollbars than normal. #C1C1C1 is the default color on Macs. */
+  @media screen and (-webkit-min-device-pixel-ratio:0) and (min-resolution:.001dpcm) {
+    * {
+      scrollbar-color: var(--color-fg) transparent;
+      scrollbar-width: thin;
+    }
+  }
+}

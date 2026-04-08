@@ -1,0 +1,98 @@
+@layer reset {
+	/* Box sizing rules */
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+
+	/* Remove default margin */
+	*:not(dialog) {
+		margin: 0;
+	}
+
+	p,
+	li,
+	h1,
+	h2,
+	h3,
+	h4 {
+		word-break: break-word;
+	}
+
+	html,
+	body {
+		overflow-x: clip;
+	}
+
+	html {
+		scroll-behavior: smooth;
+		scrollbar-gutter: stable;
+	}
+
+	/* Set core body defaults */
+	body {
+		min-height: 100dvh;
+		font-family: sans-serif;
+		font-size: 100%;
+		line-height: 1.375;
+		text-rendering: optimizeLegibility;
+		-moz-osx-font-smoothing: grayscale;
+		-webkit-font-smoothing: antialiased;
+		-webkit-text-size-adjust: none;
+	}
+
+	/* Make images easier to work with */
+	img {
+		display: block;
+		max-inline-size: 100%;
+	}
+
+	/* Inherit fonts for inputs and buttons */
+	input,
+	button,
+	textarea,
+	select {
+		font: inherit;
+	}
+
+	button {
+		cursor: pointer;
+	}
+
+	summary {
+		&::-webkit-details-marker {
+			display: none;
+		}
+
+		&::marker {
+			content: '';
+		}
+	}
+
+	/* Remove all animations and transitions for people that prefer not to see them */
+	@media (prefers-reduced-motion: reduce) {
+		*,
+		*::before,
+		*::after {
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			transition-duration: 0.01ms !important;
+			scroll-behavior: auto !important;
+		}
+
+		html {
+			scroll-behavior: initial;
+		}
+	}
+
+	dialog {
+		border: 0;
+		padding: 0;
+
+		&:where(:focus-visible):focus,
+		&:where(:focus-visible):active {
+			outline: 0;
+		}
+	}
+}
