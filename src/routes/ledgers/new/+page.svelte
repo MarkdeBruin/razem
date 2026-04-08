@@ -21,7 +21,7 @@
 				Blank ledger — no expenses and 50/50 split.
 			</label>
 
-			{#each data.templates as template}
+			{#each data.templates as template (template.id)}
 				<label>
 					<input type="radio" name="ledger-template" value={template.id} />
 					{template.name} <a href="/ledgers/templates/{template.id}">View template</a>

@@ -22,7 +22,7 @@
 		<h2><a href="ledgers/new">+ Add ledger</a></h2>
 	{:else}
 		<ul>
-			{#each data.ledgers as ledger}
+			{#each data.ledgers as ledger (ledger.id)}
 				<li>
 					<a href="ledgers/{ledger.id}">{ledger.name}</a>
 					<span> | </span>

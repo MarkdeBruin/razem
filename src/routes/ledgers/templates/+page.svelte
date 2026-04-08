@@ -12,7 +12,7 @@
 
 <main>
 	<ul>
-		{#each data.templates as template}
+		{#each data.templates as template (template.id)}
 			<li>
 				<a href="templates/{template.id}">{template.name}</a>
 			</li>

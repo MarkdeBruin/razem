@@ -40,7 +40,7 @@
 
 			<fieldset>
 				<legend>Category</legend>
-				{#each data.categories as category}
+				{#each data.categories as category (category.id)}
 					<label>
 						<input type="radio" name="category" value={category.id} required />
 						{category.name}
@@ -57,7 +57,7 @@
 	<hr />
 	<section>
 		<ul>
-			{#each data.categories as category}
+			{#each data.categories as category (category.id)}
 				<li>
 					<p>{category.name}</p>
 					{#if category.keywords.length > 0}

@@ -58,7 +58,7 @@
 
 		<fieldset>
 			<legend>Category</legend>
-			{#each data.categories as category}
+			{#each data.categories as category (category.id)}
 				<label>
 					<input
 						type="radio"

@@ -100,7 +100,7 @@
 
 			<fieldset>
 				<legend>Category</legend>
-				{#each data.categories as category}
+				{#each data.categories as category (category.id)}
 					<label>
 						<input
 							type="radio"
@@ -145,7 +145,7 @@
 			<dt>Total expenses</dt>
 			<dd>€{filteredTotal}</dd>
 		</dl>
-		{#each filteredByCategory as category}
+		{#each filteredByCategory as category (category.id)}
 			<dl>
 				<dt>{category.name}</dt>
 				<dd>€{Math.round(category.total)}</dd>
@@ -164,7 +164,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#each filteredExpenses as expense}
+				{#each filteredExpenses as expense (expense.id)}
 					<tr>
 						<th scope="row">{expense.description}</th>
 						<td>{expense.amount}</td>
