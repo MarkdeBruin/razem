@@ -3,6 +3,7 @@
 	import '/src/styles/_global.css';
 	import '/src/styles/_reset.css';
 	import '/src/styles/base.css';
+	import '/src/styles/layout.css';
 
 	let { children } = $props();
 </script>
