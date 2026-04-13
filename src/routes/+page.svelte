@@ -3,30 +3,19 @@
 	let { data }: PageProps = $props();
 </script>
 
-<header>
-	<nav>
-		<ul class="ledgers" role="list">
-			<li><h1>Ledgers</h1></li>
-		</ul>
-		<ul>
-			<li>
-				{#if data.ledgers.length > 0}<a href="/ledgers/new">+ Add ledger</a>{/if}
-			</li>
-			<li><a href="/settings/categories">Categories & Keywords</a></li>
-		</ul>
-	</nav>
+<header class="header--home">
+	<h1>Ledgers</h1>
+	<a class="btn" href="ledgers/new">Add</a>
 </header>
 
 <main>
 	{#if data.ledgers.length === 0}
-		<h2><a href="ledgers/new">+ Add ledger</a></h2>
+		<p>No ledgers yet.</p>
 	{:else}
-		<ul>
+		<ul class="ledgers--list">
 			{#each data.ledgers as ledger (ledger.id)}
 				<li>
 					<a href="ledgers/{ledger.id}">{ledger.name}</a>
-					<span> | </span>
-					<a href="ledgers/{ledger.id}/delete">Delete ledger</a>
 				</li>
 			{/each}
 		</ul>

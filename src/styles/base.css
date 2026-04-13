@@ -9,7 +9,7 @@
 
 	body {
 		background: var(--color-bg);
-		border-color: var(--color-fg);
+		border-color: var(--border-color);
 		color: var(--color-fg);
 		font-family: var(--font-mono);
 		text-rendering: optimizeLegibility;
@@ -19,13 +19,8 @@
 	}
 
 	a {
+		color: var(--color-fg);
 		text-decoration: none;
-
-		&:not([class]) {
-			color: var(--color-fg);
-			text-decoration: underline;
-			text-decoration-skip-ink: auto;
-		}
 	}
 
 	:is(a, button, input, textarea, .switch, .btn) {
@@ -46,12 +41,6 @@
 			opacity: 0.5;
 			pointer-events: none;
 		}
-	}
-
-	:where(ul, ol):where([role='list']) {
-		margin: 0;
-		padding: 0;
-		list-style: none;
 	}
 
 	/* Nicer scrollbars on Chrome 29+. This is intended for Windows machines, but */

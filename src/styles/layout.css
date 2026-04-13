@@ -1,11 +1,12 @@
 @layer base {
 	html {
-		padding-inline:
-		    calc(var(--main-padding) + var(--custom-safe-inset-left))
+		padding-inline: calc(var(--main-padding) + var(--custom-safe-inset-left))
 			calc(var(--main-padding) + var(--custom-safe-inset-right));
 	}
 
 	body {
+		padding-block: --custom-safe-inset-top
+			calc(var(--main-padding) * 4 + var(--custom-safe-inset-bottom));
 		inline-size: 100%;
 		margin-inline: auto;
 		max-inline-size: 80ch;

@@ -18,14 +18,17 @@
 
 	--font-mono: ui-monospace, monospace;
 
-	--l: 88%;
-	--c: 0.08;
-	--h: 117;
+	--l: 90%;
+	--c: 0.10;
+	--h: 120;
 	--color-light: oklch(var(--l) var(--c) var(--h));
-	--color-dark: oklch(from var(--color-light) calc(var(--l) - 60%) c h);
+	--color-dark: oklch(from var(--color-light) calc(var(--l) - 65%) c h);
 
 	--color-bg: light-dark(var(--color-light), var(--color-dark));
 	--color-fg: light-dark(var(--color-dark), var(--color-light));
+	
+	--color-border-solid: var(--color-fg);
+	--color-border: oklch(from (var(--color-border-solid) / 0.5));
 
 	--focus-ring-color: var(--color-fg);
 	--focus-ring-offset: 1px;

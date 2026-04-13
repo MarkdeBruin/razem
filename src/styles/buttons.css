@@ -1,0 +1,23 @@
+@layer components {
+	.btn {
+		background-color: var(--color-fg);
+		border: 1px solid transparent;
+		color: var(--color-bg);
+		cursor: pointer;
+		font-size: 1em;
+		padding: 0.65em 1.3em;
+		pointer-events: auto;
+		border-radius: 999rem;
+		text-decoration: none;
+		transition: 100ms ease-out;
+		transition-property: background-color, border, color, opacity, scale;
+
+		@media (any-hover: hover) {
+			&:hover {
+				background-color: var(--color-bg);
+				color: var(--color-fg);
+				border-color: var(--color-fg);
+			}
+		}
+	}
+}
