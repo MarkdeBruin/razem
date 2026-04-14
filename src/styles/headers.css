@@ -1,6 +1,6 @@
 @layer components {
     .header--home {
-        padding-block: calc(var(--block-space) + var(--custom-safe-inset-top)) var(--block-space);
+        padding-block: calc(var(--block-space) + var(--safe-inset-top)) var(--block-space);
         display: flex;
         justify-content: space-between;
         align-items: center;

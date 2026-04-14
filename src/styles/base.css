@@ -9,7 +9,7 @@
 
 	body {
 		background: var(--color-bg);
-		border-color: var(--border-color);
+		border-color: var(--color-border);
 		color: var(--color-fg);
 		font-family: var(--font-mono);
 		text-rendering: optimizeLegibility;
