@@ -1,7 +1,6 @@
 import { getExpense, deleteExpense } from '$lib/services/expenses.js';
-import { error, fail, redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types.js';
-import { getLedger } from '$lib/services/ledgers.js';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const expense = await getExpense(params.id);
