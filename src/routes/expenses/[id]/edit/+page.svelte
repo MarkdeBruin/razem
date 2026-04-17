@@ -4,7 +4,7 @@
 	import { matchCategory } from '$lib/utils/categories';
 
 	let { data, form }: PageProps = $props();
-	
+
 	// svelte-ignore state_referenced_locally
 	let description = $state(data.expense.description);
 	// svelte-ignore state_referenced_locally
@@ -13,9 +13,7 @@
 	let isNewKeyword = $state(false);
 	let match: string;
 
-	$effect(() => {
-		
-	});
+	$effect(() => {});
 </script>
 
 <header><h1>Edit expense</h1></header>
@@ -23,6 +21,14 @@
 <main>
 	<form method="POST" use:enhance>
 		<fieldset>
+			<select name="ledger-id">
+				{#each data.ledgers as ledger (ledger.id)}
+					<option value={ledger.id} selected={ledger.id === data.expense.ledgerId}>
+						{ledger.name}
+					</option>
+				{/each}
+				{#if form?.expenseLedgerIdMissing}<small>Ledger is required</small>{/if}
+			</select>
 			<div>
 				<input
 					type="text"

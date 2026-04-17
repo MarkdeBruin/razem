@@ -14,6 +14,7 @@
 
 <main>
 	<form method="POST" use:enhance>
+		<input type="hidden" name="ledger-id" value={data.expense.ledgerId} />
 		<button type="submit">Delete expense</button>
 	</form>
 </main>

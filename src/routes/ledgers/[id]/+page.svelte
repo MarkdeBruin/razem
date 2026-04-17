@@ -170,8 +170,8 @@
 						<td>{expense.amount}</td>
 						<td>{expense.categoryName}</td>
 						<td>
-							<a href="/ledgers/{data.ledger.id}/{expense.id}/edit">Edit</a>
-							<a href="/ledgers/{data.ledger.id}/{expense.id}/delete">Delete</a>
+							<a href="/expenses/{expense.id}/edit">Edit</a>
+							<a href="/expenses/{expense.id}/delete">Delete</a>
 						</td>
 					</tr>
 				{/each}
