@@ -4,7 +4,7 @@ import { notFoundError } from '$lib/utils/errors';
 import { mockTemplates } from '$lib/mock/data';
 
 export async function getAllLedgerTemplates(): Promise<LedgerTemplate[]> {
-	return mockTemplates;
+	return mockTemplates.toReversed();
 }
 
 export async function getLedgerTemplate(id: string): Promise<LedgerTemplate | undefined> {
