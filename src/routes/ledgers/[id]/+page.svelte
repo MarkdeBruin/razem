@@ -1,14 +1,7 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
 	import type { PageProps } from './$types';
-	import { matchCategory } from '$lib/utils/categories';
 
-	let { data, form }: PageProps = $props();
-
-	let description = $state('');
-	let selectedCategoryId = $state('');
-	let isNewKeyword = $state(false);
-	let match: string;
+	let { data }: PageProps = $props();
 
 	function formatSplit(ownerFraction: number): string {
 		const owner = Math.round(ownerFraction * 100);
@@ -64,71 +57,6 @@
 	</section>
 
 	<section>
-		<form method="POST" use:enhance>
-			<fieldset>
-				<div>
-					<input
-						type="text"
-						name="exp-description"
-						placeholder="Description"
-						required
-						autocapitalize="sentences"
-						bind:value={description}
-						oninput={() => {
-							match = matchCategory(description, data.categories);
-							if (match) {
-								selectedCategoryId = match;
-								isNewKeyword = false;
-							}
-						}}
-						onblur={() => (isNewKeyword = description.trim().length > 0 && !match)}
-					/>
-					{#if form?.expenseDescMissing}<small>Description is required</small>{/if}
-				</div>
-				<div>
-					<input
-						type="number"
-						name="exp-amount"
-						placeholder="Amount"
-						min="1"
-						inputmode="numeric"
-						required
-					/>
-					{#if form?.expenseAmountMissing}<small>Amount is required</small>{/if}
-				</div>
-			</fieldset>
-
-			<fieldset>
-				<legend>Category</legend>
-				{#each data.categories as category (category.id)}
-					<label>
-						<input
-							type="radio"
-							name="exp-category"
-							value={category.id}
-							required
-							bind:group={selectedCategoryId}
-						/>
-						{category.name}
-					</label>
-				{/each}
-			</fieldset>
-			{#if form?.categoryMissing}
-				<small>Please select a category</small>
-			{/if}
-
-			{#if isNewKeyword && selectedCategoryId}
-				<label>
-					<input type="checkbox" name="save-keyword" value="true" />
-					Auto-fill this category next time I add {description.trim()}
-				</label>
-			{/if}
-
-			<input type="submit" value="Add expense" />
-		</form>
-	</section>
-
-	<section>
 		<fieldset>
 			<legend>Filter expenses</legend>
 			<input type="radio" id="all" name="expenses" bind:group={filter} value="all" />
@@ -152,6 +80,8 @@
 			</dl>
 		{/each}
 	</section>
+
+	<a href="/expenses/new?ledger={data.ledger.id}">Add expense</a>
 
 	<section>
 		<table>

@@ -1,9 +1,8 @@
 import { getLedger } from '$lib/services/ledgers';
-import { getAllExpenses, createExpense, deleteExpense } from '$lib/services/expenses';
+import { getAllExpenses } from '$lib/services/expenses';
 import { getAllCategories } from '$lib/services/categories.js';
-import { addKeyword } from '$lib/services/categories.js';
-import { error, fail } from '@sveltejs/kit';
-import type { Actions, PageServerLoad } from './$types.js';
+import { error } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types.js';
 
 export const load: PageServerLoad = async ({ locals, parent, params }) => {
 	const ledger = await getLedger(params.id);
@@ -53,32 +52,3 @@ export const load: PageServerLoad = async ({ locals, parent, params }) => {
 		otherBalance
 	};
 };
-
-export const actions = {
-	default: async ({ locals, params, request }) => {
-		const data = await request.formData();
-
-		const description = data.get('exp-description') as string;
-		if (!description) return fail(422, { expenseDescMissing: true });
-
-		const amount = Number(data.get('exp-amount'));
-		if (!amount || amount <= 0) return fail(422, { expenseAmountMissing: true });
-
-		const categoryId = data.get('exp-category') as string;
-		if (!categoryId) return fail(422, { categoryMissing: true });
-
-		await createExpense({
-			description,
-			amount,
-			userId: locals.currentUser.id,
-			ledgerId: params.id,
-			categoryId
-    });
-		
-    if (data.get('save-keyword')) {
-      await addKeyword(description, categoryId);
-    }
-
-		return { success: true };
-	}
-} satisfies Actions;

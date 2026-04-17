@@ -19,5 +19,7 @@
 				</li>
 			{/each}
 		</ul>
+		<br />
+		<a href="/expenses/new?ledger={data.ledgers[0].id}">Add expense</a>
 	{/if}
 </main>

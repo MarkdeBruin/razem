@@ -5,23 +5,20 @@
 
 	let { data, form }: PageProps = $props();
 
-	// svelte-ignore state_referenced_locally
-	let description = $state(data.expense.description);
-	// svelte-ignore state_referenced_locally
-	let selectedCategoryId = $state(data.expense.categoryId);
-
+	let description = $state('');
+	let selectedCategoryId = $state('');
 	let isNewKeyword = $state(false);
 	let match: string;
 </script>
 
-<header><h1>Edit expense</h1></header>
+<header><h1>New expense</h1></header>
 
 <main>
 	<form method="POST" use:enhance>
 		<fieldset>
 			<select name="ledger-id">
 				{#each data.ledgers as ledger (ledger.id)}
-					<option value={ledger.id} selected={ledger.id === data.expense.ledgerId}>
+					<option value={ledger.id} selected={ledger.id === data.ledgerId}>
 						{ledger.name}
 					</option>
 				{/each}
@@ -51,7 +48,6 @@
 					type="number"
 					name="exp-amount"
 					placeholder="Amount"
-					value={data.expense.amount}
 					min="1"
 					inputmode="numeric"
 					required
@@ -85,6 +81,7 @@
 				Auto-fill this category next time I add {description.trim()}
 			</label>
 		{/if}
-		<input type="submit" value="Save changes" />
+
+		<input type="submit" value="Add expense" />
 	</form>
 </main>
