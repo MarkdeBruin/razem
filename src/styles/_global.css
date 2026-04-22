@@ -15,22 +15,55 @@
 
 	--main-padding: clamp(var(--inline-space), 4vw, calc(var(--inline-space) * 4));
 
-	--font-mono: ui-monospace, monospace;
+	--font:
+		'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial,
+		sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
 
-	--l: 90%;
-	--c: 0.10;
-	--h: 120;
-	--color-light: oklch(var(--l) var(--c) var(--h));
-	--color-dark: oklch(from var(--color-light) calc(var(--l) - 65%) c h);
-
-	--color-bg: light-dark(var(--color-light), var(--color-dark));
-	--color-fg: light-dark(var(--color-dark), var(--color-light));
+	--font-weight: 400;
+	--font-weight-medium: 500;
+	--font-weight-bold: 600;
 	
-	--color-border-solid: var(--color-fg);
-	--color-border: oklch(from (var(--color-border-solid) / 0.5));
+	@media (prefers-color-scheme: dark) {
+		--font-weight: 350;
+		--font-weight-medium: 450;
+		--font-weight-bold: 550;
+	}
+
+	--color-light: oklch(94.9% 0.011 89.7);
+	--color-dark: oklch(44.6% 0.162 26.9);
+
+	--color-bg: var(--color-light);
+	--color-fg: var(--color-dark);
+	--color-hover: oklch(from var(--color-fg) calc(l - 0.1) c h);
+
+	@media (prefers-color-scheme: dark) {
+		--color-bg: oklch(from var(--color-dark) calc(l - 0.1) c h);
+		--color-fg: var(--color-light);
+		--color-hover: oklch(from var(--color-fg) calc(l + 0.5) c h);
+	}
+	
+	--color-fg-15: oklch(from var(--color-fg) l c h / 0.15);
+	--color-fg-25: oklch(from var(--color-fg) l c h / 0.25);
+	--color-fg-50: oklch(from var(--color-fg) l c h / 0.50);
+	--color-bg-15: oklch(from var(--color-bg) l c h / 0.15);
+	--color-bg-50: oklch(from var(--color-bg) l c h / 0.50);
+	
+	--color-border: var(--color-fg);
+	--color-border-15: oklch(from var(--color-border) l c h / 0.15);
+	--color-border-50: oklch(from var(--color-border) l c h / 0.50);
+	
+	--btn-color: var(--color-fg);
+	--btn-hover-color: var(--color-hover);
+	--btn-text-color: var(--color-bg);
+	
+	--btn-secondary-color: var(--color-fg-15);
+	--btn-secondary-hover-color: var(--color-fg-25);
+	--btn-secondary-text-color: var(--color-fg);
 
 	--focus-ring-color: var(--color-fg);
 	--focus-ring-offset: 1px;
 	--focus-ring-size: 2px;
 	--focus-ring: var(--focus-ring-size) solid var(--focus-ring-color);
+
+	--scrollbar-color: oklch(from var(--color-fg) l c h / 0.33);
 }

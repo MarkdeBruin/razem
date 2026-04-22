@@ -1,4 +1,8 @@
 @layer utilities {
+	.tabular-nums {
+		font-feature-settings: 'zero' 1, 'tnum' 1;
+	}
+
 	.sr-only {
 		block-size: 1px;
 		clip-path: inset(50%);

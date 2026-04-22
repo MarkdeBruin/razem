@@ -4,22 +4,23 @@
 </script>
 
 <header class="header--home">
-	<h1>Ledgers</h1>
-	<a class="btn" href="ledgers/new">Add</a>
+	<h1>♥</h1>
 </header>
 
 <main>
+	<h1>Ledgers</h1>
+	<a class="btn--circle" href="ledgers/new" aria-label="Add ledger">+</a>
 	{#if data.ledgers.length === 0}
 		<p>No ledgers yet.</p>
 	{:else}
 		<ul class="ledgers--list">
 			{#each data.ledgers as ledger (ledger.id)}
 				<li>
-					<a href="ledgers/{ledger.id}">{ledger.name}</a>
+					<a class="tabular-nums" href="ledgers/{ledger.id}">{ledger.name}</a>
 				</li>
 			{/each}
 		</ul>
 		<br />
-		<a href="/expenses/new?ledger={data.ledgers[0].id}">Add expense</a>
+		<a class="btn" href="/expenses/new?ledger={data.ledgers[0].id}">Add expense</a>
 	{/if}
 </main>

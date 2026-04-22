@@ -9,7 +9,7 @@
 			calc(var(--main-padding) * 4 + var(--safe-inset-bottom));
 		inline-size: 100%;
 		margin-inline: auto;
-		max-inline-size: 80ch;
+		max-inline-size: 66ch;
 		min-height: 100dvh;
 	}
 }

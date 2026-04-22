@@ -4,6 +4,7 @@
 	import '/src/styles/_global.css';
 	import '/src/styles/_reset.css';
 	import '/src/styles/base.css';
+	import '/src/styles/font-face.css';
 	import '/src/styles/buttons.css';
 	import '/src/styles/headers.css';
 	import '/src/styles/layout.css';
@@ -16,6 +17,13 @@
 <svelte:head>
 	<title>Razem</title>
 	<link rel="icon" href={favicon} />
+	<link
+      rel="preload"
+      href="/assets/fonts/spaceGrotesk.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
 </svelte:head>
 
 {@render children()}
