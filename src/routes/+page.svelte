@@ -4,23 +4,46 @@
 </script>
 
 <header class="header--home">
+	<h1 class="sr-only">Home</h1>
 	<h1>♥</h1>
 </header>
 
-<main>
-	<h1>Ledgers</h1>
-	<a class="btn--circle" href="ledgers/new" aria-label="Add ledger">+</a>
-	{#if data.ledgers.length === 0}
-		<p>No ledgers yet.</p>
-	{:else}
-		<ul class="ledgers--list">
-			{#each data.ledgers as ledger (ledger.id)}
-				<li>
-					<a class="tabular-nums" href="ledgers/{ledger.id}">{ledger.name}</a>
-				</li>
-			{/each}
+<main class="stack">
+	<section class="list--section">
+		<header>
+			<h2>Ledgers</h2>
+			<a class="btn--circle" href="ledgers/new" aria-label="Add ledger">+</a>
+		</header>
+		{#if data.ledgers.length === 0}
+			<p>No ledgers yet.</p>
+		{:else}
+			<ul>
+				{#each data.ledgers as ledger (ledger.id)}
+					<li>
+						<a href="ledgers/{ledger.id}">{ledger.name}</a>
+					</li>
+				{/each}
+				<li><a class="btn--text-only" href="/ledgers">All ledgers</a></li>
+			</ul>
+		{/if}
+	</section>
+
+	{#if data.ledgers.length !== 0}
+		<a class="btn margin-block-end-half" href="/expenses/new?ledger={data.ledgers[0].id}">Add expense</a>
+	{/if}
+
+	<section class="list--section">
+		<header>
+			<h2>Settings</h2>
+		</header>
+		<ul>
+			<li>
+				<a href="/settings/account">Account</a>
+			</li>
+			<li>
+				<a href="/settings/categories">Categories &amp; Keywords</a>
+			</li>
 		</ul>
 		<br />
-		<a class="btn" href="/expenses/new?ledger={data.ledgers[0].id}">Add expense</a>
-	{/if}
+	</section>
 </main>

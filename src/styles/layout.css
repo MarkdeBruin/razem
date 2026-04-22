@@ -5,11 +5,15 @@
 	}
 
 	body {
-		padding-block: --safe-inset-top
-			calc(var(--main-padding) * 4 + var(--safe-inset-bottom));
+		padding-block: --safe-inset-top calc(var(--main-padding) * 4 + var(--safe-inset-bottom));
 		inline-size: 100%;
 		margin-inline: auto;
-		max-inline-size: 66ch;
+		max-inline-size: 56ch;
 		min-height: 100dvh;
+	}
+
+	.stack {
+		display: grid;
+		row-gap: var(--block-space);
 	}
 }

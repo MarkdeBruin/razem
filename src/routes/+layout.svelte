@@ -8,7 +8,7 @@
 	import '/src/styles/buttons.css';
 	import '/src/styles/headers.css';
 	import '/src/styles/layout.css';
-	import '/src/styles/ledgers.css';
+	import '/src/styles/lists.css';
 	import '/src/styles/utilities.css';
 
 	let { children } = $props();

@@ -1,0 +1,29 @@
+@layer base {
+	.list--section {
+		header {
+			align-items: top;
+			display: flex;
+			gap: var(--inline-space-double);
+			justify-content: space-between;
+			padding-block-end: var(--block-space-half);
+		}
+
+		header h2 {
+			font-size: var(--text-lg);
+		}
+
+		li a {
+			align-items: center;
+			display: grid;
+			border-block-start: 1px solid var(--color-border-subtle);
+			min-height: 2.8em;
+			padding-block: var(--block-space-half);
+
+			@media (any-hover: hover) {
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+}

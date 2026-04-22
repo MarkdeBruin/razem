@@ -1,8 +1,0 @@
-@layer components {
-    .ledgers--list {
-        a {
-            display: block;
-            padding-block: var(--block-space-half);
-        }
-    }
-}
