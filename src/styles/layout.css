@@ -8,7 +8,7 @@
 		padding-block: var(--safe-inset-top) calc(var(--main-padding) * 4 + var(--safe-inset-bottom));
 		inline-size: 100%;
 		margin-inline: auto;
-		max-inline-size: 56ch;
+		max-inline-size: 40ch;
 		min-height: 100dvh;
 	}
 

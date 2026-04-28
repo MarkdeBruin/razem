@@ -145,8 +145,6 @@
 	}
 
 	.tabular-nums {
-		font-feature-settings:
-			'zero' 1,
-			'tnum' 1;
+		font-feature-settings: 'tnum' 1;
 	}
 }

@@ -1,7 +1,18 @@
 @layer components {
-    .header--home {
-        padding-block: calc(var(--block-space) + var(--safe-inset-top)) var(--block-space);
-        display: grid;
-        place-content: center;
-    }
+	.header--home {
+		padding-block: calc(var(--block-space) + var(--safe-inset-top)) var(--block-space);
+		display: grid;
+		place-content: center;
+	}
+
+	.header--ledger {
+		padding-block: calc(var(--block-space) + var(--safe-inset-top)) var(--block-space);
+		display: grid;
+		place-content: center;
+
+		h1 {
+			font-size: var(--text-base);
+			font-weight: var(--font-weight-normal);
+		}
+	}
 }

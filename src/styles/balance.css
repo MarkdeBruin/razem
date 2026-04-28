@@ -1,0 +1,11 @@
+@layer base {
+    .balance--section {
+        h2 {
+            font-size: var(--text-xl);
+            margin-inline: auto;
+            max-width: fit-content;
+            padding-inline-end: var(--inline-space);
+            font-feature-settings: 'tnum' 1, 'zero' 1;
+        }
+    }
+}

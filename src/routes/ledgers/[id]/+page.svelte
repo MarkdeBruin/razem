@@ -36,81 +36,68 @@
 	);
 </script>
 
-<header>
+<header class="header--ledger">
 	<h1>{data.ledger.name}</h1>
 </header>
 
-<main>
-	<section>
-		<dl>
-			<dt>{data.currentUser.name}</dt>
-			<dd>{Math.round(data.currentBalance)}</dd>
-		</dl>
-		<dl>
-			<dt>{data.otherUser.name}</dt>
-			<dd>{Math.round(data.otherBalance)}</dd>
-		</dl>
-		<dl>
-			<dt>Split {data.owner.name}/{data.partner.name}</dt>
-			<dd>{formatSplit(data.ledger.ownerFraction)} <a href="{data.ledger.id}/edit">Edit</a></dd>
-		</dl>
+<main class="stack">
+	<section class="balance--section">
+		<h2>
+			<span class="sr-only">Your balance:</span>
+			{#if data.currentBalance > 0}&plus;{/if}{Math.round(data.currentBalance)}
+		</h2>
 	</section>
 
-	<section>
-		<fieldset>
-			<legend>Filter expenses</legend>
-			<input type="radio" id="all" name="expenses" bind:group={filter} value="all" />
-			<label for="all">All</label>
-			<input type="radio" id="current" name="expenses" bind:group={filter} value="current" />
-			<label for="current">{data.currentUser.name}’s</label>
-			<input type="radio" id="other" name="expenses" bind:group={filter} value="other" />
-			<label for="other">{data.otherUser.name}’s</label>
-		</fieldset>
+	<select class="margin-block-end-half" bind:value={filter}>
+		<option value="all">All expenses</option>
+		<option value="current">{data.currentUser.name}'s expesnes</option>
+		<option value="other">{data.otherUser.name}'s expenses</option>
+	</select>
+
+	<section class="list--section tabular-nums">
+		<header>
+			<h2>Totals</h2>
+		</header>
+		<ul>
+			{#each filteredByCategory as category (category.id)}
+				{#if category.total > 0}
+					<li>
+						<p>
+							<span>{category.name}</span>
+							<span>{Math.round(category.total)}</span>
+						</p>
+					</li>
+				{/if}
+			{/each}
+			<li>
+				<p>
+					<strong>Sum</strong>
+					<strong>{filteredTotal}</strong>
+				</p>
+			</li>
+		</ul>
 	</section>
 
-	<section>
-		<dl>
-			<dt>Total expenses</dt>
-			<dd>€{filteredTotal}</dd>
-		</dl>
-		{#each filteredByCategory as category (category.id)}
-			<dl>
-				<dt>{category.name}</dt>
-				<dd>€{Math.round(category.total)}</dd>
-			</dl>
-		{/each}
-	</section>
+	<a class="btn margin-block-end-half" href="/expenses/new?ledger={data.ledger.id}">Add expense</a>
 
-	<a href="/expenses/new?ledger={data.ledger.id}">Add expense</a>
-
-	<section>
-		<table>
-			<thead>
-				<tr>
-					<th scope="col">Expense</th>
-					<th scope="col">Amount (€)</th>
-					<th scope="col">Category</th>
-					<th scope="col">Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				{#each filteredExpenses as expense (expense.id)}
-					<tr>
-						<th scope="row">{expense.description}</th>
-						<td>{expense.amount}</td>
-						<td>{expense.categoryName}</td>
-						<td>
-							<a href="/expenses/{expense.id}/edit">Edit</a>
-							<a href="/expenses/{expense.id}/delete">Delete</a>
-						</td>
-					</tr>
-				{/each}
-			</tbody>
-		</table>
+	<section class="list--section tabular-nums">
+		<header>
+			<h2>Expenses</h2>
+		</header>
+		<ul>
+			{#each filteredExpenses as expense (expense.id)}
+				<li>
+					<a href="/expenses/{expense.id}/edit">
+						<span>{expense.description}</span>
+						<span>{expense.amount}</span>
+					</a>
+				</li>
+			{/each}
+		</ul>
 	</section>
 </main>
 
-<footer>
+<footer hidden>
 	<ul>
 		<li><a href="/ledgers/{data.ledger.id}/delete">Delete ledger</a></li>
 		<li><a href="/ledgers/templates/new?from={data.ledger.id}">Create template from ledger</a></li>
