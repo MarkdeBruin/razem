@@ -64,7 +64,7 @@
 	--btn-secondary-text-color: var(--color-fg);
 
 	--focus-ring-color: var(--color-fg);
-	--focus-ring-offset: 1px;
+	--focus-ring-offset: 2px;
 	--focus-ring-size: 2px;
 	--focus-ring: var(--focus-ring-size) solid var(--focus-ring-color);
 

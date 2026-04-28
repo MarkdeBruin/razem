@@ -16,6 +16,12 @@
 		text-transform: uppercase;
 		transition: 100ms ease-out;
 		transition-property: background-color, border, color, opacity, scale;
+		user-select: none;
+		-webkit-tap-highlight-color: transparent;
+
+		&:active {
+			scale: 0.98;
+		}
 
 		@media (any-hover: hover) {
 			&:hover {
@@ -42,6 +48,12 @@
 		text-transform: uppercase;
 		transition: 100ms ease-out;
 		transition-property: background-color, border, color, opacity, scale;
+		user-select: none;
+		-webkit-tap-highlight-color: transparent;
+		
+		&:active {
+			scale: 0.90;
+		}
 
 		@media (any-hover: hover) {
 			&:hover {
