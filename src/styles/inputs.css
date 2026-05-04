@@ -21,6 +21,12 @@
 			border-color: var(--color-border);
 			outline: 0;
 		}
+
+		@media (any-hover: hover) {
+			&:hover {
+				color: var(--color-hover);
+			}
+		}
 	}
 
 	select {

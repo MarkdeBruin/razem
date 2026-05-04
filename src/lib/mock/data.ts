@@ -6,8 +6,8 @@ export const mockUsers: User[] = [
 ];
 
 export const mockLedgers: Ledger[] = [
-	{ id: 'ledger-1', name: 'March 2026', ownerFraction: 0.5 },
-	{ id: 'ledger-2', name: 'February 2026', ownerFraction: 0.5 }
+	{ id: 'ledger-1', name: 'February 2026', ownerFraction: 0.5 },
+	{ id: 'ledger-2', name: 'March 2026', ownerFraction: 0.5 }
 ];
 
 export const mockExpenses: Expense[] = [

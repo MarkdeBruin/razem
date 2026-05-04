@@ -19,6 +19,10 @@
 		h1 {
 			font-size: var(--text-base);
 			font-weight: var(--font-weight-normal);
+			text-align: center;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 	}
 }

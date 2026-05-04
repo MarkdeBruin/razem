@@ -17,7 +17,7 @@
 			border-block-start: 1px solid var(--color-border-subtle);
 			display: flex;
 			justify-content: space-between;
-			gap: var(var(--inline-space-double));
+			gap: var(--inline-space-double);
 			min-height: 2.8em;
 			padding-block: var(--block-space-half);
 		}
@@ -25,6 +25,7 @@
 		@media (any-hover: hover) {
 			a:hover {
 				text-decoration: underline;
+				color: var(--color-hover);
 			}
 		}
 	}

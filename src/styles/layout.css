@@ -5,7 +5,7 @@
 	}
 
 	body {
-		padding-block: var(--safe-inset-top) calc(var(--main-padding) * 4 + var(--safe-inset-bottom));
+		padding-block: var(--safe-inset-top) calc(var(--main-padding) + var(--safe-inset-bottom));
 		inline-size: 100%;
 		margin-inline: auto;
 		max-inline-size: 40ch;
