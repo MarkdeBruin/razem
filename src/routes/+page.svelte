@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
+	import { PlusIcon } from "phosphor-svelte"
 	let { data }: PageProps = $props();
 </script>
 
@@ -12,7 +13,7 @@
 	<section class="list--section">
 		<header>
 			<h2>Ledgers</h2>
-			<a class="btn--circle" href="ledgers/new" aria-label="Add ledger">+</a>
+			<a class="btn--circle" href="ledgers/new" aria-label="Add ledger"><PlusIcon /></a>
 		</header>
 		{#if data.ledgers.length === 0}
 			<p>No ledgers yet.</p>
@@ -29,7 +30,9 @@
 	</section>
 
 	{#if data.ledgers.length !== 0}
-		<a class="btn margin-block-end-half" href="/expenses/new?ledger={data.ledgers[0].id}">Add expense</a>
+		<a class="btn margin-block-end-half" href="/expenses/new?ledger={data.ledgers[0].id}"
+			>Add expense</a
+		>
 	{/if}
 
 	<section class="list--section">

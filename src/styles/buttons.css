@@ -31,7 +31,7 @@
 	}
 
 	.btn--circle {
-		--btn-size: 1.1em;
+		--btn-size: 2.2em;
 		aspect-ratio: 1;
 		background-color: var(--btn-secondary-color);
 		block-size: var(--btn-size);
@@ -39,13 +39,10 @@
 		color: var(--btn-secondary-text-color);
 		cursor: pointer;
 		display: grid;
-		font-size: 200%;
 		font-weight: var(--font-weight-light);
 		inline-size: var(--btn-size);
 		place-content: center;
 		pointer-events: auto;
-		text-decoration: none;
-		text-transform: uppercase;
 		transition: 100ms ease-out;
 		transition-property: background-color, border, color, opacity, scale;
 		user-select: none;

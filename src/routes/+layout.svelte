@@ -12,6 +12,8 @@
 	import '/src/styles/lists.css';
 	import '/src/styles/utilities.css';
 
+	import { IconContext } from 'phosphor-svelte';
+
 	let { children } = $props();
 </script>
 
@@ -19,12 +21,14 @@
 	<title>Razem</title>
 	<link rel="icon" href={favicon} />
 	<link
-      rel="preload"
-      href="/assets/fonts/spaceGrotesk.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
+		rel="preload"
+		href="/assets/fonts/spaceGrotesk.woff2"
+		as="font"
+		type="font/woff2"
+		crossorigin="anonymous"
+	/>
 </svelte:head>
 
-{@render children()}
+<IconContext values={{ color: 'currentColor', size: 24, mirrored: false, weight: 'bold' }}>
+	{@render children()}
+</IconContext>
