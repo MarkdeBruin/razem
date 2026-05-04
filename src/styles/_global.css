@@ -57,11 +57,14 @@
 	--btn-color: var(--color-fg);
 	--btn-hover-color: var(--color-hover);
 	--btn-text-color: var(--color-bg);
-	--btn-text: 0.9rem;
+	--btn-text: 0.8935rem;
 
 	--btn-secondary-color: oklch(from var(--color-fg) l c h / 0.15);
 	--btn-secondary-hover-color: oklch(from var(--color-fg) l c h / 0.25);
 	--btn-secondary-text-color: var(--color-fg);
+
+
+	--input-color-bg: oklch(from var(--color-fg) l c h / 0.15);
 
 	--focus-ring-color: var(--color-fg);
 	--focus-ring-offset: 2px;

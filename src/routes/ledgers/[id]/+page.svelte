@@ -52,7 +52,7 @@
 
 	<select class="margin-block-end-half" bind:value={filter}>
 		<option value="all">All expenses</option>
-		<option value="current">{data.currentUser.name}'s expesnes</option>
+		<option value="current">{data.currentUser.name}'s expenses</option>
 		<option value="other">{data.otherUser.name}'s expenses</option>
 	</select>
 

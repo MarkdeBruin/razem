@@ -32,7 +32,6 @@
 
 		/* Keyboard navigation */
 		&:where(:focus-visible) {
-			border-radius: 0.25ch;
 			outline: var(--focus-ring-size) solid var(--focus-ring-color);
 			outline-offset: var(--focus-ring-offset);
 		}

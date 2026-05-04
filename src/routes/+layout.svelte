@@ -5,6 +5,7 @@
 	import '/src/styles/_reset.css';
 	import '/src/styles/base.css';
 	import '/src/styles/font-face.css';
+	import '/src/styles/inputs.css'
 	import '/src/styles/balance.css';
 	import '/src/styles/buttons.css';
 	import '/src/styles/headers.css';

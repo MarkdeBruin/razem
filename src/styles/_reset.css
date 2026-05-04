@@ -104,6 +104,13 @@
 		letter-spacing: inherit;
 		word-spacing: inherit;
 		color: currentColor;
+		cursor: pointer;
+		border: none;
+		box-shadow: none;
+
+		&:focus {
+			box-shadow: none;
+		}
 	}
 
 	:where(textarea, select, input) {

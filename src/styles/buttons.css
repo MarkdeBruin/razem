@@ -8,6 +8,7 @@
 		display: grid;
 		font-size: var(--btn-text);
 		letter-spacing: var(--uppercase-spacing);
+		min-height: 2.4rem;
 		padding: 0.6em 1.2em;
 		pointer-events: auto;
 		border-radius: 0.5em;
