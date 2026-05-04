@@ -29,6 +29,6 @@
 	/>
 </svelte:head>
 
-<IconContext values={{ color: 'currentColor', size: 24, mirrored: false, weight: 'bold' }}>
+<IconContext values={{ color: 'currentColor', size: '1.2em', mirrored: false, weight: 'bold' }}>
 	{@render children()}
 </IconContext>

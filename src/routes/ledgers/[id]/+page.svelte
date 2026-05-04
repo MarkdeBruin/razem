@@ -1,14 +1,8 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
+	import { ArrowLeftIcon, FadersHorizontalIcon } from 'phosphor-svelte';
 
 	let { data }: PageProps = $props();
-
-	function formatSplit(ownerFraction: number): string {
-		const owner = Math.round(ownerFraction * 100);
-		const partner = 100 - owner;
-
-		return `${owner}/${partner}`;
-	}
 
 	let filter = $state<'all' | 'current' | 'other'>('all');
 
@@ -38,7 +32,9 @@
 </script>
 
 <header class="header--ledger">
+	<a href="/" class="btn--circle" aria-label="Go home"><ArrowLeftIcon /></a>
 	<h1>{data.ledger.name}</h1>
+	<a href="{data.ledger.id}/edit" class="btn--circle" aria-label="Edit ledger"><FadersHorizontalIcon /></a>
 </header>
 
 <main class="stack">

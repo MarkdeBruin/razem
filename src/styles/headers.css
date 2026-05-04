@@ -6,9 +6,15 @@
 	}
 
 	.header--ledger {
-		padding-block: calc(var(--block-space) + var(--safe-inset-top)) var(--block-space);
-		display: grid;
-		place-content: center;
+		align-items: center;
+		background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg) 50%, transparent 100%);
+		padding-block: calc(var(--block-space) + var(--safe-inset-top)) var(--block-space-double);
+		display: flex;
+		gap: var(--inline-space);
+		justify-content: space-between;
+		margin-block-end: calc(var(--block-space) * -1);
+		position: sticky;
+		top: 0;
 
 		h1 {
 			font-size: var(--text-base);
