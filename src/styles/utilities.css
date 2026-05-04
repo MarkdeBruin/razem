@@ -144,6 +144,10 @@
 		white-space: nowrap;
 	}
 
+	.visibility-hidden {
+		visibility: hidden;
+	}
+
 	.tabular-nums {
 		font-feature-settings: 'tnum' 1;
 	}

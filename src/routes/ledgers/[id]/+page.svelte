@@ -26,13 +26,14 @@
 	);
 
 	const filteredByCategory = $derived(
-		data.categories.map((category) => ({
-			...category,
-			total: filteredExpenses
-				.filter((expense) => expense.categoryId === category.id)
-				.reduce((sum, expense) => sum + expense.amount, 0)
-		}))
-		//.filter((category) => category.total > 0) // only show categories with expenses
+		data.categories
+			.map((category) => ({
+				...category,
+				total: filteredExpenses
+					.filter((expense) => expense.categoryId === category.id)
+					.reduce((sum, expense) => sum + expense.amount, 0)
+			}))
+			.filter((category) => category.total > 0) // only show categories with expenses
 	);
 </script>
 
@@ -44,7 +45,12 @@
 	<section class="balance--section">
 		<h2>
 			<span class="sr-only">Your balance:</span>
-			{#if data.currentBalance > 0}&plus;{/if}{Math.round(data.currentBalance)}
+			{(data.currentBalance > 0 ? '+' : '') + Math.round(data.currentBalance)}<span
+				class="visibility-hidden"
+				aria-hidden="true"
+			>
+				{data.currentBalance > 0 ? '+' : '-'}
+			</span>
 		</h2>
 	</section>
 
@@ -60,14 +66,12 @@
 		</header>
 		<ul>
 			{#each filteredByCategory as category (category.id)}
-				{#if category.total > 0}
-					<li>
-						<p>
-							<span>{category.name}</span>
-							<span>{Math.round(category.total)}</span>
-						</p>
-					</li>
-				{/if}
+				<li>
+					<p>
+						<span>{category.name}</span>
+						<span>{Math.round(category.total)}</span>
+					</p>
+				</li>
 			{/each}
 			<li>
 				<p>
