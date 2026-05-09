@@ -40,7 +40,7 @@
 
 	/*When updating also update CSS background-image SVG fills*/
 	--color-light: oklch(94.9% 0.011 89.7);
-	--color-dark: oklch(44.6% 0.162 26.9);
+	--color-dark: oklch(42.6% 0.162 26.9);
 	
 
 	--color-bg: var(--color-light);
@@ -48,7 +48,7 @@
 	--color-hover: oklch(from var(--color-fg) calc(l - 0.1) c h);
 
 	@media (prefers-color-scheme: dark) {
-		--color-bg: oklch(from var(--color-dark) calc(l - 0.1) c h);
+		--color-bg: var(--color-dark);
 		--color-fg: var(--color-light);
 		--color-hover: oklch(from var(--color-fg) calc(l + 0.5) c h);
 	}

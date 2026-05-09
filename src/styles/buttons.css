@@ -21,7 +21,7 @@
 		-webkit-tap-highlight-color: transparent;
 
 		&:active {
-			scale: 0.98;
+			scale: 0.99;
 		}
 
 		@media (any-hover: hover) {
@@ -50,7 +50,7 @@
 		-webkit-tap-highlight-color: transparent;
 		
 		&:active {
-			scale: 0.90;
+			scale: 0.94;
 		}
 
 		@media (any-hover: hover) {
