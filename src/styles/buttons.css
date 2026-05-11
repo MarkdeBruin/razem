@@ -23,6 +23,10 @@
 		&:active {
 			scale: 0.99;
 		}
+		&:disabled {
+			cursor: not-allowed;
+			scale: 1 !important;
+		}
 
 		@media (any-hover: hover) {
 			&:hover {
@@ -48,7 +52,7 @@
 		transition-property: background-color, border, color, opacity, scale;
 		user-select: none;
 		-webkit-tap-highlight-color: transparent;
-		
+
 		&:active {
 			scale: 0.94;
 		}
