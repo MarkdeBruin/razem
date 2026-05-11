@@ -5,7 +5,7 @@
 	import '/src/styles/_reset.css';
 	import '/src/styles/base.css';
 	import '/src/styles/font-face.css';
-	import '/src/styles/inputs.css'
+	import '/src/styles/inputs.css';
 	import '/src/styles/balance.css';
 	import '/src/styles/buttons.css';
 	import '/src/styles/headers.css';
@@ -28,6 +28,8 @@
 		type="font/woff2"
 		crossorigin="anonymous"
 	/>
+	<meta name="theme-color" content="oklch(94.9% 0.011 89.7)" media="(prefers-color-scheme: light)" />
+	<meta name="theme-color" content="oklch(42.6% 0.162 26.9)" media="(prefers-color-scheme: dark)" />
 </svelte:head>
 
 <IconContext values={{ color: 'currentColor', size: '1.2em', mirrored: false, weight: 'bold' }}>
