@@ -2,6 +2,14 @@
 	form {
 		display: grid;
 		gap: var(--block-space);
+
+		h1, h2, h3, h4, h5, h6 {
+		font-size: var(--text-lg);
+		}
+
+		.btn {
+			margin-block-start: var(--block-space-half);
+		}
 	}
 
 	label:not(:has(input[type='checkbox'], input[type='radio'])) {

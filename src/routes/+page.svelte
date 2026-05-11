@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
-	import { PlusIcon } from "phosphor-svelte"
+	import { PlusIcon } from 'phosphor-svelte';
 	let { data }: PageProps = $props();
 </script>
 
@@ -30,9 +30,9 @@
 	</section>
 
 	{#if data.ledgers.length !== 0}
-		<a class="btn margin-block-end-half" href="/expenses/new?ledger={data.ledgers[0].id}"
-			>Add expense</a
-		>
+		<a class="btn margin-block-end-half" href="/expenses/new?ledger={data.ledgers[0].id}&from=home">
+			Add expense
+		</a>
 	{/if}
 
 	<section class="list--section">

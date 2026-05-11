@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import type { PageProps } from './$types';
 	import { matchCategory } from '$lib/utils/categories';
+	import { ArrowLeftIcon } from 'phosphor-svelte';
 
 	let { data, form }: PageProps = $props();
 
@@ -11,11 +12,17 @@
 	let match: string;
 </script>
 
-<header><h1>New expense</h1></header>
+<header class="header-sticky--back">
+	<a href={data.backUrl} class="btn--circle" aria-label="Back">
+		<ArrowLeftIcon />
+	</a>
+</header>
 
 <main>
 	<form method="POST" use:enhance>
-		<fieldset>
+	<h1>New Expense</h1>
+		<label for="ledger-id">
+		    Ledger
 			<select name="ledger-id">
 				{#each data.ledgers as ledger (ledger.id)}
 					<option value={ledger.id} selected={ledger.id === data.ledgerId}>
@@ -23,54 +30,41 @@
 					</option>
 				{/each}
 			</select>
-			{#if form?.expenseLedgerIdMissing}<small>Ledger is required</small>{/if}
-			<div>
-				<input
-					type="text"
-					name="exp-description"
-					placeholder="Description"
-					required
-					autocapitalize="sentences"
-					bind:value={description}
-					oninput={() => {
-						match = matchCategory(description, data.categories);
-						if (match) {
-							selectedCategoryId = match;
-							isNewKeyword = false;
-						}
-					}}
-					onblur={() => (isNewKeyword = description.trim().length > 0 && !match)}
-				/>
-				{#if form?.expenseDescMissing}<small>Description is required</small>{/if}
-			</div>
-			<div>
-				<input
-					type="number"
-					name="exp-amount"
-					placeholder="Amount"
-					min="1"
-					inputmode="numeric"
-					required
-				/>
-				{#if form?.expenseAmountMissing}<small>Amount is required</small>{/if}
-			</div>
-		</fieldset>
+		</label>
+		{#if form?.expenseLedgerIdMissing}<small>Ledger is required</small>{/if}
+		<label>
+			Description
+			<input
+				type="text"
+				name="exp-description"
+				required
+				autocapitalize="sentences"
+				bind:value={description}
+				oninput={() => {
+					match = matchCategory(description, data.categories);
+					if (match) {
+						selectedCategoryId = match;
+						isNewKeyword = false;
+					}
+				}}
+				onblur={() => (isNewKeyword = description.trim().length > 0 && !match)}
+			/>
+			{#if form?.expenseDescMissing}<small>Description is required</small>{/if}
+		</label>
+		<label>
+			Amount
+			<input type="number" name="exp-amount" min="1" inputmode="numeric" required />
+			{#if form?.expenseAmountMissing}<small>Amount is required</small>{/if}
+		</label>
 
-		<fieldset>
-			<legend>Category</legend>
-			{#each data.categories as category (category.id)}
-				<label>
-					<input
-						type="radio"
-						name="exp-category"
-						value={category.id}
-						required
-						bind:group={selectedCategoryId}
-					/>
-					{category.name}
-				</label>
-			{/each}
-		</fieldset>
+		<label>
+			Category
+			<select name="exp-category" required bind:value={selectedCategoryId}>
+				{#each data.categories as category (category.id)}
+					<option value={category.id}>{category.name}</option>
+				{/each}
+			</select>
+		</label>
 		{#if form?.categoryMissing}
 			<small>Please select a category</small>
 		{/if}
@@ -78,10 +72,10 @@
 		{#if isNewKeyword && selectedCategoryId}
 			<label>
 				<input type="checkbox" name="save-keyword" value="true" />
-				Auto-fill this category next time I add {description.trim()}
+				Auto-fill this category next time I add “{description.trim()}”
 			</label>
 		{/if}
 
-		<input type="submit" value="Add expense" />
+		<input class="btn" type="submit" value="Add expense" />
 	</form>
 </main>

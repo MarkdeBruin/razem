@@ -7,10 +7,14 @@ import { createExpense } from '$lib/services/expenses';
 
 export const load: PageServerLoad = async ({ url }) => {
 	const ledgers = await getAllLedgers();
-	const ledgerId = url.searchParams.get('ledger') ?? ledgers[0]?.id;
-	const categories = await getAllCategories();
+  const categories = await getAllCategories();
 
-	return { ledgers, ledgerId, categories };
+  const ledgerId = url.searchParams.get('ledger') ?? ledgers[0]?.id;
+  const from = url.searchParams.get('from')
+
+  const backUrl = from === 'ledger' ? `/ledgers/${ledgerId}` : '/'
+
+	return { ledgers, ledgerId, categories, backUrl };
 };
 
 export const actions = {

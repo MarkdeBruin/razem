@@ -86,7 +86,7 @@
 		</ul>
 	</section>
 
-	<a class="btn margin-block-end-half" href="/expenses/new?ledger={data.ledger.id}">Add expense</a>
+	<a class="btn margin-block-end-half" href="/expenses/new?ledger={data.ledger.id}&from=ledger">Add expense</a>
 
 	<section class="list--section tabular-nums">
 		<header>

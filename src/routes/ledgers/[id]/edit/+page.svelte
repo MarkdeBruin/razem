@@ -82,6 +82,6 @@
 				}}
 			/>
 		</label>
-		<input class="btn margin-block-start-half" type="submit" value="Save changes" />
+		<input class="btn" type="submit" value="Save changes" />
 	</form>
 </main>
