@@ -1,15 +1,22 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { PageProps } from './$types';
+	import { ArrowLeftIcon } from 'phosphor-svelte';
+
 	let { data, form }: PageProps = $props();
 </script>
 
-<header><h1>New ledger</h1></header>
+<header class="header-sticky--back">
+	<a href="/" class="btn--circle" aria-label="Back home">
+		<ArrowLeftIcon />
+	</a>
+</header>
 
 <main>
 	<form method="POST" use:enhance>
+		<h1>New ledger</h1>
 		<label>
-			<span>Ledger name</span>
+			Name
 			<input type="text" name="ledger-name" required autocapitalize="sentences" />
 			{#if form?.nameMissing}<small>Name is required</small>{/if}
 		</label>
@@ -29,12 +36,6 @@
 			{/each}
 		</fieldset>
 
-		<hr />
-
-		<small>You can add new templates via ledger detail pages.</small>
-
-		<hr />
-
-		<input type="submit" value="Add ledger" />
+		<input class="btn" type="submit" value="Add ledger" />
 	</form>
 </main>
