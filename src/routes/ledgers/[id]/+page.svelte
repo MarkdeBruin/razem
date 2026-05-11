@@ -77,16 +77,20 @@
 					</p>
 				</li>
 			{/each}
-			<li>
-				<p>
-					<strong>Sum</strong>
-					<strong>{filteredTotal}</strong>
-				</p>
-			</li>
+			{#if filteredByCategory.length > 1}
+				<li>
+					<p>
+						<strong>Sum</strong>
+						<strong>{filteredTotal}</strong>
+					</p>
+				</li>
+			{/if}
 		</ul>
 	</section>
 
-	<a class="btn margin-block-end-half" href="/expenses/new?ledger={data.ledger.id}&from=ledger">Add expense</a>
+	<a class="btn margin-block-end-half" href="/expenses/new?ledger={data.ledger.id}&from=ledger"
+		>Add expense</a
+	>
 
 	<section class="list--section tabular-nums">
 		<header>
