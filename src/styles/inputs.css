@@ -43,6 +43,7 @@
 
 		&:focus {
 			border-color: var(--color-border);
+			color: var(--color-hover);
 			outline: 0;
 		}
 

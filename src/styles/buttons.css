@@ -56,6 +56,7 @@
 		@media (any-hover: hover) {
 			&:hover {
 				background-color: var(--btn-secondary-hover-color);
+				color: var(--color-hover);
 			}
 		}
 	}
