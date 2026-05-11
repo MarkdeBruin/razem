@@ -21,7 +21,7 @@
 	</a>
 </header>
 
-<main class="margin-block-start">
+<main>
 	<form method="POST" use:enhance>
 		<h2>Edit ledger</h2>
 		<label>

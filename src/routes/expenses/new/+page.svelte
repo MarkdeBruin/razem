@@ -20,9 +20,9 @@
 
 <main>
 	<form method="POST" use:enhance>
-	<h1>New Expense</h1>
+		<h1>New Expense</h1>
 		<label for="ledger-id">
-		    Ledger
+			Ledger
 			<select name="ledger-id">
 				{#each data.ledgers as ledger (ledger.id)}
 					<option value={ledger.id} selected={ledger.id === data.ledgerId}>
@@ -64,10 +64,10 @@
 					<option value={category.id}>{category.name}</option>
 				{/each}
 			</select>
+			{#if form?.categoryMissing}
+				<small>Please select a category</small>
+			{/if}
 		</label>
-		{#if form?.categoryMissing}
-			<small>Please select a category</small>
-		{/if}
 
 		{#if isNewKeyword && selectedCategoryId}
 			<label>
