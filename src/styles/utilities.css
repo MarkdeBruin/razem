@@ -148,6 +148,12 @@
 		visibility: hidden;
 	}
 
+	.hide-no-js {
+		@media (scripting: none) {
+		display: none;
+		}
+	}
+
 	.tabular-nums {
 		font-feature-settings: 'tnum' 1;
 	}

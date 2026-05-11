@@ -58,7 +58,7 @@
 		</h2>
 	</section>
 
-	<select class="margin-block-end-half" bind:value={filter}>
+	<select class="margin-block-end-half hide-no-js" bind:value={filter}>
 		<option value="all">All expenses</option>
 		<option value="current">{data.currentUser.name}'s expenses</option>
 		<option value="other">{data.otherUser.name}'s expenses</option>

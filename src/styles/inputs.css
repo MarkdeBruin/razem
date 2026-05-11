@@ -30,6 +30,11 @@
 		}
 	}
 
+	input[type='checkbox'],
+	input[type='radio'] {
+		font-size: var(--text-xl);
+	}
+
 	select {
 		appearance: none;
 		-webkit-appearance: none;

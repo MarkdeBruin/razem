@@ -18,7 +18,7 @@ export const actions = {
 		if (!name) return fail(422, { nameMissing: true });
 
 		const ownerFraction = Number(data.get('owner-percentage')) / 100;
-		if (!ownerFraction) return fail(422, { fractionMissing: true });
+		if (ownerFraction === null || ownerFraction === undefined) return fail(422, { fractionMissing: true });
 
 		const updatedLedger: NewLedger = {
 			name: name,
