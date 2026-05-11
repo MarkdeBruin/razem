@@ -31,7 +31,7 @@
 	);
 </script>
 
-<header class="header--ledger">
+<header class="header-sticky--ledger">
 	<a href="/" class="btn--circle" aria-label="Go home"><ArrowLeftIcon /></a>
 	<h1>{data.ledger.name}</h1>
 	<a href="{data.ledger.id}/edit" class="btn--circle" aria-label="Edit ledger"
