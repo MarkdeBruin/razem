@@ -34,19 +34,27 @@
 <header class="header--ledger">
 	<a href="/" class="btn--circle" aria-label="Go home"><ArrowLeftIcon /></a>
 	<h1>{data.ledger.name}</h1>
-	<a href="{data.ledger.id}/edit" class="btn--circle" aria-label="Edit ledger"><FadersHorizontalIcon /></a>
+	<a href="{data.ledger.id}/edit" class="btn--circle" aria-label="Edit ledger"
+		><FadersHorizontalIcon /></a
+	>
 </header>
 
 <main class="stack">
 	<section class="balance--section">
-		<h2>
-			<span class="sr-only">Your balance:</span>
+		<div>
 			{(data.currentBalance > 0 ? '+' : '') + Math.round(data.currentBalance)}<span
 				class="visibility-hidden"
 				aria-hidden="true"
 			>
 				{data.currentBalance > 0 ? '+' : '-'}
 			</span>
+		</div>
+
+		<h2>
+			{data.currentBalance > 0
+				? `${data.otherUser.name} owes you`
+				: `You owe ${data.otherUser.name}`}
+			<span class="sr-only">{Math.abs(Math.round(data.currentBalance))}</span>
 		</h2>
 	</section>
 

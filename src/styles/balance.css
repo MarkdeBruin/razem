@@ -1,10 +1,23 @@
 @layer base {
-    .balance--section {
-        h2 {
-            font-size: var(--text-xl);
-            margin-inline: auto;
-            max-width: fit-content;
-            font-feature-settings: 'tnum' 1, 'zero' 1;
-        }
-    }
+	.balance--section {
+		padding-block-end: var(--block-space-half);
+		text-align: center;
+
+		h2 {
+			color: var(--color-fg-subtle);
+			font-size: var(--text-small);
+			font-weight: var(--font-weight-normal);
+		}
+
+		div {
+			font-size: var(--text-xl);
+			font-weight: var(--font-weight-bold);
+			line-height: 1;
+			margin-inline: auto;
+			max-width: fit-content;
+			font-feature-settings:
+				'tnum' 1,
+				'zero' 1;
+		}
+	}
 }
