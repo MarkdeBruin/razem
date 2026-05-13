@@ -1,6 +1,6 @@
 @layer components {
-	header[class*='header--'] {
-		padding-block: calc(var(--block-space) + var(--safe-inset-top)) var(--block-space);
+	header[class*='header-'] {
+		padding-block: calc(var(--block-space) + var(--safe-inset-top)) var(--block-space-double);
 	}
 
 	header[class*='header-sticky--'] {
@@ -9,7 +9,6 @@
 		display: flex;
 		gap: var(--inline-space);
 		margin-block-end: calc(var(--block-space) * -1);
-		padding-block: calc(var(--block-space) + var(--safe-inset-top)) var(--block-space-double);
 		position: sticky;
 		top: 0;
 
@@ -30,5 +29,9 @@
 	.header--home {
 		display: grid;
 		place-content: center;
+
+		h1 {
+			line-height: 2.2rem;
+		}
 	}
 }

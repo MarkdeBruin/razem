@@ -46,7 +46,7 @@
 				class="visibility-hidden"
 				aria-hidden="true"
 			>
-				{data.currentBalance > 0 ? '+' : '-'}
+				{data.currentBalance === 0 ? '' : data.currentBalance > 0 ? '+' : '-'}
 			</span>
 		</div>
 
