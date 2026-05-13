@@ -45,6 +45,6 @@ export const actions = {
       await addKeyword(description, categoryId);
     }
 
-    redirect(303, `/ledgers/${ledgerId}`);
+    redirect(303, `/ledgers/${ledgerId}#exp`);
 	}
 } satisfies Actions;

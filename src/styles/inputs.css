@@ -132,14 +132,16 @@
 	}
 
 	input[type='radio'] {
-		--icon-size: 0.9rem;
+		--icon-size: 0.85rem;
 
 		appearance: none;
 		-moz-appearance: none;
 		-webkit-appearance: none;
 		border: 2px solid var(--color-border-input-icon);
 		border-radius: 100%;
+		display: grid;
 		height: var(--icon-size);
+		place-content: center;
 		width: var(--icon-size);
 
 		&:checked {
@@ -150,12 +152,8 @@
 				content: '';
 				background-color: var(--color-fg);
 				border-radius: 100%;
-				position: absolute;
-				width: calc(var(--icon-size) / 2);
-				height: calc(var(--icon-size) / 2);
-				top: 50%;
-				left: 50%;
-				transform: translate(-50%, -50%);
+				width: calc(var(--icon-size) / 2.5);
+				height: calc(var(--icon-size) / 2.5);
 			}
 		}
 	}

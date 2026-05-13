@@ -92,7 +92,7 @@
 		>Add expense</a
 	>
 
-	<section class="list--section tabular-nums">
+	<section id="exp" class="list--section tabular-nums">
 		<header>
 			<h2>Expenses</h2>
 		</header>
