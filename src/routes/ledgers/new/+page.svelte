@@ -25,13 +25,13 @@
 			<legend>Choose a template</legend>
 			<label>
 				<input type="radio" id="blank" name="ledger-template" value="blank" checked />
-				Blank ledger — no expenses and 50/50 split.
+				Blank ledger
 			</label>
 
 			{#each data.templates as template (template.id)}
 				<label>
 					<input type="radio" name="ledger-template" value={template.id} />
-					{template.name} <a href="/ledgers/templates/{template.id}">View template</a>
+					{template.name}
 				</label>
 			{/each}
 		</fieldset>

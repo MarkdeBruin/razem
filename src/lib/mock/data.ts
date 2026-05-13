@@ -23,7 +23,7 @@ export const mockExpenses: Expense[] = [
 export const mockTemplates: LedgerTemplate[] = [
 	{
 		id: 'template-1',
-		name: 'Monthly',
+		name: 'Monthly expenses',
 		ownerFraction: 0.5,
 		expenses: [
 			{ id: 'texp-1', description: 'Rent', amount: 1200, userId: 'user-1', categoryId: 'cat-1' },
