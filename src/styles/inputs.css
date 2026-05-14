@@ -144,6 +144,10 @@
 		place-content: center;
 		width: var(--icon-size);
 
+		&:focus-visible {
+			outline: 0;
+		}
+
 		&:checked {
 			position: relative;
 			border-color: var(--color-border);
