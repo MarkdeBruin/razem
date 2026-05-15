@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
 	import { ArrowLeftIcon, FadersHorizontalIcon } from 'phosphor-svelte';
+	import SelectWrapper from '$lib/components/SelectWrapper.svelte';
 
 	let { data }: PageProps = $props();
 
@@ -58,11 +59,16 @@
 		</h2>
 	</section>
 
-	<select class="margin-block-end-half hide-no-js" bind:value={filter}>
-		<option value="all">All expenses</option>
-		<option value="current">{data.currentUser.name}'s expenses</option>
-		<option value="other">{data.otherUser.name}'s expenses</option>
-	</select>
+	<label class="margin-block-end-half hide-no-js">
+		<span class="sr-only">Filter expenses</span>
+		<SelectWrapper>
+			<select bind:value={filter}>
+				<option value="all">All expenses</option>
+				<option value="current">{data.currentUser.name}'s expenses</option>
+				<option value="other">{data.otherUser.name}'s expenses</option>
+			</select>
+		</SelectWrapper>
+	</label>
 
 	<section class="list--section tabular-nums">
 		<header>

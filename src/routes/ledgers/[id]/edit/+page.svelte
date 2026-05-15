@@ -61,7 +61,7 @@
 			{#if form?.fractionMissing}<small>{data.owner.name}’s share is required</small>{/if}
 		</label>
 		<label>
-			<span>{data.partner.name}’s share</span>
+			{data.partner.name}’s share
 			<input
 				type="number"
 				min="0"

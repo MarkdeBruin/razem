@@ -3,6 +3,7 @@
 	import type { PageProps } from './$types';
 	import { matchCategory } from '$lib/utils/categories';
 	import { ArrowLeftIcon, TrashSimpleIcon } from 'phosphor-svelte';
+	import SelectWrapper from '$lib/components/SelectWrapper.svelte';
 
 	let { data, form }: PageProps = $props();
 
@@ -27,16 +28,18 @@
 
 <main>
 	<form method="POST" use:enhance>
-	<h2>Edit expense</h2>
+		<h2>Edit expense</h2>
 		<label for="ledger-id">
 			Ledger
-			<select name="ledger-id">
-				{#each data.ledgers as ledger (ledger.id)}
-					<option value={ledger.id} selected={ledger.id === data.expense.ledgerId}>
-						{ledger.name}
-					</option>
-				{/each}
-			</select>
+			<SelectWrapper>
+				<select name="ledger-id">
+					{#each data.ledgers as ledger (ledger.id)}
+						<option value={ledger.id} selected={ledger.id === data.expense.ledgerId}>
+							{ledger.name}
+						</option>
+					{/each}
+				</select>
+			</SelectWrapper>
 			{#if form?.expenseLedgerIdMissing}<small>Ledger is required</small>{/if}
 		</label>
 		<label>
@@ -75,11 +78,13 @@
 
 		<label>
 			Category
-			<select name="exp-category" required bind:value={selectedCategoryId}>
-				{#each data.categories as category (category.id)}
-					<option value={category.id}>{category.name}</option>
-				{/each}
-			</select>
+			<SelectWrapper>
+				<select name="exp-category" required bind:value={selectedCategoryId}>
+					{#each data.categories as category (category.id)}
+						<option value={category.id}>{category.name}</option>
+					{/each}
+				</select>
+			</SelectWrapper>
 			{#if form?.categoryMissing}
 				<small>Please select a category</small>
 			{/if}
