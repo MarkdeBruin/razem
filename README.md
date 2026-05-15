@@ -1,3 +1,3 @@
-# razem
-SvelteKit app for splitting expenses with your partner 🚧 WIP 🚧
+# Expense tracking for couples 🚧 W.I.P. 🚧 
+
 
