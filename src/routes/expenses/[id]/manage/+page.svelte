@@ -97,7 +97,7 @@
 	</form>
 
 	<form class="margin-block-start-double" method="POST" action="?/delete" use:enhance>
-		<h2>Delete ledger</h2>
+		<h2>Delete expense</h2>
 		<label>
 			<input type="checkbox" name="confirm-delete" required />
 			Permanently delete expense
