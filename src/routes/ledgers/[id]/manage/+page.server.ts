@@ -1,4 +1,4 @@
-import { getLedger, updateLedger } from '$lib/services/ledgers';
+import { getLedger, updateLedger, deleteLedger } from '$lib/services/ledgers';
 import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types.js';
 import type { NewLedger } from '$lib/types/index.js';
@@ -11,7 +11,7 @@ export const load: PageServerLoad = async ({ params }) => {
 };
 
 export const actions = {
-	default: async ({ params, request }) => {
+	update: async ({ params, request }) => {
 		const data = await request.formData();
 
 		const name = data.get('ledger-name') as string;
@@ -28,5 +28,9 @@ export const actions = {
 		await updateLedger(params.id, updatedLedger);
 
 		redirect(303, `/ledgers/${params.id}`);
+  },
+  delete: async ({ params }) => {
+		await deleteLedger(params.id);
+		redirect(303, '/');
 	}
 } satisfies Actions;

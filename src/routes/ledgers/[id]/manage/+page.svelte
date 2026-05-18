@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { PageProps } from './$types';
-	import { ArrowLeftIcon, TrashSimpleIcon } from 'phosphor-svelte';
+	import { ArrowLeftIcon } from 'phosphor-svelte';
 
 	let { data, form }: PageProps = $props();
 
@@ -15,14 +15,11 @@
 	<a href="/ledgers/{data.ledger.id}" class="btn--circle" aria-label="Back to ledger">
 		<ArrowLeftIcon />
 	</a>
-	<h1><span class="sr-only">Edit</span> {data.ledger.name}</h1>
-	<a href="/ledgers/{data.ledger.id}/delete" class="btn--circle" aria-label="Delete ledger">
-		<TrashSimpleIcon />
-	</a>
+	<h1>Manage <span>{data.ledger.name}</span></h1>
 </header>
 
-<main>
-	<form method="POST" use:enhance>
+<main class="stack">
+	<form method="POST" action="?/update" use:enhance>
 		<h2>Edit ledger</h2>
 		<label>
 			Name
@@ -83,5 +80,16 @@
 			/>
 		</label>
 		<input class="btn" type="submit" value="Save changes" />
+	</form>
+	<form class="margin-block-start-double" method="POST" action="?/delete" use:enhance>
+		<header>
+			<h2>Delete ledger</h2>
+			<p class="text-subtle">And all expenses</p>
+		</header>
+		<label>
+			<input type="checkbox" name="confirm-delete" required />
+			Permanently delete ledger
+		</label>
+		<button class="btn" type="submit">Delete ledger</button>
 	</form>
 </main>

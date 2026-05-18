@@ -135,6 +135,10 @@
 		margin-block: auto;
 	}
 
+	.text-subtle {
+		color: var(--color-fg-subtle);
+	}
+
 	.sr-only {
 		block-size: 1px;
 		clip-path: inset(50%);
@@ -150,7 +154,7 @@
 
 	.hide-no-js {
 		@media (scripting: none) {
-		display: none;
+			display: none;
 		}
 	}
 
