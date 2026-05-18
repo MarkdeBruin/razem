@@ -32,8 +32,8 @@ export const load: PageServerLoad = async ({ locals, parent, params }) => {
 	const ownerShare = totalExpenses * ledger.ownerFraction;
 	const partnerShare = totalExpenses * (1 - ledger.ownerFraction);
 
-	const ownerBalance = ownerTotal - ownerShare;
-	const partnerBalance = partnerTotal - partnerShare;
+	const ownerBalance = Math.round(ownerTotal - ownerShare);
+	const partnerBalance = Math.round(partnerTotal - partnerShare);
 	const currentBalance = locals.currentUser.id === owner.id ? ownerBalance : partnerBalance;
   const otherBalance = locals.currentUser.id === owner.id ? partnerBalance : ownerBalance;
 

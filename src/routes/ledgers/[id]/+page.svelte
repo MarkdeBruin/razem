@@ -43,7 +43,7 @@
 <main class="stack">
 	<section class="balance--section">
 		<div>
-			{(data.currentBalance > 0 ? '+' : '') + Math.round(data.currentBalance)}<span
+			{(data.currentBalance > 0 ? '+' : '') + data.currentBalance}<span
 				class="visibility-hidden"
 				aria-hidden="true"
 			>
@@ -55,7 +55,7 @@
 			{data.currentBalance > 0
 				? `${data.otherUser.name} owes you`
 				: `You owe ${data.otherUser.name}`}
-			<span class="sr-only">{Math.abs(Math.round(data.currentBalance))}</span>
+			<span class="sr-only">{Math.abs(data.currentBalance)}</span>
 		</h2>
 	</section>
 
