@@ -25,7 +25,7 @@
 						<a href="ledgers/{ledger.id}">{ledger.name}</a>
 					</li>
 				{/each}
-				<li><a class="btn--text-only" href="/ledgers">All ledgers</a></li>
+				<li><a href="/ledgers">All ledgers</a></li>
 			</ul>
 		{:else}
 			<EmptyState
