@@ -21,6 +21,11 @@
 		text-decoration: none;
 	}
 
+	strong,
+	b {
+		font-weight: var(--font-weight-bold);
+	}
+
 	:is(img, svg) {
 		user-select: none;
 	}

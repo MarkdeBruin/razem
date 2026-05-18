@@ -15,7 +15,7 @@
 	<a href="/ledgers/{data.ledger.id}" class="btn--circle" aria-label="Back to ledger">
 		<ArrowLeftIcon />
 	</a>
-	<h1>{data.ledger.name}</h1>
+	<h1><span class="sr-only">Edit</span> {data.ledger.name}</h1>
 	<a href="/ledgers/{data.ledger.id}/delete" class="btn--circle" aria-label="Delete ledger">
 		<TrashSimpleIcon />
 	</a>
