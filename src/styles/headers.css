@@ -1,6 +1,7 @@
 @layer components {
 	header[class*='header-'] {
 		padding-block: calc(var(--block-space) + var(--safe-inset-top)) var(--block-space-double);
+		z-index: 10;
 	}
 
 	header[class*='header-sticky--'] {
