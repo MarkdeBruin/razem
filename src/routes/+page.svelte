@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
 	import { PlusIcon } from 'phosphor-svelte';
+	import EmptyState from '$lib/components/EmptyState.svelte';
 	let { data }: PageProps = $props();
 </script>
 
@@ -13,11 +14,11 @@
 	<section class="list--section">
 		<header>
 			<h2>Ledgers</h2>
-			<a class="btn--circle" href="ledgers/new" aria-label="Add ledger"><PlusIcon /></a>
+			{#if data.ledgers.length}
+				<a class="btn--circle" href="ledgers/new" aria-label="Add ledger"><PlusIcon /></a>
+			{/if}
 		</header>
-		{#if data.ledgers.length === 0}
-			<p>No ledgers yet.</p>
-		{:else}
+		{#if data.ledgers.length}
 			<ul>
 				{#each data.ledgers as ledger (ledger.id)}
 					<li>
@@ -26,10 +27,17 @@
 				{/each}
 				<li><a class="btn--text-only" href="/ledgers">All ledgers</a></li>
 			</ul>
+		{:else}
+			<EmptyState
+				title="Get started"
+				subtitle="Add a ledger to start tracking your shared expenses."
+				cta="Add ledger"
+				url="ledgers/new"
+			/>
 		{/if}
 	</section>
 
-	{#if data.ledgers.length !== 0}
+	{#if data.ledgers.length}
 		<a class="btn margin-block-end-half" href="/expenses/new?ledger={data.ledgers[0].id}&from=home">
 			Add expense
 		</a>

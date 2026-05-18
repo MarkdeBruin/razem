@@ -1,9 +1,11 @@
 <script lang="ts">
-	let { children } = $props();
+	import type { Snippet } from 'svelte';
 	import { CaretUpDownIcon } from 'phosphor-svelte';
+	
+	let { children }: { children: Snippet } = $props();
 </script>
 
-<div class="select-wrapper">
+<select-wrapper>
 	{@render children()}
 	<CaretUpDownIcon />
-</div>
+</select-wrapper>

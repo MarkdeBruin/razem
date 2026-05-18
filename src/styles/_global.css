@@ -19,8 +19,9 @@
 		'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial,
 		sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
 
-	--text-base: 1rem;
 	--text-small: 0.8rem;
+	--text-base: 1rem;
+	--text-md: 1.2rem;
 	--text-lg: 1.6rem;
 	--text-xl: 3.2rem;
 

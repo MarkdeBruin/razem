@@ -183,7 +183,7 @@
 		outline-offset: var(--focus-ring-offset);
 	}
 
-	.select-wrapper {
+	select-wrapper {
 		display: grid;
 		position: relative;
 

@@ -2,6 +2,7 @@
 	import type { PageProps } from './$types';
 	import { ArrowLeftIcon, FadersHorizontalIcon } from 'phosphor-svelte';
 	import SelectWrapper from '$lib/components/SelectWrapper.svelte';
+	import EmptyState from '$lib/components/EmptyState.svelte';
 
 	let { data }: PageProps = $props();
 
@@ -70,49 +71,58 @@
 		</SelectWrapper>
 	</label>
 
-	<section class="list--section tabular-nums">
-		<header>
-			<h2>Totals</h2>
-		</header>
-		<ul>
-			{#each filteredByCategory as category (category.id)}
-				<li>
-					<p>
-						<span>{category.name}</span>
-						<span>{Math.round(category.total)}</span>
-					</p>
-				</li>
-			{/each}
-			{#if filteredByCategory.length > 1}
-				<li>
-					<p>
-						<strong>Sum</strong>
-						<strong>{filteredTotal}</strong>
-					</p>
-				</li>
-			{/if}
-		</ul>
-	</section>
+	{#if !filteredExpenses.length}
+		<EmptyState
+			title="Nothing here yet"
+			subtitle="Expenses and their totals will show here."
+			cta="Add expense"
+			url="/expenses/new?ledger={data.ledger.id}&from=ledger"
+		/>
+	{:else}
+		<section class="list--section tabular-nums">
+			<header>
+				<h2>Totals</h2>
+			</header>
+			<ul>
+				{#each filteredByCategory as category (category.id)}
+					<li>
+						<p>
+							<span>{category.name}</span>
+							<span>{Math.round(category.total)}</span>
+						</p>
+					</li>
+				{/each}
+				{#if filteredByCategory.length > 1}
+					<li>
+						<p>
+							<strong>Sum</strong>
+							<strong>{filteredTotal}</strong>
+						</p>
+					</li>
+				{/if}
+			</ul>
+		</section>
 
-	<a class="btn margin-block-end-half" href="/expenses/new?ledger={data.ledger.id}&from=ledger"
-		>Add expense</a
-	>
+		<a class="btn margin-block-end-half" href="/expenses/new?ledger={data.ledger.id}&from=ledger"
+			>Add expense</a
+		>
 
-	<section id="exp" class="list--section tabular-nums">
-		<header>
-			<h2>Expenses</h2>
-		</header>
-		<ul>
-			{#each filteredExpenses as expense (expense.id)}
-				<li>
-					<a href="/expenses/{expense.id}/edit">
-						<span>{expense.description}</span>
-						<span>{expense.amount}</span>
-					</a>
-				</li>
-			{/each}
-		</ul>
-	</section>
+		<section id="exp" class="list--section tabular-nums">
+			<header>
+				<h2>Expenses</h2>
+			</header>
+			<ul>
+				{#each filteredExpenses as expense (expense.id)}
+					<li>
+						<a href="/expenses/{expense.id}/edit">
+							<span>{expense.description}</span>
+							<span>{expense.amount}</span>
+						</a>
+					</li>
+				{/each}
+			</ul>
+		</section>
+	{/if}
 </main>
 
 <footer hidden>
