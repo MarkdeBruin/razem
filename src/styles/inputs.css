@@ -41,13 +41,8 @@
 		gap: var(--inline-space-half);
 	}
 
-	label:has(input[type='checkbox']) {
-		cursor: pointer;
-		display: flex;
-		gap: var(--inline-space);
-	}
-
-	label:has(input[type='radio']) {
+	label:has(input[type='radio'], input[type='checkbox']) {
+		align-items: center;
 		background-color: var(--input-color);
 		border: 2px solid transparent;
 		border-radius: 0.5em;
@@ -59,8 +54,8 @@
 		min-width: 0;
 		padding-inline: var(--inline-space);
 		padding-block: 0.25em;
-		align-items: center;
 		pointer-events: auto;
+		user-select: none;
 
 		&:focus {
 			border-color: var(--color-border);
@@ -76,12 +71,12 @@
 		}
 	}
 
-	label:has(input[type='radio']:focus-visible) {
+	label:has(input[type='radio']:focus-visible, input[type='checkbox']:focus-visible) {
 		outline: var(--focus-ring-size) solid var(--focus-ring-color);
 		outline-offset: var(--focus-ring-offset);
 	}
 
-	label:has(input[type='radio']:checked) {
+	label:has(input[type='radio']:checked, input[type='checkbox']:checked) {
 		border-color: var(--color-border);
 	}
 
@@ -127,21 +122,22 @@
 	}
 
 	input[type='checkbox'],
-	input[type='radio'] {
+	input[type='radio'],
+	input[type='submit'] {
 		cursor: pointer;
 	}
 
+	input[type='checkbox'],
 	input[type='radio'] {
-		--icon-size: 0.85rem;
+		--icon-size: 1rem;
 
 		appearance: none;
 		-moz-appearance: none;
 		-webkit-appearance: none;
 		border: 2px solid var(--color-border-input-icon);
-		border-radius: 100%;
-		display: grid;
+		flex-shrink: 0;
 		height: var(--icon-size);
-		place-content: center;
+		position: relative;
 		width: var(--icon-size);
 
 		&:focus-visible {
@@ -149,16 +145,36 @@
 		}
 
 		&:checked {
-			position: relative;
 			border-color: var(--color-border);
 
-			&:after {
+			&::after {
 				content: '';
+				position: absolute;
 				background-color: var(--color-fg);
-				border-radius: 100%;
-				width: calc(var(--icon-size) / 2.5);
-				height: calc(var(--icon-size) / 2.5);
+				border: 3px solid var(--input-color);
+				inset: 0;
+				
 			}
+		}
+	}
+
+	input[type='checkbox'] {
+		--icon-size: 1rem;
+		border-radius: 0.25em;
+		corner-shape: squircle;
+		margin-inline-end: calc(var(--inline-space-half) / 2);
+
+		&:checked::after {
+			border-radius: 0.2em;
+		}
+	}
+
+	input[type='radio'] {
+		--icon-size: 0.85rem;
+		border-radius: 100%;
+
+		&:checked::after {
+			border-radius: 100%;
 		}
 	}
 
@@ -184,7 +200,7 @@
 		-webkit-appearance: none;
 		-moz-appearance: none;
 		cursor: pointer;
-		padding-inline-end: calc(var(--inline-space) * 3)
+		padding-inline-end: calc(var(--inline-space) * 3);
 	}
 
 	input::-webkit-outer-spin-button,

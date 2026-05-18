@@ -77,7 +77,7 @@
 		{#if isNewKeyword && selectedCategoryId}
 			<label>
 				<input type="checkbox" name="save-keyword" value="true" />
-				Auto-fill this category next time I add “{description.trim()}”
+				 Auto-fill category in future
 			</label>
 		{/if}
 
