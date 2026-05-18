@@ -1,4 +1,4 @@
-import { getExpense, updateExpense } from '$lib/services/expenses';
+import { getExpense, updateExpense, deleteExpense } from '$lib/services/expenses';
 import { getAllCategories } from '$lib/services/categories.js';
 import { addKeyword } from '$lib/services/categories.js';
 import { error, fail, redirect } from '@sveltejs/kit';
@@ -17,7 +17,7 @@ export const load: PageServerLoad = async ({ params }) => {
 };
 
 export const actions = {
-	default: async ({ locals, params, request }) => {
+	update: async ({ locals, params, request }) => {
 		const data = await request.formData();
 
 		const ledgerId = data.get('ledger-id') as string;
@@ -46,6 +46,14 @@ export const actions = {
 			await addKeyword(description, categoryId);
 		}
 
+		redirect(303, `/ledgers/${ledgerId}`);
+  },
+  delete: async ({ params, request }) => {
+    const data = await request.formData();
+    const ledgerId = data.get('ledger-id') as string;
+    
+    await deleteExpense(params.id);
+		
 		redirect(303, `/ledgers/${ledgerId}`);
 	}
 } satisfies Actions;

@@ -20,14 +20,11 @@
 	<a href="/ledgers/{data.expense.ledgerId}" class="btn--circle" aria-label="Back to ledger">
 		<ArrowLeftIcon />
 	</a>
-	<h1>{data.expense.description}</h1>
-	<a href="/expenses/{data.expense.id}/delete" class="btn--circle" aria-label="Delete ledger">
-		<TrashSimpleIcon />
-	</a>
+	<h1>Manage {data.expense.description}</h1>
 </header>
 
-<main>
-	<form method="POST" use:enhance>
+<main class="stack">
+	<form method="POST" action="?/update" use:enhance>
 		<h2>Edit expense</h2>
 		<label for="ledger-id">
 			Ledger
@@ -97,5 +94,15 @@
 			</label>
 		{/if}
 		<input class="btn" type="submit" value="Save changes" />
+	</form>
+
+	<form class="margin-block-start-double" method="POST" action="?/delete" use:enhance>
+		<h2>Delete ledger</h2>
+		<label>
+			<input type="checkbox" name="confirm-delete" required />
+			Permanently delete expense
+		</label>
+		<input type="hidden" name="ledger-id" value={data.expense.ledgerId} />
+		<button class="btn" type="submit">Delete expense</button>
 	</form>
 </main>
