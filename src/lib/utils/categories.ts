@@ -1,9 +1,7 @@
-import type { Category } from "$lib/types";
+import type { Keyword } from "$lib/types";
 
-export function matchCategory(input: string, categories: Category[]): string {
-		const normalised = input.toLowerCase();
-		const match = categories.find((category) =>
-			category.keywords.some((keyword) => normalised.includes(keyword.toLowerCase()))
-		);
-		return match?.id ?? '';
-	}
+export function matchCategory(input: string, keywords: Keyword[]): string {
+    const normalised = input.toLowerCase();
+    const match = keywords.find((keyword) => normalised.includes(keyword.name.toLowerCase()));
+    return match?.categoryId ?? '';
+}

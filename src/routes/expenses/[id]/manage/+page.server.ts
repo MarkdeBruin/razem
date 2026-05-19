@@ -1,5 +1,5 @@
 import { getExpense, updateExpense, deleteExpense } from '$lib/services/expenses';
-import { getAllCategories } from '$lib/services/categories.js';
+import { getAllCategories, getAllKeywords } from '$lib/services/categories.js';
 import { createKeyword } from '$lib/services/categories.js';
 import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types.js';
@@ -11,9 +11,10 @@ export const load: PageServerLoad = async ({ params }) => {
 	if (!expense) error(404, { message: 'Expense not found' });
 
 	const ledgers = await getAllLedgers();
-	const categories = await getAllCategories();
+  const categories = await getAllCategories();
+	const keywords = await getAllKeywords();
 
-	return { expense, ledgers, categories };
+	return { expense, ledgers, categories, keywords };
 };
 
 export const actions = {

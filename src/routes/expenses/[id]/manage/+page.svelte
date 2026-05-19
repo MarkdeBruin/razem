@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import type { PageProps } from './$types';
 	import { matchCategory } from '$lib/utils/categories';
-	import { ArrowLeftIcon, TrashSimpleIcon } from 'phosphor-svelte';
+	import { ArrowLeftIcon } from 'phosphor-svelte';
 	import SelectWrapper from '$lib/components/SelectWrapper.svelte';
 
 	let { data, form }: PageProps = $props();
@@ -49,7 +49,7 @@
 				autocapitalize="sentences"
 				bind:value={description}
 				oninput={() => {
-					match = matchCategory(description, data.categories);
+					match = matchCategory(description, data.keywords);
 					if (match) {
 						selectedCategoryId = match;
 						isNewKeyword = false;

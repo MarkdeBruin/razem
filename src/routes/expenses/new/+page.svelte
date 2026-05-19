@@ -44,7 +44,7 @@
 				autocapitalize="sentences"
 				bind:value={description}
 				oninput={() => {
-					match = matchCategory(description, data.categories);
+					match = matchCategory(description, data.keywords);
 					if (match) {
 						selectedCategoryId = match;
 						isNewKeyword = false;

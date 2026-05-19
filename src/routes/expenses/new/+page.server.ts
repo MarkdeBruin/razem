@@ -1,5 +1,5 @@
 import { getAllLedgers } from '$lib/services/ledgers';
-import { getAllCategories } from '$lib/services/categories.js';
+import { getAllCategories, getAllKeywords } from '$lib/services/categories.js';
 import { createKeyword } from '$lib/services/categories.js';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
@@ -8,14 +8,15 @@ import type { NewExpense, NewKeyword } from '$lib/types';
 
 export const load: PageServerLoad = async ({ url }) => {
 	const ledgers = await getAllLedgers();
-	const categories = await getAllCategories();
+  const categories = await getAllCategories();
+	const keywords = await getAllKeywords();
 
 	const ledgerId = url.searchParams.get('ledger') ?? ledgers[0]?.id;
 	const from = url.searchParams.get('from');
 
 	const backUrl = from === 'ledger' ? `/ledgers/${ledgerId}` : '/';
 
-	return { ledgers, ledgerId, categories, backUrl };
+	return { ledgers, ledgerId, categories, keywords, backUrl };
 };
 
 export const actions = {
