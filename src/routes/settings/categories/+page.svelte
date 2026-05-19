@@ -65,7 +65,7 @@
 			{#if categoryKeywords.length > 0}
 				<ul>
 					{#each categoryKeywords as keyword (keyword.id)}
-						<li><p>{keyword.name}</p></li>
+						<li><a href="/settings/keywords/{keyword.id}">{keyword.name}</a></li>
 					{/each}
 				</ul>
 			{/if}

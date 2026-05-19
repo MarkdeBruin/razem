@@ -1,0 +1,69 @@
+<script lang="ts">
+	import { enhance } from '$app/forms';
+	import type { PageProps } from './$types';
+	import { ArrowLeftIcon } from 'phosphor-svelte';
+	import SelectWrapper from '$lib/components/SelectWrapper.svelte';
+	import { matchCategory } from '$lib/utils/categories';
+
+	let { data, form }: PageProps = $props();
+	// svelte-ignore state_referenced_locally
+	let keyword = $state(data.keyword.name);
+	let isDuplicate = $state(false);
+</script>
+
+<header class="header-sticky--back">
+	<a href="/settings/categories" class="btn--circle" aria-label="Back to categories">
+		<ArrowLeftIcon />
+	</a>
+	<h1>Manage {data.keyword.name}</h1>
+</header>
+
+<main class="stack">
+	<form method="POST" action="?/update" use:enhance>
+		<h2>Edit keyword</h2>
+		<label>
+			Keyword
+			<input
+				type="text"
+				name="keyword"
+				required
+				autocapitalize="sentences"
+				bind:value={keyword}
+				oninput={() => {
+					if (keyword === data.keyword.name) {
+						isDuplicate = false;
+						return;
+					}
+					isDuplicate = !!matchCategory(keyword, data.keywords);
+				}}
+			/>
+			{#if isDuplicate}
+				<small>"{keyword}" already exists</small>
+			{/if}
+			{#if form?.keywordMissing}<small>Keyword is required</small>{/if}
+		</label>
+		<label>
+			Category
+			<SelectWrapper>
+				<select name="category" required>
+					{#each data.categories as category (category.id)}
+						<option value={category.id} selected={category.id === data.keyword.categoryId}>
+							{category.name}
+						</option>
+					{/each}
+				</select>
+			</SelectWrapper>
+			{#if form?.categoryMissing}<small>Please select a category</small>{/if}
+		</label>
+		<input class="btn" type="submit" value="Save changes" disabled={isDuplicate} />
+	</form>
+
+	<form class="margin-block-start-double" method="POST" action="?/delete" use:enhance>
+		<h2>Delete keyword</h2>
+		<label>
+			<input type="checkbox" name="confirm-delete" required />
+			Permanently delete keyword
+		</label>
+		<button class="btn" type="submit">Delete keyword</button>
+	</form>
+</main>
