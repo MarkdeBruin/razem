@@ -39,3 +39,19 @@ export const mockCategories: Category[] = [
   { id: 'cat-3', name: 'Leisure', keywords: ['Dinner', 'Lunch', 'Trip', 'Date'] },
 	{ id: 'cat-4', name: 'Other', keywords: ['Bol', 'Amazon'] },
 ];
+
+export const mockKeywords = [
+	{ id: 'kw-1', name: 'Rent', categoryId: 'cat-1' },
+	{ id: 'kw-2', name: 'Eneco', categoryId: 'cat-1' },
+	{ id: 'kw-3', name: 'Water', categoryId: 'cat-1' },
+	{ id: 'kw-4', name: 'Internet', categoryId: 'cat-1' },
+	{ id: 'kw-5', name: 'AH', categoryId: 'cat-2' },
+	{ id: 'kw-6', name: 'Lidl', categoryId: 'cat-2' },
+	{ id: 'kw-7', name: 'Oriental', categoryId: 'cat-2' },
+	{ id: 'kw-8', name: 'Dinner', categoryId: 'cat-3' },
+	{ id: 'kw-9', name: 'Lunch', categoryId: 'cat-3' },
+	{ id: 'kw-10', name: 'Trip', categoryId: 'cat-3' },
+	{ id: 'kw-11', name: 'Date', categoryId: 'cat-3' },
+	{ id: 'kw-12', name: 'Bol', categoryId: 'cat-4' },
+	{ id: 'kw-13', name: 'Amazon', categoryId: 'cat-4' }
+];

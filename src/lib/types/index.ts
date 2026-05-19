@@ -18,7 +18,7 @@ export type Expense = {
 	amount: number;
 	userId: string;
 	ledgerId: string;
-  categoryId: string;
+	categoryId: string;
 };
 export type NewExpense = Omit<Expense, 'id'>;
 
@@ -34,7 +34,15 @@ export type LedgerTemplate = {
 export type NewLedgerTemplate = Omit<LedgerTemplate, 'id'>;
 
 export type Category = {
+	id: string;
+	name: string;
+	keywords: string[];
+};
+
+export type Keyword = {
   id: string;
   name: string;
-  keywords: string[];
+  categoryId: string;
 }
+
+export type NewKeyword = Omit<Keyword, 'id'>;

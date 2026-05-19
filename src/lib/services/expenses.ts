@@ -1,6 +1,5 @@
 import type { Expense, NewExpense } from '$lib/types';
 import { notFoundError } from '$lib/utils/errors';
-
 import { mockExpenses } from '$lib/mock/data';
 
 export async function getAllExpenses(ledgerId: string): Promise<Expense[]> {

@@ -1,9 +1,9 @@
 import { getExpense, updateExpense, deleteExpense } from '$lib/services/expenses';
 import { getAllCategories } from '$lib/services/categories.js';
-import { addKeyword } from '$lib/services/categories.js';
+import { createKeyword } from '$lib/services/categories.js';
 import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types.js';
-import type { NewExpense } from '$lib/types/index.js';
+import type { NewExpense, NewKeyword } from '$lib/types/index.js';
 import { getAllLedgers } from '$lib/services/ledgers.js';
 
 export const load: PageServerLoad = async ({ params }) => {
@@ -23,8 +23,9 @@ export const actions = {
 		const ledgerId = data.get('ledger-id') as string;
 		if (!ledgerId) return fail(422, { expenseLedgerIdMissing: true });
 
-		const description = data.get('exp-description') as string;
-		if (!description) return fail(422, { expenseDescMissing: true });
+		const rawDescription = data.get('exp-description') as string;
+    if (!rawDescription) return fail(422, { expenseDescMissing: true });
+		const description = rawDescription.trim().replace(/^\w/, c => c.toUpperCase())
 
 		const amount = Number(data.get('exp-amount'));
 		if (!amount || amount <= 0) return fail(422, { expenseAmountMissing: true });
@@ -43,7 +44,8 @@ export const actions = {
 		updateExpense(params.id, updatedExpense);
 
 		if (data.get('save-keyword')) {
-			await addKeyword(description, categoryId);
+			const newKeyword: NewKeyword = { name: description, categoryId };
+			await createKeyword(newKeyword);
 		}
 
 		redirect(303, `/ledgers/${ledgerId}`);
