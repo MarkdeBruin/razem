@@ -1,10 +1,12 @@
-import { getAllCategories, getAllKeywords, addKeyword } from '$lib/services/categories';
+import { getAllCategories, getAllKeywords, createKeyword } from '$lib/services/categories';
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
+import type { NewKeyword } from '$lib/types';
 
 export const load: PageServerLoad = async () => {
 	return {
-		categories: await getAllCategories()
+    categories: await getAllCategories(),
+		keywords: await getAllKeywords()
 	};
 };
 
@@ -18,8 +20,11 @@ export const actions = {
 		const categoryId = data.get('category') as string;
     if (!categoryId) return fail(422, { categoryMissing: true });
 		
-    const keyword = rawKeyword.trim().replace(/^\w/, c => c.toUpperCase());
-    await addKeyword(keyword, categoryId);
+    const name = rawKeyword.trim().replace(/^\w/, c => c.toUpperCase());
+    
+    const newKeyword: NewKeyword = { name, categoryId };
+		await createKeyword(newKeyword);
+
 		
 		return { success: true };
 	}

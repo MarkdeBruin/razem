@@ -36,7 +36,6 @@ export type NewLedgerTemplate = Omit<LedgerTemplate, 'id'>;
 export type Category = {
 	id: string;
 	name: string;
-	keywords: string[];
 };
 
 export type Keyword = {

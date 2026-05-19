@@ -11,13 +11,62 @@ export const mockLedgers: Ledger[] = [
 ];
 
 export const mockExpenses: Expense[] = [
-	{ id: 'exp-1', description: 'Rent', amount: 1200, userId: 'user-1', ledgerId: 'ledger-1', categoryId: 'cat-1' },
-	{ id: 'exp-2', description: 'Groceries', amount: 150, userId: 'user-1', ledgerId: 'ledger-1', categoryId: 'cat-1' },
-	{ id: 'exp-3', description: 'Utilities', amount: 80, userId: 'user-1', ledgerId: 'ledger-1', categoryId: 'cat-1' },
-	{ id: 'exp-4', description: 'Internet', amount: 40, userId: 'user-1', ledgerId: 'ledger-1', categoryId: 'cat-1' },
-	{ id: 'exp-5', description: 'AH', amount: 20, userId: 'user-2', ledgerId: 'ledger-1', categoryId: 'cat-2' },
-	{ id: 'exp-6', description: 'Rent', amount: 1200, userId: 'user-1', ledgerId: 'ledger-2', categoryId: 'cat-1' },
-	{ id: 'exp-7', description: 'Bol', amount: 130, userId: 'user-2', ledgerId: 'ledger-2', categoryId: 'cat-4' }
+	{
+		id: 'exp-1',
+		description: 'Rent',
+		amount: 1200,
+		userId: 'user-1',
+		ledgerId: 'ledger-1',
+		categoryId: 'cat-1'
+	},
+	{
+		id: 'exp-2',
+		description: 'Groceries',
+		amount: 150,
+		userId: 'user-1',
+		ledgerId: 'ledger-1',
+		categoryId: 'cat-1'
+	},
+	{
+		id: 'exp-3',
+		description: 'Utilities',
+		amount: 80,
+		userId: 'user-1',
+		ledgerId: 'ledger-1',
+		categoryId: 'cat-1'
+	},
+	{
+		id: 'exp-4',
+		description: 'Internet',
+		amount: 40,
+		userId: 'user-1',
+		ledgerId: 'ledger-1',
+		categoryId: 'cat-1'
+	},
+	{
+		id: 'exp-5',
+		description: 'AH',
+		amount: 20,
+		userId: 'user-2',
+		ledgerId: 'ledger-1',
+		categoryId: 'cat-2'
+	},
+	{
+		id: 'exp-6',
+		description: 'Rent',
+		amount: 1200,
+		userId: 'user-1',
+		ledgerId: 'ledger-2',
+		categoryId: 'cat-1'
+	},
+	{
+		id: 'exp-7',
+		description: 'Bol',
+		amount: 130,
+		userId: 'user-2',
+		ledgerId: 'ledger-2',
+		categoryId: 'cat-4'
+	}
 ];
 
 export const mockTemplates: LedgerTemplate[] = [
@@ -34,10 +83,10 @@ export const mockTemplates: LedgerTemplate[] = [
 ];
 
 export const mockCategories: Category[] = [
-	{ id: 'cat-1', name: 'Housing', keywords: ['Rent', 'Eneco', 'Water', 'Internet'] },
-	{ id: 'cat-2', name: 'Groceries', keywords: ['AH', 'Lidl', 'Oriental'] },
-  { id: 'cat-3', name: 'Leisure', keywords: ['Dinner', 'Lunch', 'Trip', 'Date'] },
-	{ id: 'cat-4', name: 'Other', keywords: ['Bol', 'Amazon'] },
+	{ id: 'cat-1', name: 'Housing' },
+	{ id: 'cat-2', name: 'Groceries' },
+	{ id: 'cat-3', name: 'Leisure' },
+	{ id: 'cat-4', name: 'Other' }
 ];
 
 export const mockKeywords = [

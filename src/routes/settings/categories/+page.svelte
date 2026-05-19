@@ -27,7 +27,7 @@
 				required
 				autocapitalize="sentences"
 				oninput={() => {
-					isDuplicate = !!matchCategory(keyword, data.categories);
+					isDuplicate = !!matchCategory(keyword, data.keywords);
 				}}
 			/>
 			{#if isDuplicate}
@@ -55,15 +55,20 @@
 	</form>
 
 	{#each data.categories as category (category.id)}
+		{@const categoryKeywords = data.keywords.filter(
+			(keyword) => keyword.categoryId === category.id
+		)}
 		<section class="list--section">
 			<header>
 				<h2>{category.name}</h2>
 			</header>
-			{#if category.keywords.length > 0}<ul>
-					{#each category.keywords as keyword}
-						<li><p>{keyword}</p></li>
+			{#if categoryKeywords.length > 0}
+				<ul>
+					{#each categoryKeywords as keyword (keyword.id)}
+						<li><p>{keyword.name}</p></li>
 					{/each}
-				</ul>{/if}
+				</ul>
+			{/if}
 		</section>
 	{/each}
 </main>
