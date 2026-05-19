@@ -5,20 +5,21 @@ import { createExpense } from '$lib/services/expenses';
 import type { Actions, PageServerLoad } from './$types';
 import type { TemplateExpense } from '$lib/types';
 
-export const load: PageServerLoad = async () => {
-	return {
-		templates: await getAllLedgerTemplates()
-	};
+export const load: PageServerLoad = async ({ url }) => {
+	const from = url.searchParams.get('from');
+	const backUrl = from === 'overview' ? `/ledgers` : '/';
+
+	return { templates: await getAllLedgerTemplates(), backUrl };
 };
 
 export const actions = {
 	default: async ({ request }) => {
-    const data = await request.formData();
-		
+		const data = await request.formData();
+
 		const name = data.get('ledger-name') as string;
 		if (!name) return fail(422, { nameMissing: true });
-    
-    let ownerFraction = 0.5; // Default fraction (50%)
+
+		let ownerFraction = 0.5; // Default fraction (50%)
 		let templateExpenses: TemplateExpense[] = [];
 
 		const templateId = data.get('ledger-template') as string;
@@ -35,10 +36,9 @@ export const actions = {
 
 		await Promise.all(
 			templateExpenses.map((expense) =>
-        createExpense({
-          ...expense,
-          ledgerId: newLedger.id,
-
+				createExpense({
+					...expense,
+					ledgerId: newLedger.id
 				})
 			)
 		);

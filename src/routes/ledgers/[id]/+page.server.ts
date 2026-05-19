@@ -4,7 +4,7 @@ import { getAllCategories } from '$lib/services/categories.js';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types.js';
 
-export const load: PageServerLoad = async ({ locals, parent, params }) => {
+export const load: PageServerLoad = async ({ locals, parent, params, url }) => {
 	const ledger = await getLedger(params.id);
 	if (!ledger) error(404, { message: 'Ledger not found' });
 
@@ -15,8 +15,8 @@ export const load: PageServerLoad = async ({ locals, parent, params }) => {
 	const expensesWithCategory = expenses.map((expense) => ({
 		...expense,
 		categoryName: categoryMap.get(expense.categoryId) ?? 'Uncategorised'
-  }));
-	
+	}));
+
 	const { owner, partner } = await parent();
 
 	function totalByUser(userId: string): number {
@@ -35,8 +35,11 @@ export const load: PageServerLoad = async ({ locals, parent, params }) => {
 	const ownerBalance = Math.round(ownerTotal - ownerShare);
 	const partnerBalance = Math.round(partnerTotal - partnerShare);
 	const currentBalance = locals.currentUser.id === owner.id ? ownerBalance : partnerBalance;
-  const otherBalance = locals.currentUser.id === owner.id ? partnerBalance : ownerBalance;
+	const otherBalance = locals.currentUser.id === owner.id ? partnerBalance : ownerBalance;
 
+	const from = url.searchParams.get('from');
+  const backUrl = from === 'overview' ? `/ledgers` : '/';
+	
 	return {
 		ledger,
 		categories,
@@ -49,6 +52,7 @@ export const load: PageServerLoad = async ({ locals, parent, params }) => {
 		ownerBalance,
 		partnerBalance,
 		currentBalance,
-		otherBalance
+		otherBalance,
+		backUrl
 	};
 };

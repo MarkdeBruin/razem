@@ -7,7 +7,7 @@
 </script>
 
 <header class="header-sticky--back">
-	<a href="/" class="btn--circle" aria-label="Back home">
+	<a href={data.backUrl} class="btn--circle" aria-label="Back home">
 		<ArrowLeftIcon />
 	</a>
 </header>

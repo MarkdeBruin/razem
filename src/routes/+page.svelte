@@ -15,17 +15,19 @@
 		<header>
 			<h2>Ledgers</h2>
 			{#if data.ledgers.length}
-				<a class="btn--circle" href="ledgers/new" aria-label="Add ledger"><PlusIcon /></a>
+				<a class="btn--circle" href="ledgers/new?from=home" aria-label="Add ledger"><PlusIcon /></a>
 			{/if}
 		</header>
 		{#if data.ledgers.length}
 			<ul>
 				{#each data.ledgers as ledger (ledger.id)}
 					<li>
-						<a href="ledgers/{ledger.id}">{ledger.name}</a>
+						<a href="ledgers/{ledger.id}?from=home">{ledger.name}</a>
 					</li>
 				{/each}
-				<li><a href="/ledgers">All ledgers</a></li>
+				{#if data.ledgers.length > 4}
+					<li><a href="/ledgers">All ledgers</a></li>
+				{/if}
 			</ul>
 		{:else}
 			<EmptyState
