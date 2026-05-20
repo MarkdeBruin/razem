@@ -79,7 +79,7 @@
 				}}
 			/>
 		</label>
-		<input class="btn" type="submit" value="Save changes" />
+		<button class="btn" type="submit"><span>Save changes</span></button>
 	</form>
 	<form class="margin-block-start-double" method="POST" action="?/delete" use:enhance>
 		<header>
@@ -90,6 +90,6 @@
 			<input type="checkbox" name="confirm-delete" required />
 			Permanently delete ledger
 		</label>
-		<button class="btn line" type="submit">Delete ledger</button>
+		<button class="btn line" type="submit"><span>Delete ledger</span></button>
 	</form>
 </main>

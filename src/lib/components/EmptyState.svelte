@@ -18,5 +18,5 @@
 	{/if}
 	<h3>{title}</h3>
 	<p>{subtitle}</p>
-	<a class="btn" href={url}>{cta}</a>
+	<a class="btn" href={url}><span>{cta}</span></a>
 </empty-state>

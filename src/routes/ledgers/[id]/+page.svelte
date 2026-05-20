@@ -63,7 +63,7 @@
 	<label class="margin-block-end-half hide-no-js">
 		<span class="sr-only">Filter expenses</span>
 		<SelectWrapper>
-			<select bind:value={filter}>
+			<select name="expenses-filter" bind:value={filter}>
 				<option value="all">All expenses</option>
 				<option value="current">{data.currentUser.name}'s expenses</option>
 				<option value="other">{data.otherUser.name}'s expenses</option>
@@ -103,9 +103,9 @@
 			</ul>
 		</section>
 
-		<a class="btn margin-block-end-half" href="/expenses/new?ledger={data.ledger.id}&from=ledger"
-			>Add expense</a
-		>
+		<a class="btn margin-block-end-half" href="/expenses/new?ledger={data.ledger.id}&from=ledger">
+			<span>Add expense</span>
+		</a>
 
 		<section id="exp" class="list--section tabular-nums">
 			<header>

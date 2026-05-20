@@ -38,6 +38,6 @@
 			</div>
 		</fieldset>
 
-		<input class="btn" type="submit" value="Add ledger" />
+		<button class="btn" type="submit"><span>Add ledger</span></button>
 	</form>
 </main>

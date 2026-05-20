@@ -41,7 +41,7 @@
 
 	{#if data.ledgers.length}
 		<a class="btn margin-block-end-half" href="/expenses/new?ledger={data.ledgers[0].id}&from=home">
-			Add expense
+			<span>Add expense</span>
 		</a>
 	{/if}
 

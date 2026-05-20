@@ -44,7 +44,8 @@
 		align-items: center;
 		background-color: var(--input-color);
 		border: 2px solid transparent;
-		border-radius: 0.5em;
+		border-radius: var(--border-radius);
+		corner-shape: squircle;
 		cursor: pointer;
 		display: flex;
 		gap: var(--inline-space-half);
@@ -98,7 +99,8 @@
 	textarea {
 		background-color: var(--input-color);
 		border: 2px solid transparent;
-		border-radius: 0.5em;
+		border-radius: var(--border-radius);
+		corner-shape: squircle;
 		cursor: text;
 		line-height: 1.1em;
 		min-height: 2.4em;

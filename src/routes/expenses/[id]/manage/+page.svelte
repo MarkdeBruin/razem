@@ -93,7 +93,7 @@
 				Auto-fill category for {description.trim()}
 			</label>
 		{/if}
-		<input class="btn" type="submit" value="Save changes" />
+		<button class="btn" type="submit"><span>Save changes</span></button>
 	</form>
 
 	<form class="margin-block-start-double" method="POST" action="?/delete" use:enhance>
@@ -103,6 +103,6 @@
 			Permanently delete expense
 		</label>
 		<input type="hidden" name="ledger-id" value={data.expense.ledgerId} />
-		<button class="btn line" type="submit">Delete expense</button>
+		<button class="btn line" type="submit"><span>Delete expense</span></button>
 	</form>
 </main>

@@ -1,7 +1,8 @@
 @layer components {
-    .btn {
+	.btn {
 		background-color: var(--btn-color);
 		border: 2px solid transparent;
+		border-radius: var(--border-radius);
 		color: var(--btn-text-color);
 		corner-shape: squircle;
 		cursor: pointer;
@@ -9,9 +10,9 @@
 		font-size: var(--btn-text);
 		letter-spacing: var(--uppercase-spacing);
 		min-height: 2.4rem;
-		padding: 0.5em 1em;
+		padding: 0.5em var(--inline-space-double);
+		place-items: center;
 		pointer-events: auto;
-		border-radius: 0.5em;
 		text-align: center;
 		text-decoration: none;
 		text-transform: uppercase;
@@ -23,28 +24,32 @@
 		&:active {
 			scale: 0.99;
 		}
+
 		&:disabled {
 			cursor: not-allowed;
 			scale: 1 !important;
+		}
+
+		&.line {
+			background-color: var(--btn-line-color);
+			border-color: var(--color-border);
+			color: var(--btn-line-text-color);
 		}
 
 		@media (any-hover: hover) {
 			&:hover {
 				background-color: var(--btn-hover-color);
 			}
-		}
-	}
 
-
-	.line {
-		background-color: var(--btn-line-color);
-		border-color: var(--color-border);
-		color: var(--btn-line-text-color);
-		
-		@media (any-hover: hover) {
-			&:hover {
+			&.line:hover {
+				border-color: transparent;
 				color: var(--btn-line-text-hover-color);
 			}
+		}
+
+		span {
+			text-box-edge: cap alphabetic;
+			text-box-trim: trim-both;
 		}
 	}
 

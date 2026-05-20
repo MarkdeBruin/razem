@@ -46,7 +46,7 @@
 
 	--color-bg: var(--color-light);
 	--color-fg: var(--color-dark);
-	--color-fg-subtle: color-mix(in oklch, var(--color-fg) 67%, var(--color-bg));
+	--color-fg-subtle: color-mix(in oklch, var(--color-fg) 77.5%, var(--color-bg));
 	--color-hover: oklch(from var(--color-fg) calc(l - 0.1) c h);
 
 	@media (prefers-color-scheme: dark) {
@@ -81,5 +81,5 @@
 	--focus-ring-size: 2px;
 	--focus-ring: var(--focus-ring-size) solid var(--focus-ring-color);
 
-	--scrollbar-color: color-mix(in oklch, var(--color-fg) 20%, var(--color-bg));
+	--border-radius: 0.5em;
 }

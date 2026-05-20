@@ -22,7 +22,7 @@
 <main>
 	<form method="POST" use:enhance>
 		<h1>New Expense</h1>
-		<label for="ledger-id">
+		<label>
 			Ledger
 			<SelectWrapper>
 				<select name="ledger-id">
@@ -81,6 +81,6 @@
 			</label>
 		{/if}
 
-		<input class="btn" type="submit" value="Add expense" />
+		<button class="btn" type="submit"><span>Add expense</span></button>
 	</form>
 </main>

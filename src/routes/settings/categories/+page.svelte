@@ -53,7 +53,7 @@
 			</div>
 		</fieldset>
 
-		<input class="btn" type="submit" value="Add keyword" disabled={isDuplicate} />
+		<button class="btn" type="submit" disabled={isDuplicate}><span>Add keyword</span></button>
 	</form>
 
 	{#each data.categories as category (category.id)}

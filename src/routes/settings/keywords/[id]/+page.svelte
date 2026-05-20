@@ -62,7 +62,7 @@
 				{/if}
 			</div>
 		</fieldset>
-		<input class="btn" type="submit" value="Save changes" disabled={isDuplicate} />
+		<button class="btn" type="submit" disabled={isDuplicate}><span>Save changes</span></button>
 	</form>
 
 	<form class="margin-block-start-double" method="POST" action="?/delete" use:enhance>
@@ -71,6 +71,6 @@
 			<input type="checkbox" name="confirm-delete" required />
 			Permanently delete keyword
 		</label>
-		<button class="btn line" type="submit">Delete keyword</button>
+		<button class="btn line" type="submit"><span>Delete keyword</span></button>
 	</form>
 </main>
