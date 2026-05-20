@@ -31,7 +31,7 @@
 				}}
 			/>
 			{#if isDuplicate}
-				<small>“{keyword}” already exists</small>
+				<small>“{keyword.trim()}” already exists</small>
 			{/if}
 			{#if form?.keywordMissing}
 				<small>Keyword is required</small>

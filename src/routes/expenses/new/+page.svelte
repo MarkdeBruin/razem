@@ -60,24 +60,31 @@
 			{#if form?.expenseAmountMissing}<small>Amount is required</small>{/if}
 		</label>
 
-		<label>
-			Category
-			<SelectWrapper>
-				<select name="exp-category" required bind:value={selectedCategoryId}>
-					{#each data.categories as category (category.id)}
-						<option value={category.id}>{category.name}</option>
-					{/each}
-				</select>
-			</SelectWrapper>
-			{#if form?.categoryMissing}
-				<small>Please select a category</small>
-			{/if}
-		</label>
+		<fieldset>
+			<legend><span>Category</span></legend>
+			<div class="stack--small">
+				{#each data.categories as category (category.id)}
+					<label>
+						<input
+							type="radio"
+							name="exp-category"
+							value={category.id}
+							bind:group={selectedCategoryId}
+							required
+						/>
+						{category.name}
+					</label>
+				{/each}
+				{#if form?.categoryMissing}
+					<small>Please select a category</small>
+				{/if}
+			</div>
+		</fieldset>
 
 		{#if isNewKeyword && selectedCategoryId}
 			<label>
 				<input type="checkbox" name="save-keyword" value="true" />
-				 Auto-fill category in future
+				Auto-fill category in future
 			</label>
 		{/if}
 
