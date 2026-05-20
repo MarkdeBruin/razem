@@ -59,14 +59,19 @@
 	--color-border-subtle: color-mix(in oklch, var(--color-border) 20%, var(--color-bg));
 	--color-border-input-icon: color-mix(in oklch, var(--color-border) 30%, var(--color-bg));
 
+	--btn-text: 0.8935rem;
 	--btn-color: var(--color-fg);
 	--btn-hover-color: var(--color-hover);
 	--btn-text-color: var(--color-bg);
-	--btn-text: 0.8935rem;
 
-	--btn-secondary-color: color-mix(in oklch, var(--color-fg) 10%, var(--color-bg));
-	--btn-secondary-hover-color: color-mix(in oklch, var(--color-fg) 15%, var(--color-bg));
-	--btn-secondary-text-color: var(--color-fg);
+	--btn-line-color: var(--color-bg);
+	--btn-line-hover-color: var(--color-hover);
+	--btn-line-text-color: var(--color-fg);
+	--btn-line-text-hover-color: var(--color-bg);
+
+	--btn-circle-color: color-mix(in oklch, var(--color-fg) 10%, var(--color-bg));
+	--btn-circle-hover-color: color-mix(in oklch, var(--color-fg) 15%, var(--color-bg));
+	--btn-circle-text-color: var(--color-fg);
 
 	--input-color: color-mix(in oklch, var(--color-fg) 10%, var(--color-bg));
 	--input-hover-color: color-mix(in oklch, var(--color-fg) 15%, var(--color-bg));

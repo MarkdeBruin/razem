@@ -1,7 +1,7 @@
 @layer components {
-	.btn {
+    .btn {
 		background-color: var(--btn-color);
-		border: 1px solid transparent;
+		border: 2px solid transparent;
 		color: var(--btn-text-color);
 		corner-shape: squircle;
 		cursor: pointer;
@@ -9,14 +9,14 @@
 		font-size: var(--btn-text);
 		letter-spacing: var(--uppercase-spacing);
 		min-height: 2.4rem;
-		padding: 0.6em 1.2em;
+		padding: 0.5em 1em;
 		pointer-events: auto;
 		border-radius: 0.5em;
 		text-align: center;
 		text-decoration: none;
 		text-transform: uppercase;
 		transition: 100ms ease-out;
-		transition-property: background-color, border, color, opacity, scale;
+		transition-property: background-color, border, color, scale;
 		user-select: none;
 		-webkit-tap-highlight-color: transparent;
 
@@ -35,13 +35,26 @@
 		}
 	}
 
+
+	.line {
+		background-color: var(--btn-line-color);
+		border-color: var(--color-border);
+		color: var(--btn-line-text-color);
+		
+		@media (any-hover: hover) {
+			&:hover {
+				color: var(--btn-line-text-hover-color);
+			}
+		}
+	}
+
 	.btn--circle {
 		--btn-size: 2.2em;
 		aspect-ratio: 1;
-		background-color: var(--btn-secondary-color);
+		background-color: var(--btn-circle-color);
 		block-size: var(--btn-size);
 		border-radius: 100%;
-		color: var(--btn-secondary-text-color);
+		color: var(--btn-circle-text-color);
 		cursor: pointer;
 		display: grid;
 		font-weight: var(--font-weight-light);
@@ -59,7 +72,7 @@
 
 		@media (any-hover: hover) {
 			&:hover {
-				background-color: var(--btn-secondary-hover-color);
+				background-color: var(--btn-circle-hover-color);
 				color: var(--color-hover);
 			}
 		}

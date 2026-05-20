@@ -90,7 +90,7 @@
 		{#if isNewKeyword && selectedCategoryId}
 			<label>
 				<input type="checkbox" name="save-keyword" value="true" />
-				Auto-fill this category next time I add {description.trim()}
+				Auto-fill category for {description.trim()}
 			</label>
 		{/if}
 		<input class="btn" type="submit" value="Save changes" />
@@ -103,6 +103,6 @@
 			Permanently delete expense
 		</label>
 		<input type="hidden" name="ledger-id" value={data.expense.ledgerId} />
-		<button class="btn" type="submit">Delete expense</button>
+		<button class="btn line" type="submit">Delete expense</button>
 	</form>
 </main>

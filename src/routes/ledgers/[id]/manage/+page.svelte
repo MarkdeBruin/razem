@@ -90,6 +90,6 @@
 			<input type="checkbox" name="confirm-delete" required />
 			Permanently delete ledger
 		</label>
-		<button class="btn" type="submit">Delete ledger</button>
+		<button class="btn line" type="submit">Delete ledger</button>
 	</form>
 </main>

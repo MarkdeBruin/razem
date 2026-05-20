@@ -64,6 +64,6 @@
 			<input type="checkbox" name="confirm-delete" required />
 			Permanently delete keyword
 		</label>
-		<button class="btn" type="submit">Delete keyword</button>
+		<button class="btn line" type="submit">Delete keyword</button>
 	</form>
 </main>

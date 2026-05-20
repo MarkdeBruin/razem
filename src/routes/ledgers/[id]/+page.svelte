@@ -34,11 +34,11 @@
 </script>
 
 <header class="header-sticky--ledger">
-	<a href="{data.backUrl}" class="btn--circle" aria-label="Go home"><ArrowLeftIcon /></a>
+	<a href={data.backUrl} class="btn--circle" aria-label="Go home"><ArrowLeftIcon /></a>
 	<h1>{data.ledger.name}</h1>
-	<a href="{data.ledger.id}/manage" class="btn--circle" aria-label="Edit ledger"
-		><FadersHorizontalIcon /></a
-	>
+	<a href="{data.ledger.id}/manage" class="btn--circle" aria-label="Edit ledger">
+		<FadersHorizontalIcon />
+	</a>
 </header>
 
 <main class="stack">
