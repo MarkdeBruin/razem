@@ -40,6 +40,9 @@
 			{#if isDuplicate}
 				<small>"{keyword}" already exists</small>
 			{/if}
+			{#if form?.keywordDuplicate}
+				<small>{form.duplicateName} already exists</small>
+			{/if}
 			{#if form?.keywordMissing}<small>Keyword is required</small>{/if}
 		</label>
 		<fieldset>

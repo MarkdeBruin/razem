@@ -36,6 +36,9 @@
 			{#if form?.keywordMissing}
 				<small>Keyword is required</small>
 			{/if}
+			{#if form?.keywordDuplicate}
+				<small>{form.duplicateName} already exists</small>
+			{/if}
 		</label>
 
 		<fieldset>

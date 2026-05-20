@@ -2,6 +2,7 @@ import { getAllCategories, getAllKeywords, createKeyword } from '$lib/services/c
 import { fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import type { NewKeyword } from '$lib/types';
+import { keywordExists } from '$lib/utils/categories';
 
 export const load: PageServerLoad = async () => {
 	return {
@@ -21,6 +22,11 @@ export const actions = {
     if (!categoryId) return fail(422, { categoryMissing: true });
 		
     const name = rawKeyword.trim().replace(/^\w/, c => c.toUpperCase());
+
+    const existingKeywords = await getAllKeywords();
+		if (keywordExists(name, existingKeywords)) {
+			return fail(422, { keywordDuplicate: true, duplicateName: name });
+		}
     
     const newKeyword: NewKeyword = { name, categoryId };
 		await createKeyword(newKeyword);
