@@ -16,4 +16,9 @@
 		display: grid;
 		row-gap: var(--block-space);
 	}
+
+	.stack--small {
+		display: grid;
+		row-gap: var(--block-space-half);
+	}
 }

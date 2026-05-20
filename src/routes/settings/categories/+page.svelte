@@ -39,17 +39,19 @@
 		</label>
 
 		<fieldset>
-			<legend>Category</legend>
-			{#each data.categories as category (category.id)}
-				<label>
-					<input type="radio" name="category" value={category.id} required />
-					{category.name}
-				</label>
-			{/each}
+			<legend><span>Category</span></legend>
+			<div class="stack--small">
+				{#each data.categories as category (category.id)}
+					<label>
+						<input type="radio" name="category" value={category.id} required />
+						{category.name}
+					</label>
+				{/each}
+				{#if form?.categoryMissing}
+					<small>Please select a category</small>
+				{/if}
+			</div>
 		</fieldset>
-		{#if form?.categoryMissing}
-			<small>Please select a category</small>
-		{/if}
 
 		<input class="btn" type="submit" value="Add keyword" disabled={isDuplicate} />
 	</form>

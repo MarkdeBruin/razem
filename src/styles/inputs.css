@@ -21,8 +21,7 @@
 	fieldset {
 		border: none;
 		display: grid;
-		gap: 0.5em;
-		padding: 0;
+		gap: calc(var(--block-space-half) / 2);
 		padding: 0;
 		margin: 0;
 	}
@@ -38,7 +37,7 @@
 		display: grid;
 		font-size: var(--text-small);
 		font-weight: var(--font-weight-medium);
-		gap: var(--inline-space-half);
+		gap: calc(var(--block-space-half) / 2);
 	}
 
 	label:has(input[type='radio'], input[type='checkbox']) {
@@ -153,7 +152,6 @@
 				background-color: var(--color-fg);
 				border: 3px solid var(--input-color);
 				inset: 0;
-				
 			}
 		}
 	}

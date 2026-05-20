@@ -22,7 +22,8 @@
 		</label>
 
 		<fieldset>
-			<legend>Choose a template</legend>
+			<legend><span>Choose a template</span></legend>
+			<div class="stack--small">
 			<label>
 				<input type="radio" id="blank" name="ledger-template" value="blank" checked />
 				Blank ledger
@@ -34,6 +35,7 @@
 					{template.name}
 				</label>
 			{/each}
+			</div>
 		</fieldset>
 
 		<input class="btn" type="submit" value="Add ledger" />

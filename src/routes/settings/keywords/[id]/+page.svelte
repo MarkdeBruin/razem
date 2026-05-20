@@ -42,19 +42,26 @@
 			{/if}
 			{#if form?.keywordMissing}<small>Keyword is required</small>{/if}
 		</label>
-		<label>
-			Category
-			<SelectWrapper>
-				<select name="category" required>
-					{#each data.categories as category (category.id)}
-						<option value={category.id} selected={category.id === data.keyword.categoryId}>
-							{category.name}
-						</option>
-					{/each}
-				</select>
-			</SelectWrapper>
-			{#if form?.categoryMissing}<small>Please select a category</small>{/if}
-		</label>
+		<fieldset>
+			<legend><span>Category</span></legend>
+			<div class="stack--small">
+				{#each data.categories as category (category.id)}
+					<label>
+						<input
+							type="radio"
+							name="category"
+							value={category.id}
+							checked={category.id === data.keyword.categoryId}
+							required
+						/>
+						{category.name}
+					</label>
+				{/each}
+				{#if form?.categoryMissing}
+					<small>Please select a category</small>
+				{/if}
+			</div>
+		</fieldset>
 		<input class="btn" type="submit" value="Save changes" disabled={isDuplicate} />
 	</form>
 
