@@ -1,0 +1,20 @@
+@layer components {
+	error-message {
+		align-items: center;
+		display: grid;
+		gap: var(--block-space-double);
+		inset: 0;
+		place-self: center;
+		position: absolute;
+		text-align: center;
+
+		h1 {
+			font-size: var(--text-xl);
+			line-height: 1;
+		}
+
+		p {
+			color: var(--color-fg-subtle);
+		}
+	}
+}

@@ -8,6 +8,7 @@
 	import '/src/styles/inputs.css';
 	import '/src/styles/balance.css';
 	import '/src/styles/buttons.css';
+	import '/src/styles/error-message.css';
 	import '/src/styles/empty.css';
 	import '/src/styles/headers.css';
 	import '/src/styles/layout.css';
