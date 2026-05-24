@@ -12,6 +12,10 @@
 		min-height: 100dvh;
 	}
 
+	main {
+		padding-block-end: var(--block-space-double);
+	}
+
 	.stack {
 		display: grid;
 		row-gap: var(--block-space);

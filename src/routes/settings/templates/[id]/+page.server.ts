@@ -1,4 +1,4 @@
-import { getLedgerTemplate } from '$lib/services/ledgerTemplates';
+import { getLedgerTemplate } from '$lib/services/templates';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 

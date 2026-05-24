@@ -15,7 +15,7 @@
 	<a href="/ledgers/{data.ledger.id}" class="btn--circle" aria-label="Back to ledger">
 		<ArrowLeftIcon />
 	</a>
-	<h1>Manage <span>{data.ledger.name}</span></h1>
+	<h1><span class="sr-only">Manage</span> {data.ledger.name}</h1>
 </header>
 
 <main class="stack">
@@ -80,6 +80,15 @@
 			/>
 		</label>
 		<button class="btn" type="submit"><span>Save changes</span></button>
+	</form>
+	<form class="margin-block-start-double" method="POST" action="?/template" use:enhance>
+		<header>
+			<h2>New template</h2>
+			<p class="text-subtle">From all current expenses and the split setting</p>
+		</header>
+		<input type="text" name="template-name" placeholder="Name" required />
+		{#if form?.templateNameMissing}<mark>Name is required</mark>{/if}
+		<button class="btn line" type="submit"><span>Create template</span></button>
 	</form>
 	<form class="margin-block-start-double" method="POST" action="?/delete" use:enhance>
 		<header>
