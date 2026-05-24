@@ -56,6 +56,7 @@
 			<li>
 				<a href="/settings/categories">Categories &amp; Keywords</a>
 			</li>
+			<li><a href="/settings/templates">Ledger templates</a></li>
 		</ul>
 		<br />
 	</section>

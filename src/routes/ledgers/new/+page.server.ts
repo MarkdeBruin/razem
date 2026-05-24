@@ -1,5 +1,5 @@
 import { redirect, fail } from '@sveltejs/kit';
-import { getLedgerTemplate, getAllLedgerTemplates } from '$lib/services/ledgerTemplates';
+import { getLedgerTemplate, getAllLedgerTemplates } from '$lib/services/templates';
 import { createLedger } from '$lib/services/ledgers';
 import { createExpense } from '$lib/services/expenses';
 import type { Actions, PageServerLoad } from './$types';
