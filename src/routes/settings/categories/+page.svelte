@@ -16,7 +16,7 @@
 </header>
 
 <main class="stack">
-	<form class="margin-block-end-double" method="POST" use:enhance>
+	<form method="POST" use:enhance>
 		<h2>New keyword</h2>
 		<label>
 			Keyword

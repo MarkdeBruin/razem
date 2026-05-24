@@ -68,7 +68,7 @@
 		<button class="btn" type="submit" disabled={isDuplicate}><span>Save changes</span></button>
 	</form>
 
-	<form class="margin-block-start-double" method="POST" action="?/delete" use:enhance>
+	<form method="POST" action="?/delete" use:enhance>
 		<h2>Delete keyword</h2>
 		<label>
 			<input type="checkbox" name="confirm-delete" required />

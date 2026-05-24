@@ -10,6 +10,7 @@
 	<a href={data.backUrl} class="btn--circle" aria-label="Back home">
 		<ArrowLeftIcon />
 	</a>
+	<span aria-hidden="true">New ledger</span>
 </header>
 
 <main>

@@ -81,16 +81,20 @@
 		</label>
 		<button class="btn" type="submit"><span>Save changes</span></button>
 	</form>
-	<form class="margin-block-start-double" method="POST" action="?/template" use:enhance>
+	<form method="POST" action="?/template" use:enhance>
 		<header>
 			<h2>New template</h2>
 			<p class="text-subtle">From all current expenses and the split setting</p>
 		</header>
-		<input type="text" name="template-name" placeholder="Name" required />
-		{#if form?.templateNameMissing}<mark>Name is required</mark>{/if}
+		<label>
+			Name
+			<input type="text" name="template-name" required />
+			{#if form?.templateNameMissing}<mark>Name is required</mark>{/if}
+		</label>
+
 		<button class="btn line" type="submit"><span>Create template</span></button>
 	</form>
-	<form class="margin-block-start-double" method="POST" action="?/delete" use:enhance>
+	<form method="POST" action="?/delete" use:enhance>
 		<header>
 			<h2>Delete ledger</h2>
 			<p class="text-subtle">And all expenses</p>

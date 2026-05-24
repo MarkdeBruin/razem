@@ -18,7 +18,11 @@
 
 	.stack {
 		display: grid;
-		row-gap: var(--block-space);
+		row-gap: var(--block-space-double);
+
+		> a {
+			margin-top: calc(var(--block-space-half) * -1);
+		}
 	}
 
 	.stack--small {

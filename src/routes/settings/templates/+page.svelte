@@ -7,15 +7,12 @@
 
 <header class="header-sticky--back">
 	<a href="/" class="btn--circle" aria-label="Back home"><ArrowLeftIcon /></a>
-	<h1>Ledger templates</h1>
-	<button class="btn--circle" aria-label="Help"><QuestionMarkIcon /></button>
+	<span aria-hidden="true">Ledger templates</span>
 </header>
 
 <main>
 	<section class="list--section margin-block-start">
-		<header>
-			<h2>Templates</h2>
-		</header>
+		<header><h1>Ledger templates</h1></header>
 		<ul>
 			{#each data.templates as template (template.id)}
 				<li>

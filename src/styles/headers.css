@@ -1,7 +1,28 @@
 @layer components {
+	@keyframes section-text {
+		from {
+			opacity: 0;
+			transform: translateX(-0.5ch);
+		}
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
+
 	header[class*='header-'] {
 		padding-block: calc(var(--block-space) + var(--safe-inset-top)) var(--block-space-double);
 		z-index: 10;
+
+		> [aria-hidden='true'] {
+			opacity: 0;
+			@supports (animation-timeline: scroll()) {
+				animation: section-text linear forwards;
+				animation-duration: auto;
+				animation-timeline: scroll();
+				animation-range: 4rem 5rem;
+			}
+		}
 	}
 
 	header[class*='header-sticky--'] {

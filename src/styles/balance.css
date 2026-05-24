@@ -1,6 +1,6 @@
 @layer base {
 	.balance--section {
-		padding-block-end: var(--block-space-half);
+		padding-block-start: var(--block-space-half);
 		text-align: center;
 
 		h2 {

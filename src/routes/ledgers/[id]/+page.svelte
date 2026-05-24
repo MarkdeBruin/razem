@@ -103,7 +103,7 @@
 			</ul>
 		</section>
 
-		<a class="btn margin-block-end-half" href="/expenses/new?ledger={data.ledger.id}&from=ledger">
+		<a class="btn" href="/expenses/new?ledger={data.ledger.id}&from=ledger">
 			<span>Add expense</span>
 		</a>
 

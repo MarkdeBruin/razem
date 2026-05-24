@@ -17,6 +17,7 @@
 	<a href={data.backUrl} class="btn--circle" aria-label="Back">
 		<ArrowLeftIcon />
 	</a>
+	<span aria-hidden="true">New expense</span>
 </header>
 
 <main>
