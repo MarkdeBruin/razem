@@ -4,6 +4,7 @@
 	import { matchCategory } from '$lib/utils/categories';
 	import { ArrowLeftIcon } from 'phosphor-svelte';
 	import SelectWrapper from '$lib/components/SelectWrapper.svelte';
+	import { attachObserveHeader } from '$lib/utils/headerObserver';
 
 	let { data, form }: PageProps = $props();
 
@@ -11,18 +12,20 @@
 	let selectedCategoryId = $state('');
 	let isNewKeyword = $state(false);
 	let match: string;
+
+	let headerSpan = $state<HTMLElement>();
 </script>
 
 <header class="header-sticky--back">
 	<a href={data.backUrl} class="btn--circle" aria-label="Back">
 		<ArrowLeftIcon />
 	</a>
-	<span aria-hidden="true">New expense</span>
+	<span bind:this={headerSpan} aria-hidden="true">New expense</span>
 </header>
 
 <main>
 	<form method="POST" use:enhance>
-		<h1>New Expense</h1>
+		<h1 {@attach attachObserveHeader(headerSpan)}>New Expense</h1>
 		<label>
 			Ledger
 			<SelectWrapper>

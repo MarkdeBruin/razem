@@ -2,20 +2,22 @@
 	import { enhance } from '$app/forms';
 	import type { PageProps } from './$types';
 	import { ArrowLeftIcon } from 'phosphor-svelte';
+	import { attachObserveHeader } from '$lib/utils/headerObserver';
 
 	let { data, form }: PageProps = $props();
+	let headerSpan = $state<HTMLElement>();
 </script>
 
 <header class="header-sticky--back">
 	<a href={data.backUrl} class="btn--circle" aria-label="Back home">
 		<ArrowLeftIcon />
 	</a>
-	<span aria-hidden="true">New ledger</span>
+	<span bind:this={headerSpan} aria-hidden="true">New ledger</span>
 </header>
 
 <main>
 	<form method="POST" use:enhance>
-		<h1>New ledger</h1>
+		<h1 {@attach attachObserveHeader(headerSpan)}>New ledger</h1>
 		<label>
 			Name
 			<input type="text" name="ledger-name" required autocapitalize="sentences" />
