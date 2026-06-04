@@ -1,5 +1,10 @@
 @layer reset, base, components, modules, utilities, native, platform;
 
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
 :root {
 	--safe-inset-top: env(safe-area-inset-top, 0px);
 	--safe-inset-right: env(safe-area-inset-right, 0px);
@@ -42,7 +47,6 @@
 	/*When updating also update CSS background-image SVG fills and HTML theme in <head>*/
 	--color-light: oklch(94.9% 0.011 89.7);
 	--color-dark: oklch(42.6% 0.162 26.9);
-	
 
 	--color-bg: var(--color-light);
 	--color-fg: var(--color-dark);
@@ -75,7 +79,7 @@
 
 	--input-color: color-mix(in oklch, var(--color-fg) 10%, var(--color-bg));
 	--input-hover-color: color-mix(in oklch, var(--color-fg) 15%, var(--color-bg));
-	
+
 	--focus-ring-color: var(--color-fg);
 	--focus-ring-offset: 2px;
 	--focus-ring-size: 2px;

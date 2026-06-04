@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { onNavigate } from '$app/navigation';
 	import favicon from '$lib/assets/favicon.svg';
+	import { IconContext } from 'phosphor-svelte';
 
 	import '/src/styles/_global.css';
 	import '/src/styles/_reset.css';
@@ -15,9 +17,18 @@
 	import '/src/styles/lists.css';
 	import '/src/styles/utilities.css';
 
-	import { IconContext } from 'phosphor-svelte';
-
 	let { children } = $props();
+	
+	onNavigate((navigation) => {
+    if (!document.startViewTransition) return;
+
+    return new Promise((resolve) => {
+      document.startViewTransition(async () => {
+        resolve();
+        await navigation.complete;
+      });
+    });
+  });
 </script>
 
 <svelte:head>
@@ -30,7 +41,11 @@
 		type="font/woff2"
 		crossorigin="anonymous"
 	/>
-	<meta name="theme-color" content="oklch(94.9% 0.011 89.7)" media="(prefers-color-scheme: light)" />
+	<meta
+		name="theme-color"
+		content="oklch(94.9% 0.011 89.7)"
+		media="(prefers-color-scheme: light)"
+	/>
 	<meta name="theme-color" content="oklch(42.6% 0.162 26.9)" media="(prefers-color-scheme: dark)" />
 </svelte:head>
 
