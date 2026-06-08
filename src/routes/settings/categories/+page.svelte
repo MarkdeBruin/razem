@@ -12,7 +12,6 @@
 <header class="header-sticky--back">
 	<a href="/" class="btn--circle" aria-label="Back home"><ArrowLeftIcon /></a>
 	<h1>Categories & Keywords</h1>
-	<button class="btn--circle" aria-label="Help"><QuestionMarkIcon /></button>
 </header>
 
 <main class="stack">
@@ -64,12 +63,12 @@
 			(keyword) => keyword.categoryId === category.id
 		)}
 		<section class="list--section">
-			<header>
-				<h2>{category.name}</h2>
-			</header>
 			{#if categoryKeywords.length > 0}
+				<header>
+					<h2>{category.name}</h2>
+				</header>
 				<ul>
-					{#each categoryKeywords as keyword (keyword.id)}
+					{#each [...categoryKeywords].reverse() as keyword (keyword.id)}
 						<li><a href="/settings/keywords/{keyword.id}">{keyword.name}</a></li>
 					{/each}
 				</ul>

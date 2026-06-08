@@ -7,9 +7,9 @@
 			opacity: 0;
 			pointer-events: none;
 			transition:
-				opacity 200ms ease,
-				transform 200ms ease;
-			transform: translateY(-0.5ch);
+				opacity 200ms ease-out,
+				transform 200ms ease-out;
+			transform: translateY(-0.2rem);
 		}
 
 		> .visible[aria-hidden='true'] {
