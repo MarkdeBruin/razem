@@ -4,8 +4,8 @@
 	interface Props {
 		title: string;
 		subtitle: string;
-		cta: string;
-		url: string;
+		cta?: string;
+		url?: string;
 		children?: Snippet;
 	}
 
@@ -18,5 +18,7 @@
 	{/if}
 	<h3>{title}</h3>
 	<p>{subtitle}</p>
-	<a class="btn" href={url}><span>{cta}</span></a>
+	{#if cta && url}
+		<a class="btn" href={url}><span>{cta}</span></a>
+	{/if}
 </empty-state>
