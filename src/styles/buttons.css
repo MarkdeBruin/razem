@@ -54,16 +54,15 @@
 	}
 
 	.btn--circle {
-		--btn-size: 2.2em;
 		aspect-ratio: 1;
 		background-color: var(--btn-circle-color);
-		block-size: var(--btn-size);
+		block-size: var(--btn-circle-size);
 		border-radius: 100%;
 		color: var(--btn-circle-text-color);
 		cursor: pointer;
 		display: grid;
 		font-weight: var(--font-weight-light);
-		inline-size: var(--btn-size);
+		inline-size: var(--btn-circle-size);
 		place-content: center;
 		pointer-events: auto;
 		transition: 100ms ease-out;

@@ -7,7 +7,25 @@
 
 <header class="header--home">
 	<h1 class="sr-only">Home</h1>
-	<h1>♥</h1>
+	<svg
+		width="108"
+		height="86"
+		viewBox="0 0 108 86"
+		fill="currentColor"
+		xmlns="http://www.w3.org/2000/svg"
+	>
+		<circle cx="32" cy="10" r="10" />
+		<circle cx="76" cy="10" r="10" />
+		<circle cx="10" cy="32" r="10" />
+		<circle cx="32" cy="32" r="10" />
+		<circle cx="54" cy="32" r="10" />
+		<circle cx="76" cy="32" r="10" />
+		<circle cx="98" cy="32" r="10" />
+		<circle cx="32" cy="54" r="10" />
+		<circle cx="54" cy="54" r="10" />
+		<circle cx="76" cy="54" r="10" />
+		<circle cx="54" cy="76" r="10" />
+	</svg>
 </header>
 
 <main class="stack">

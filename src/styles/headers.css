@@ -9,13 +9,13 @@
 			transition:
 				opacity 200ms ease,
 				transform 200ms ease;
-			transform: translateX(-0.5ch);
+			transform: translateY(-0.5ch);
 		}
 
 		> .visible[aria-hidden='true'] {
 			opacity: 1;
 			pointer-events: auto;
-			transform: translateX(0);
+			transform: translateY(0);
 		}
 	}
 
@@ -30,16 +30,22 @@
 
 		&:has(:nth-child(3)) {
 			justify-content: space-between;
+
+			h1,
+			span {
+				padding: 0;
+			}
 		}
 
-		h1 {
+		h1, span {
+			flex: 1;
 			font-size: var(--text-base);
 			font-weight: var(--font-weight-normal);
 			text-align: center;
 			white-space: nowrap;
 			overflow: hidden;
+			padding-inline-end: calc(var(--btn-circle-size) + var(--inline-space));
 			text-overflow: ellipsis;
-			view-transition-name: sticky-header;
 		}
 	}
 
@@ -47,8 +53,8 @@
 		display: grid;
 		place-content: center;
 
-		h1 {
-			line-height: 2.2rem;
+		svg {
+			height: var(--btn-circle-size);
 		}
 	}
 }

@@ -2,7 +2,7 @@
 
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  animation: none;
+	animation: none;
 }
 
 :root {
@@ -76,6 +76,7 @@
 	--btn-circle-color: color-mix(in oklch, var(--color-fg) 10%, var(--color-bg));
 	--btn-circle-hover-color: color-mix(in oklch, var(--color-fg) 15%, var(--color-bg));
 	--btn-circle-text-color: var(--color-fg);
+	--btn-circle-size: 2.2em;
 
 	--input-color: color-mix(in oklch, var(--color-fg) 10%, var(--color-bg));
 	--input-hover-color: color-mix(in oklch, var(--color-fg) 15%, var(--color-bg));

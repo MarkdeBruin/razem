@@ -155,8 +155,7 @@
 
 	/* Smooth scrolling & auto-height animations */
 	@media (prefers-reduced-motion: no-preference) {
-		:where(html) {
-			scroll-behavior: smooth;
+		:where(html) {	
 			interpolate-size: allow-keywords;
 		}
 	}

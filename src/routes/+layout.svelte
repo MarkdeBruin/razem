@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onNavigate } from '$app/navigation';
 	import favicon from '$lib/assets/favicon.svg';
 	import { IconContext } from 'phosphor-svelte';
 
@@ -18,17 +17,6 @@
 	import '/src/styles/utilities.css';
 
 	let { children } = $props();
-	
-	onNavigate((navigation) => {
-    if (!document.startViewTransition) return;
-
-    return new Promise((resolve) => {
-      document.startViewTransition(async () => {
-        resolve();
-        await navigation.complete;
-      });
-    });
-  });
 </script>
 
 <svelte:head>
