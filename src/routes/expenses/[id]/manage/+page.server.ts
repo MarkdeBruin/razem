@@ -11,7 +11,7 @@ export const load: PageServerLoad = async ({ params }) => {
 	if (!expense) error(404, { message: 'Expense not found' });
 
 	const ledgers = await getAllLedgers();
-  const categories = await getAllCategories();
+	const categories = await getAllCategories();
 	const keywords = await getAllKeywords();
 
 	return { expense, ledgers, categories, keywords };
@@ -25,8 +25,8 @@ export const actions = {
 		if (!ledgerId) return fail(422, { expenseLedgerIdMissing: true });
 
 		const rawDescription = data.get('exp-description') as string;
-    if (!rawDescription) return fail(422, { expenseDescMissing: true });
-		const description = rawDescription.trim().replace(/^\w/, c => c.toUpperCase())
+		if (!rawDescription) return fail(422, { expenseDescMissing: true });
+		const description = rawDescription.trim().replace(/^\w/, (c) => c.toUpperCase());
 
 		const amount = Number(data.get('exp-amount'));
 		if (!amount || amount <= 0) return fail(422, { expenseAmountMissing: true });
@@ -49,14 +49,18 @@ export const actions = {
 			await createKeyword(newKeyword);
 		}
 
-		redirect(303, `/ledgers/${ledgerId}`);
-  },
-  delete: async ({ params, request }) => {
-    const data = await request.formData();
-    const ledgerId = data.get('ledger-id') as string;
-    
-    await deleteExpense(params.id);
-		
+		if (ledgerId.startsWith('template')) {
+			redirect(303, `/settings/templates/${ledgerId}`);
+		} else {
+			redirect(303, `/ledgers/${ledgerId}`);
+		}
+	},
+	delete: async ({ params, request }) => {
+		const data = await request.formData();
+		const ledgerId = data.get('ledger-id') as string;
+
+		await deleteExpense(params.id);
+
 		redirect(303, `/ledgers/${ledgerId}`);
 	}
 } satisfies Actions;

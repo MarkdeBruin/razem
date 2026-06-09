@@ -6,6 +6,11 @@
 	import SelectWrapper from '$lib/components/SelectWrapper.svelte';
 
 	let { data, form }: PageProps = $props();
+	
+	// svelte-ignore state_referenced_locally
+	const backUrl = data.expense.ledgerId.startsWith('template')
+		? `/settings/templates/${data.expense.ledgerId}`
+		: `/ledgers/${data.expense.ledgerId}`;
 
 	// svelte-ignore state_referenced_locally
 	let description = $state(data.expense.description);
@@ -17,7 +22,7 @@
 </script>
 
 <header class="header-sticky--back">
-	<a href="/ledgers/{data.expense.ledgerId}" class="btn--circle" aria-label="Back to ledger">
+	<a href={backUrl} class="btn--circle" aria-label="Back to ledger">
 		<ArrowLeftIcon />
 	</a>
 	<h1>Manage {data.expense.description}</h1>
@@ -26,19 +31,23 @@
 <main class="stack">
 	<form method="POST" action="?/update" use:enhance>
 		<h2>Edit expense</h2>
-		<label for="ledger-id">
-			Ledger
-			<SelectWrapper>
-				<select name="ledger-id">
-					{#each data.ledgers as ledger (ledger.id)}
-						<option value={ledger.id} selected={ledger.id === data.expense.ledgerId}>
-							{ledger.name}
-						</option>
-					{/each}
-				</select>
-			</SelectWrapper>
-			{#if form?.expenseLedgerIdMissing}<small>Ledger is required</small>{/if}
-		</label>
+		{#if data.expense.ledgerId.startsWith('template')}
+			<input type="hidden" name="ledger-id" value={data.expense.ledgerId} />
+		{:else}
+			<label for="ledger-id">
+				Ledger
+				<SelectWrapper>
+					<select name="ledger-id">
+						{#each data.ledgers as ledger (ledger.id)}
+							<option value={ledger.id} selected={ledger.id === data.expense.ledgerId}>
+								{ledger.name}
+							</option>
+						{/each}
+					</select>
+				</SelectWrapper>
+				{#if form?.expenseLedgerIdMissing}<small>Ledger is required</small>{/if}
+			</label>
+		{/if}
 		<label>
 			Description
 			<input

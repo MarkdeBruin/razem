@@ -39,10 +39,10 @@
 			<ul>
 				{#each data.expenses as expense (expense.id)}
 					<li>
-						<p>
+						<a href="/expenses/{expense.id}/manage">
 							<span>{expense.description}</span>
 							<span>{expense.amount}</span>
-						</p>
+						</a>
 					</li>
 				{/each}
 			</ul>
