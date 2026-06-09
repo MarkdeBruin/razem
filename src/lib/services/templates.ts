@@ -36,7 +36,9 @@ export async function updateLedgerTemplate(id: string, data: NewLedgerTemplate):
 export async function deleteLedgerTemplate(id: string): Promise<void> {
 	const index = mockTemplates.findIndex((template) => template.id === id);
 
-	if (index === -1) throw notFoundError('Tempalte', id);
+  if (index === -1) throw notFoundError('Tempalte', id);
+
+  // Todo: Delete expenses associated with the template
 
 	mockTemplates.splice(index, 1);
 }

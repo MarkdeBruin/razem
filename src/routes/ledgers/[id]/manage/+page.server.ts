@@ -1,9 +1,9 @@
 import { getLedger, updateLedger, deleteLedger } from '$lib/services/ledgers';
-import { getAllExpenses } from '$lib/services/expenses';
+import { getAllExpenses, createExpense } from '$lib/services/expenses';
 import { createLedgerTemplate } from '$lib/services/templates';
 import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types.js';
-import type { NewLedger, TemplateExpense } from '$lib/types/index.js';
+import type { NewLedger } from '$lib/types/index.js';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const ledger = await getLedger(params.id);
@@ -43,16 +43,19 @@ export const actions = {
 
 		const expenses = await getAllExpenses(ledger.id);
 
-		const templateExpenses: TemplateExpense[] = expenses.map((expense) => ({
-			...expense,
-			id: `texp-${crypto.randomUUID()}`
-		}));
-
 		const newTemplate = await createLedgerTemplate({
 			name,
-			ownerFraction: ledger.ownerFraction,
-			expenses: templateExpenses
+			ownerFraction: ledger.ownerFraction
 		});
+
+		await Promise.all(
+			expenses.toReversed().map((expense) =>
+				createExpense({
+					...expense,
+					ledgerId: newTemplate.id
+				})
+			)
+		);
 
 		redirect(303, `/settings/templates/${newTemplate.id}`);
 	},

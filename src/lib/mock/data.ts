@@ -66,6 +66,30 @@ export const mockExpenses: Expense[] = [
 		userId: 'user-2',
 		ledgerId: 'ledger-2',
 		categoryId: 'cat-4'
+	},
+	{
+		id: 'texp-1',
+		description: 'Rent',
+		amount: 1200,
+		userId: 'user-1',
+		ledgerId: 'template-1',
+		categoryId: 'cat-1'
+	},
+	{
+		id: 'texp-2',
+		description: 'Utilities',
+		amount: 80,
+		userId: 'user-1',
+		ledgerId: 'template-1',
+		categoryId: 'cat-1'
+	},
+	{
+		id: 'texp-3',
+		description: 'Internet',
+		amount: 40,
+		userId: 'user-2',
+		ledgerId: 'template-1',
+		categoryId: 'cat-1'
 	}
 ];
 
@@ -73,12 +97,7 @@ export const mockTemplates: LedgerTemplate[] = [
 	{
 		id: 'template-1',
 		name: 'Monthly expenses',
-		ownerFraction: 0.5,
-		expenses: [
-			{ id: 'texp-1', description: 'Rent', amount: 1200, userId: 'user-1', categoryId: 'cat-1' },
-			{ id: 'texp-2', description: 'Utilities', amount: 80, userId: 'user-1', categoryId: 'cat-1' },
-			{ id: 'texp-3', description: 'Internet', amount: 40, userId: 'user-2', categoryId: 'cat-1' }
-		]
+		ownerFraction: 0.5
 	}
 ];
 

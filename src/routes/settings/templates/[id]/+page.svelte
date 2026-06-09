@@ -35,9 +35,9 @@
 
 	<section class="list--section margin-block-start">
 		<header><h2>Expenses</h2></header>
-		{#if data.template.expenses.length}
+		{#if data.expenses.length}
 			<ul>
-				{#each data.template.expenses as expense (expense.id)}
+				{#each data.expenses as expense (expense.id)}
 					<li>
 						<p>
 							<span>{expense.description}</span>
