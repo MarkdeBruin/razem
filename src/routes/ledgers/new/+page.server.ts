@@ -1,9 +1,10 @@
 import { redirect, fail } from '@sveltejs/kit';
 import { getLedgerTemplate, getAllLedgerTemplates } from '$lib/services/templates';
+import { getAllExpenses } from '$lib/services/expenses';
 import { createLedger } from '$lib/services/ledgers';
 import { createExpense } from '$lib/services/expenses';
 import type { Actions, PageServerLoad } from './$types';
-import type { TemplateExpense } from '$lib/types';
+import type { Expense } from '$lib/types';
 
 export const load: PageServerLoad = async ({ url }) => {
 	const from = url.searchParams.get('from');
@@ -20,7 +21,7 @@ export const actions = {
 		if (!name) return fail(422, { nameMissing: true });
 
 		let ownerFraction = 0.5; // Default fraction (50%)
-		let templateExpenses: TemplateExpense[] = [];
+		let templateExpenses: Expense[] = [];
 
 		const templateId = data.get('ledger-template') as string;
 		if (templateId !== 'blank') {
@@ -28,14 +29,14 @@ export const actions = {
 
 			if (template) {
 				ownerFraction = template.ownerFraction;
-				templateExpenses = template.expenses;
+				templateExpenses = await getAllExpenses(template.id);
 			}
 		}
 
 		const newLedger = await createLedger({ name, ownerFraction });
 
 		await Promise.all(
-			templateExpenses.map((expense) =>
+			templateExpenses.toReversed().map((expense) =>
 				createExpense({
 					...expense,
 					ledgerId: newLedger.id
