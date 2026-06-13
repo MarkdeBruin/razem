@@ -43,7 +43,7 @@
 
 <main class="stack">
 	<section class="balance--section">
-		<div>
+		<div aria-hidden="true">
 			{(data.currentBalance > 0 ? '+' : '') + data.currentBalance}<span
 				class="visibility-hidden"
 				aria-hidden="true"
