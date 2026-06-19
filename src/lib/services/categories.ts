@@ -7,7 +7,8 @@ export async function getAllCategories(): Promise<Category[]> {
 }
 
 export async function getAllKeywords(): Promise<Keyword[]> {
-	return mockKeywords;
+	const keywords = mockKeywords;
+	return keywords.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 export async function getKeyword(id: string): Promise<Keyword | undefined> {

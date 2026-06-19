@@ -68,7 +68,7 @@
 					<h2>{category.name}</h2>
 				</header>
 				<ul>
-					{#each [...categoryKeywords].reverse() as keyword (keyword.id)}
+					{#each [...categoryKeywords] as keyword (keyword.id)}
 						<li><a href="/settings/keywords/{keyword.id}">{keyword.name}</a></li>
 					{/each}
 				</ul>
