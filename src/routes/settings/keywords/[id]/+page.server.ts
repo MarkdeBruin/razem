@@ -30,7 +30,7 @@ export const actions = {
 		if (!categoryId) return fail(422, { categoryMissing: true });
 
 		const existingKeywords = await getAllKeywords();
-		if (keywordExists(name, existingKeywords)) {
+		if (keywordExists(name, existingKeywords, params.id)) {
 			return fail(422, { keywordDuplicate: true, duplicateName: name });
 		}
 

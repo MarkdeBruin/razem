@@ -40,7 +40,7 @@
 						isDuplicate = false;
 						return;
 					}
-					isDuplicate = !!matchCategory(keyword, data.keywords);
+					isDuplicate = !!matchCategory(keyword, data.keywords, data.keyword.id);
 				}}
 			/>
 			{#if isDuplicate}
