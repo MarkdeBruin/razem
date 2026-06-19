@@ -2,8 +2,11 @@
 	import { enhance } from '$app/forms';
 	import type { PageProps } from './$types';
 	import { ArrowLeftIcon } from 'phosphor-svelte';
+	import SaveButton from '$lib/components/SaveButton.svelte';
+	import { useSaveForm } from '$lib/utils/saveFrom.svelte';
 
 	let { data, form }: PageProps = $props();
+	const save = useSaveForm();
 
 	// svelte-ignore state_referenced_locally
 	let fraction = data.ledger.ownerFraction;
@@ -19,8 +22,11 @@
 </header>
 
 <main class="stack">
-	<form method="POST" action="?/update" use:enhance>
+	<form method="POST" action="?/update" use:enhance={save.enhance}>
 		<h2>Edit ledger</h2>
+		<span class="sr-only" aria-live="polite" aria-atomic="true">
+			{#if form?.updated}Changes saved{/if}
+		</span>
 		<label>
 			Name
 			<input
@@ -79,7 +85,7 @@
 				}}
 			/>
 		</label>
-		<button class="btn" type="submit"><span>Save changes</span></button>
+		<SaveButton saveState={save.saveState} />
 	</form>
 	<form method="POST" action="?/template" use:enhance>
 		<header>

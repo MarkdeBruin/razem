@@ -1,4 +1,10 @@
-import { getKeyword, updateKeyword, deleteKeyword, getAllKeywords, getAllCategories } from '$lib/services/categories';
+import {
+	getKeyword,
+	updateKeyword,
+	deleteKeyword,
+	getAllKeywords,
+	getAllCategories
+} from '$lib/services/categories';
 import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import type { NewKeyword } from '$lib/types';
@@ -14,24 +20,24 @@ export const load: PageServerLoad = async ({ params }) => {
 
 export const actions = {
 	update: async ({ params, request }) => {
-    const data = await request.formData();
-		
+		const data = await request.formData();
+
 		const rawKeyword = data.get('keyword') as string;
-    if (!rawKeyword) return fail(422, { keywordMissing: true });
-    const name = rawKeyword.trim().replace(/^\w/, (c) => c.toUpperCase());
-		
+		if (!rawKeyword) return fail(422, { keywordMissing: true });
+		const name = rawKeyword.trim().replace(/^\w/, (c) => c.toUpperCase());
+
 		const categoryId = data.get('category') as string;
 		if (!categoryId) return fail(422, { categoryMissing: true });
 
-    const existingKeywords = await getAllKeywords();
+		const existingKeywords = await getAllKeywords();
 		if (keywordExists(name, existingKeywords)) {
 			return fail(422, { keywordDuplicate: true, duplicateName: name });
 		}
-		
-    const updatedKeyword: NewKeyword = { name, categoryId };
-    await updateKeyword(params.id, updatedKeyword);
-		
-		redirect(303, '/settings/categories');
+
+		const updatedKeyword: NewKeyword = { name, categoryId };
+		await updateKeyword(params.id, updatedKeyword);
+
+		return { updated: true };
 	},
 	delete: async ({ params }) => {
 		await deleteKeyword(params.id);

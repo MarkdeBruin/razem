@@ -4,9 +4,12 @@
 	import { matchCategory } from '$lib/utils/categories';
 	import { ArrowLeftIcon } from 'phosphor-svelte';
 	import SelectWrapper from '$lib/components/SelectWrapper.svelte';
+	import SaveButton from '$lib/components/SaveButton.svelte';
+	import { useSaveForm } from '$lib/utils/saveFrom.svelte';
 
 	let { data, form }: PageProps = $props();
-	
+	const save = useSaveForm();
+
 	// svelte-ignore state_referenced_locally
 	const backUrl = data.expense.ledgerId.startsWith('template')
 		? `/settings/templates/${data.expense.ledgerId}`
@@ -29,8 +32,11 @@
 </header>
 
 <main class="stack">
-	<form method="POST" action="?/update" use:enhance>
+	<form method="POST" action="?/update" use:enhance={save.enhance}>
 		<h2>Edit expense</h2>
+		<span class="sr-only" aria-live="polite" aria-atomic="true">
+			{#if form?.updated}Changes saved{/if}
+		</span>
 		{#if data.expense.ledgerId.startsWith('template')}
 			<input type="hidden" name="ledger-id" value={data.expense.ledgerId} />
 		{:else}
@@ -109,7 +115,7 @@
 				Auto-fill category for {description.trim()}
 			</label>
 		{/if}
-		<button class="btn" type="submit"><span>Save changes</span></button>
+		<SaveButton saveState={save.saveState} />
 	</form>
 
 	<form method="POST" action="?/delete" use:enhance>

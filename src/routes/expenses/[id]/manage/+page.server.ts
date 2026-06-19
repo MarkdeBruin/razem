@@ -47,13 +47,9 @@ export const actions = {
 		if (data.get('save-keyword')) {
 			const newKeyword: NewKeyword = { name: description, categoryId };
 			await createKeyword(newKeyword);
-		}
-
-		if (ledgerId.startsWith('template')) {
-			redirect(303, `/settings/templates/${ledgerId}`);
-		} else {
-			redirect(303, `/ledgers/${ledgerId}`);
-		}
+    }
+		
+		return { updated: true };
 	},
 	delete: async ({ params, request }) => {
 		const data = await request.formData();

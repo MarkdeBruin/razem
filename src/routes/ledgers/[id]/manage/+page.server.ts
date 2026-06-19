@@ -30,7 +30,7 @@ export const actions = {
 
 		await updateLedger(params.id, updatedLedger);
 
-		redirect(303, `/ledgers/${params.id}`);
+		return { updated: true };
 	},
 	template: async ({ params, request }) => {
 		const data = await request.formData();

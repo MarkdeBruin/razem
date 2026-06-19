@@ -2,10 +2,13 @@
 	import { enhance } from '$app/forms';
 	import type { PageProps } from './$types';
 	import { ArrowLeftIcon } from 'phosphor-svelte';
-	import SelectWrapper from '$lib/components/SelectWrapper.svelte';
 	import { matchCategory } from '$lib/utils/categories';
+	import SaveButton from '$lib/components/SaveButton.svelte';
+	import { useSaveForm } from '$lib/utils/saveFrom.svelte';
 
 	let { data, form }: PageProps = $props();
+	const save = useSaveForm();
+	
 	// svelte-ignore state_referenced_locally
 	let keyword = $state(data.keyword.name);
 	let isDuplicate = $state(false);
@@ -19,8 +22,11 @@
 </header>
 
 <main class="stack">
-	<form method="POST" action="?/update" use:enhance>
+	<form method="POST" action="?/update" use:enhance={save.enhance}>
 		<h2>Edit keyword</h2>
+		<span class="sr-only" aria-live="polite" aria-atomic="true">
+			{#if form?.updated}Changes saved{/if}
+		</span>
 		<label>
 			Keyword
 			<input
@@ -38,7 +44,7 @@
 				}}
 			/>
 			{#if isDuplicate}
-				<small>"{keyword}" already exists</small>
+				<small>“{keyword}” already exists</small>
 			{/if}
 			{#if form?.keywordDuplicate}
 				<small>{form.duplicateName} already exists</small>
@@ -65,7 +71,7 @@
 				{/if}
 			</div>
 		</fieldset>
-		<button class="btn" type="submit" disabled={isDuplicate}><span>Save changes</span></button>
+		<SaveButton saveState={save.saveState} disabled={isDuplicate} />
 	</form>
 
 	<form method="POST" action="?/delete" use:enhance>
