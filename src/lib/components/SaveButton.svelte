@@ -9,7 +9,7 @@
 	let { saveState = 'idle', disabled = false }: { saveState: SaveState, disabled?: boolean } = $props();
 </script>
 
-<button class="btn" type="submit" disabled={saveState !== 'idle' || disabled}>
+<button class="btn sticky" type="submit" disabled={saveState !== 'idle' || disabled}>
 	<span style="display: grid; overflow: hidden;">
 		{#key saveState}
 			<span

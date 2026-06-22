@@ -26,19 +26,7 @@
 <main>
 	<form method="POST" use:enhance>
 		<h1 {@attach attachObserveHeader(headerSpan)}>New Expense</h1>
-		<label>
-			Ledger
-			<SelectWrapper>
-				<select name="ledger-id">
-					{#each data.ledgers as ledger (ledger.id)}
-						<option value={ledger.id} selected={ledger.id === data.ledgerId}>
-							{ledger.name}
-						</option>
-					{/each}
-				</select>
-			</SelectWrapper>
-		</label>
-		{#if form?.expenseLedgerIdMissing}<small>Ledger is required</small>{/if}
+
 		<label>
 			Description
 			<input
@@ -79,19 +67,53 @@
 						{category.name}
 					</label>
 				{/each}
-				{#if form?.categoryMissing}
+
+				{#if isNewKeyword && selectedCategoryId}
+					<label>
+						<input type="checkbox" name="save-keyword" value="true" />
+						Auto-fill category in future
+					</label>
+				{/if}
+
+				{#if form?.expenseCategoryMissing}
 					<small>Please select a category</small>
 				{/if}
 			</div>
 		</fieldset>
 
-		{#if isNewKeyword && selectedCategoryId}
-			<label>
-				<input type="checkbox" name="save-keyword" value="true" />
-				Auto-fill category in future
-			</label>
-		{/if}
+		<fieldset>
+			<legend><span>User</span></legend>
+			<div class="stack--small">
+				<label>
+					<input type="radio" name="exp-user-id" value={data.currentUser.id} checked required />
+					{data.currentUser.name}
+				</label>
+				<label>
+					<input type="radio" name="exp-user-id" value={data.otherUser.id} required />
+					{data.otherUser.name}
+				</label>
 
-		<button class="btn" type="submit"><span>Add expense</span></button>
+				{#if form?.expenseUserIdMissing}
+					<small>Please select a user</small>
+				{/if}
+			</div>
+		</fieldset>
+
+		<label>
+			Ledger
+			<SelectWrapper>
+				<select name="ledger-id">
+					{#each data.ledgers as ledger (ledger.id)}
+						<option value={ledger.id} selected={ledger.id === data.ledgerId}>
+							{ledger.name}
+						</option>
+					{/each}
+				</select>
+			</SelectWrapper>
+			
+			{#if form?.expenseLedgerIdMissing}<small>Ledger is required</small>{/if}
+		</label>
+
+		<button class="btn sticky" type="submit"><span>Add expense</span></button>
 	</form>
 </main>

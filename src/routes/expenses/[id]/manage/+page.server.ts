@@ -21,9 +21,6 @@ export const actions = {
 	update: async ({ locals, params, request }) => {
 		const data = await request.formData();
 
-		const ledgerId = data.get('ledger-id') as string;
-		if (!ledgerId) return fail(422, { expenseLedgerIdMissing: true });
-
 		const rawDescription = data.get('exp-description') as string;
 		if (!rawDescription) return fail(422, { expenseDescMissing: true });
 		const description = rawDescription.trim().replace(/^\w/, (c) => c.toUpperCase());
@@ -32,14 +29,20 @@ export const actions = {
 		if (!amount || amount <= 0) return fail(422, { expenseAmountMissing: true });
 
 		const categoryId = data.get('exp-category') as string;
-		if (!categoryId) return fail(422, { categoryMissing: true });
+		if (!categoryId) return fail(422, { expenseCategoryMissing: true });
+
+		const userId = data.get('exp-user-id') as string;
+    if (!userId) return fail(422, { expenseUserIdMissing: true });
+
+    const ledgerId = data.get('ledger-id') as string;
+		if (!ledgerId) return fail(422, { expenseLedgerIdMissing: true });
 
 		const updatedExpense: NewExpense = {
 			ledgerId,
 			description,
 			amount,
 			categoryId,
-			userId: locals.currentUser.id
+			userId
 		};
 
 		updateExpense(params.id, updatedExpense);

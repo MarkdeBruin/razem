@@ -36,6 +36,11 @@
 			color: var(--btn-line-text-color);
 		}
 
+		&.sticky {
+			bottom: calc(var(--block-space) + var(--safe-inset-bottom));
+			position: sticky;
+		}
+
 		@media (any-hover: hover) {
 			&:hover {
 				background-color: var(--btn-hover-color);

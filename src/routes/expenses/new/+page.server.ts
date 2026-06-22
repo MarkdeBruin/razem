@@ -8,7 +8,7 @@ import type { NewExpense, NewKeyword } from '$lib/types';
 
 export const load: PageServerLoad = async ({ url }) => {
 	const ledgers = await getAllLedgers();
-  const categories = await getAllCategories();
+	const categories = await getAllCategories();
 	const keywords = await getAllKeywords();
 
 	const ledgerId = url.searchParams.get('ledger') ?? ledgers[0]?.id;
@@ -23,23 +23,26 @@ export const actions = {
 	default: async ({ locals, request }) => {
 		const data = await request.formData();
 
-		const ledgerId = data.get('ledger-id') as string;
-		if (!ledgerId) return fail(422, { expenseLedgerIdMissing: true });
-
 		const rawDescription = data.get('exp-description') as string;
-    if (!rawDescription) return fail(422, { expenseDescMissing: true });
-		const description = rawDescription.trim().replace(/^\w/, c => c.toUpperCase())
+		if (!rawDescription) return fail(422, { expenseDescMissing: true });
+		const description = rawDescription.trim().replace(/^\w/, (c) => c.toUpperCase());
 
 		const amount = Number(data.get('exp-amount'));
 		if (!amount || amount <= 0) return fail(422, { expenseAmountMissing: true });
 
 		const categoryId = data.get('exp-category') as string;
-		if (!categoryId) return fail(422, { categoryMissing: true });
+		if (!categoryId) return fail(422, { expenseCategoryMissing: true });
+
+		const userId = data.get('exp-user-id') as string;
+		if (!userId) return fail(422, { expenseUserIdMissing: true });
+
+		const ledgerId = data.get('ledger-id') as string;
+		if (!ledgerId) return fail(422, { expenseLedgerIdMissing: true });
 
 		const newExpense: NewExpense = {
 			description,
 			amount,
-			userId: locals.currentUser.id,
+			userId,
 			ledgerId,
 			categoryId
 		};

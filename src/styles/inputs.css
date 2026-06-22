@@ -123,12 +123,6 @@
 	}
 
 	input[type='checkbox'],
-	input[type='radio'],
-	input[type='submit'] {
-		cursor: pointer;
-	}
-
-	input[type='checkbox'],
 	input[type='radio'] {
 		--icon-size: 1rem;
 
@@ -136,6 +130,7 @@
 		-moz-appearance: none;
 		-webkit-appearance: none;
 		border: 2px solid var(--color-border-input-icon);
+		cursor: pointer;
 		flex-shrink: 0;
 		height: var(--icon-size);
 		position: relative;
@@ -159,10 +154,9 @@
 	}
 
 	input[type='checkbox'] {
-		--icon-size: 1rem;
+		--icon-size: 0.95rem;
 		border-radius: 0.25em;
 		corner-shape: squircle;
-		margin-inline-end: calc(var(--inline-space-half) / 2);
 
 		&:checked::after {
 			border-radius: 0.2em;
@@ -172,6 +166,7 @@
 	input[type='radio'] {
 		--icon-size: 0.85rem;
 		border-radius: 100%;
+		margin: calc((1rem - var(--icon-size)) / 2);
 
 		&:checked::after {
 			border-radius: 100%;

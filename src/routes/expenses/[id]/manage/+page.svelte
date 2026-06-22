@@ -34,26 +34,11 @@
 <main class="stack">
 	<form method="POST" action="?/update" use:enhance={save.enhance}>
 		<h2>Edit expense</h2>
+
 		<span class="sr-only" aria-live="polite" aria-atomic="true">
 			{#if form?.updated}Changes saved{/if}
 		</span>
-		{#if data.expense.ledgerId.startsWith('template')}
-			<input type="hidden" name="ledger-id" value={data.expense.ledgerId} />
-		{:else}
-			<label for="ledger-id">
-				Ledger
-				<SelectWrapper>
-					<select name="ledger-id">
-						{#each data.ledgers as ledger (ledger.id)}
-							<option value={ledger.id} selected={ledger.id === data.expense.ledgerId}>
-								{ledger.name}
-							</option>
-						{/each}
-					</select>
-				</SelectWrapper>
-				{#if form?.expenseLedgerIdMissing}<small>Ledger is required</small>{/if}
-			</label>
-		{/if}
+
 		<label>
 			Description
 			<input
@@ -103,16 +88,65 @@
 						{category.name}
 					</label>
 				{/each}
-				{#if form?.categoryMissing}
+
+				{#if isNewKeyword && selectedCategoryId}
+					<label>
+						<input type="checkbox" name="save-keyword" value="true" />
+						Auto-fill category for {description.trim()}
+					</label>
+				{/if}
+
+				{#if form?.expenseCategoryMissing}
 					<small>Please select a category</small>
 				{/if}
 			</div>
 		</fieldset>
 
-		{#if isNewKeyword && selectedCategoryId}
-			<label>
-				<input type="checkbox" name="save-keyword" value="true" />
-				Auto-fill category for {description.trim()}
+		<fieldset>
+			<legend><span>User</span></legend>
+			<div class="stack--small">
+				<label>
+					<input
+						type="radio"
+						name="exp-user-id"
+						value={data.currentUser.id}
+						checked={data.currentUser.id === data.expense.userId}
+						required
+					/>
+					{data.currentUser.name}
+				</label>
+				<label>
+					<input
+						type="radio"
+						name="exp-user-id"
+						value={data.otherUser.id}
+						checked={data.otherUser.id === data.expense.userId}
+						required
+					/>
+					{data.otherUser.name}
+				</label>
+
+				{#if form?.expenseUserIdMissing}
+					<small>Please select a user</small>
+				{/if}
+			</div>
+		</fieldset>
+
+		{#if data.expense.ledgerId.startsWith('template')}
+			<input type="hidden" name="ledger-id" value={data.expense.ledgerId} />
+		{:else}
+			<label for="ledger-id">
+				Ledger
+				<SelectWrapper>
+					<select name="ledger-id">
+						{#each data.ledgers as ledger (ledger.id)}
+							<option value={ledger.id} selected={ledger.id === data.expense.ledgerId}>
+								{ledger.name}
+							</option>
+						{/each}
+					</select>
+				</SelectWrapper>
+				{#if form?.expenseLedgerIdMissing}<small>Ledger is required</small>{/if}
 			</label>
 		{/if}
 		<SaveButton saveState={save.saveState} />
