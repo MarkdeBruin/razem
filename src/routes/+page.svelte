@@ -38,7 +38,7 @@
 		</header>
 		{#if data.ledgers.length}
 			<ul>
-				{#each data.ledgers as ledger (ledger.id)}
+				{#each data.ledgers.slice(0, 4) as ledger (ledger.id)}
 					<li>
 						<a href="ledgers/{ledger.id}?from=home">{ledger.name}</a>
 					</li>
