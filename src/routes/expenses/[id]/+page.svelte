@@ -20,7 +20,7 @@
 </script>
 
 <header class="header-sticky--back">
-	<a href="/ledgers/${data.expense.ledgerId}" class="btn--circle" aria-label="Back to ledger">
+	<a href="/ledgers/{data.expense.ledgerId}" class="btn--circle" aria-label="Back to ledger">
 		<ArrowLeftIcon />
 	</a>
 	<h1>Manage {data.expense.description}</h1>
