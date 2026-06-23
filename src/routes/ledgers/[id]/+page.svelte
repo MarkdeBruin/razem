@@ -114,7 +114,7 @@
 			<ul>
 				{#each filteredExpenses as expense (expense.id)}
 					<li>
-						<a href="/expenses/{expense.id}/manage">
+						<a href="/expenses/{expense.id}">
 							<span>{expense.description}</span>
 							<span>{expense.amount}</span>
 						</a>

@@ -2,7 +2,7 @@ import { getExpense, updateExpense, deleteExpense } from '$lib/services/expenses
 import { getAllCategories, getAllKeywords } from '$lib/services/categories.js';
 import { createKeyword } from '$lib/services/categories.js';
 import { error, fail, redirect } from '@sveltejs/kit';
-import type { Actions, PageServerLoad } from './$types.js';
+import type { Actions, PageServerLoad } from './manage/$types.js';
 import type { NewExpense, NewKeyword } from '$lib/types/index.js';
 import { getAllLedgers } from '$lib/services/ledgers.js';
 
