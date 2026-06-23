@@ -17,6 +17,14 @@
 			pointer-events: auto;
 			transform: translateY(0);
 		}
+
+		.btn--circle:first-child {
+		    margin-inline-start: var(--btn-circle-neg-margin);
+		}
+
+		.btn--circle:last-child {
+		    margin-inline-end: var(--btn-circle-neg-margin);
+		}
 	}
 
 	header[class*='header-sticky--'] {
