@@ -23,13 +23,6 @@ export type Expense = {
 };
 export type NewExpense = Omit<Expense, 'id'>;
 
-export type LedgerTemplate = {
-	id: string;
-	name: string;
-	ownerFraction: number; // fraction paid by owner (0–1)
-};
-export type NewLedgerTemplate = Omit<LedgerTemplate, 'id'>;
-
 export type Category = {
 	id: string;
 	name: string;
