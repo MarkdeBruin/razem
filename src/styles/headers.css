@@ -19,11 +19,11 @@
 		}
 
 		.btn--circle:first-child {
-		    margin-inline-start: var(--btn-circle-neg-margin);
+			margin-inline-start: var(--btn-circle-neg-margin);
 		}
 
 		&last-child {
-		    margin-inline-end: var(--btn-circle-neg-margin);
+			margin-inline-end: var(--btn-circle-neg-margin);
 		}
 	}
 
@@ -55,6 +55,13 @@
 			overflow: hidden;
 			padding-inline-end: calc(var(--btn-circle-size) + var(--inline-space));
 			text-overflow: ellipsis;
+
+			@media (any-hover: hover) {
+				a:hover {
+					text-decoration: underline;
+					color: var(--color-hover);
+				}
+			}
 		}
 	}
 

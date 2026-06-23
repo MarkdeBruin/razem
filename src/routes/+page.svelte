@@ -33,18 +33,18 @@
 		<header>
 			<h2>Ledgers</h2>
 			{#if data.ledgers.length}
-				<a class="btn--circle" href="ledgers/new?from=home" aria-label="Add ledger"><PlusIcon /></a>
+				<a class="btn--circle" href="ledgers/new" aria-label="Add ledger"><PlusIcon /></a>
 			{/if}
 		</header>
 		{#if data.ledgers.length}
 			<ul>
 				{#each data.ledgers.slice(0, 4) as ledger (ledger.id)}
 					<li>
-						<a href="ledgers/{ledger.id}?from=home">{ledger.name}</a>
+						<a href="ledgers/{ledger.id}">{ledger.name}</a>
 					</li>
 				{/each}
-				{#if data.ledgers.length > 4}
-					<li><a href="/ledgers">All ledgers</a></li>
+				{#if data.ledgers.length > 4 || data.templates.length > 0}
+					<li><a href="/ledgers">All ledgers & templates</a></li>
 				{/if}
 			</ul>
 		{:else}
@@ -58,7 +58,7 @@
 	</section>
 
 	{#if data.ledgers.length}
-		<a class="btn" href="/expenses/new?ledger={data.ledgers[0].id}&from=home">
+		<a class="btn" href="/expenses/new?ledger={data.ledgers[0].id}">
 			<span>Add expense</span>
 		</a>
 	{/if}

@@ -4,11 +4,15 @@ import { notFoundError } from '$lib/utils/errors';
 import { mockLedgers } from '$lib/mock/data';
 
 export async function getAllLedgers(): Promise<Ledger[]> {
-	return mockLedgers.toReversed();
+  return mockLedgers.filter((ledger) => !ledger.isTemplate).toReversed();
 }
 
 export async function getAllLedgerTemplates(): Promise<Ledger[]> {
 	return mockLedgers.filter((ledger) => ledger.isTemplate).toReversed();
+}
+
+export async function getAllLedgersAndTemplates(): Promise<Ledger[]> {
+	return mockLedgers.toReversed();
 }
 
 export async function getLedger(id: string): Promise<Ledger | undefined> {
