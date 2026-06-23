@@ -41,6 +41,11 @@
 			</div>
 		</fieldset>
 
+		<label>
+			<input type="checkbox" name="is-template" value="true" />
+			Create as template
+		</label>
+
 		<button class="btn" type="submit"><span>Add ledger</span></button>
 	</form>
 </main>

@@ -1,5 +1,5 @@
 import { redirect, fail } from '@sveltejs/kit';
-import { getLedgerTemplate, getAllLedgerTemplates } from '$lib/services/templates';
+import { getLedger, getAllLedgerTemplates } from '$lib/services/ledgers';
 import { getAllExpenses } from '$lib/services/expenses';
 import { createLedger } from '$lib/services/ledgers';
 import { createExpense } from '$lib/services/expenses';
@@ -25,7 +25,7 @@ export const actions = {
 
 		const templateId = data.get('ledger-template') as string;
 		if (templateId !== 'blank') {
-			const template = await getLedgerTemplate(templateId);
+			const template = await getLedger(templateId);
 
 			if (template) {
 				ownerFraction = template.ownerFraction;
@@ -33,7 +33,9 @@ export const actions = {
 			}
 		}
 
-		const newLedger = await createLedger({ name, ownerFraction, isTemplate: false });
+    let isTemplate = data.get('is-template') !== null
+
+		const newLedger = await createLedger({ name, ownerFraction, isTemplate });
 
 		await Promise.all(
 			templateExpenses.toReversed().map((expense) =>

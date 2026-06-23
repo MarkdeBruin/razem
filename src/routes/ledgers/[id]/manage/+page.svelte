@@ -85,21 +85,15 @@
 				}}
 			/>
 		</label>
-		<SaveButton saveState={save.saveState} />
-	</form>
-	<form method="POST" action="?/template" use:enhance>
-		<header>
-			<h2>New template</h2>
-			<p class="text-subtle">From all current expenses and the split setting</p>
-		</header>
+
 		<label>
-			Name
-			<input type="text" name="template-name" required />
-			{#if form?.templateNameMissing}<mark>Name is required</mark>{/if}
+			<input type="checkbox" name="is-template" value="true" checked={data.ledger.isTemplate} />
+			Use as template
 		</label>
 
-		<button class="btn line" type="submit"><span>Create template</span></button>
+		<SaveButton saveState={save.saveState} />
 	</form>
+
 	<form method="POST" action="?/delete" use:enhance>
 		<header>
 			<h2>Delete ledger</h2>
