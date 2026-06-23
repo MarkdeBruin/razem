@@ -33,7 +33,7 @@ export const actions = {
 			}
 		}
 
-		const newLedger = await createLedger({ name, ownerFraction });
+		const newLedger = await createLedger({ name, ownerFraction, isTemplate: false });
 
 		await Promise.all(
 			templateExpenses.toReversed().map((expense) =>

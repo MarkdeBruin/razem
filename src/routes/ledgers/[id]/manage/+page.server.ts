@@ -25,7 +25,8 @@ export const actions = {
 
 		const updatedLedger: NewLedger = {
 			name: name,
-			ownerFraction: ownerFraction
+			ownerFraction: ownerFraction,
+			isTemplate: false
 		};
 
 		await updateLedger(params.id, updatedLedger);

@@ -6,8 +6,14 @@ export const mockUsers: User[] = [
 ];
 
 export const mockLedgers: Ledger[] = [
-	{ id: 'ledger-1', name: 'February 2026', ownerFraction: 0.5 },
-	{ id: 'ledger-2', name: 'March 2026', ownerFraction: 0.5 }
+	{
+		id: 'ledger-1',
+		name: 'Monthly expenses',
+		ownerFraction: 0.5,
+		isTemplate: true
+	},
+	{ id: 'ledger-2', name: 'February 2026', ownerFraction: 0.5, isTemplate: false },
+	{ id: 'ledger-3', name: 'March 2026', ownerFraction: 0.5, isTemplate: false }
 ];
 
 export const mockExpenses: Expense[] = [
@@ -16,7 +22,7 @@ export const mockExpenses: Expense[] = [
 		description: 'Rent',
 		amount: 1200,
 		userId: 'user-1',
-		ledgerId: 'ledger-1',
+		ledgerId: 'ledger-2',
 		categoryId: 'cat-1'
 	},
 	{
@@ -32,7 +38,7 @@ export const mockExpenses: Expense[] = [
 		description: 'Utilities',
 		amount: 80,
 		userId: 'user-1',
-		ledgerId: 'ledger-1',
+		ledgerId: 'ledger-2',
 		categoryId: 'cat-1'
 	},
 	{
@@ -40,7 +46,7 @@ export const mockExpenses: Expense[] = [
 		description: 'Internet',
 		amount: 40,
 		userId: 'user-1',
-		ledgerId: 'ledger-1',
+		ledgerId: 'ledger-2',
 		categoryId: 'cat-1'
 	},
 	{
@@ -48,7 +54,7 @@ export const mockExpenses: Expense[] = [
 		description: 'AH',
 		amount: 20,
 		userId: 'user-2',
-		ledgerId: 'ledger-1',
+		ledgerId: 'ledger-2',
 		categoryId: 'cat-2'
 	},
 	{
@@ -56,7 +62,7 @@ export const mockExpenses: Expense[] = [
 		description: 'Rent',
 		amount: 1200,
 		userId: 'user-1',
-		ledgerId: 'ledger-2',
+		ledgerId: 'ledger-3',
 		categoryId: 'cat-1'
 	},
 	{
@@ -64,31 +70,31 @@ export const mockExpenses: Expense[] = [
 		description: 'Bol',
 		amount: 130,
 		userId: 'user-2',
-		ledgerId: 'ledger-2',
+		ledgerId: 'ledger-3',
 		categoryId: 'cat-4'
 	},
 	{
-		id: 'texp-1',
+		id: 'exp-8',
 		description: 'Rent',
 		amount: 1200,
 		userId: 'user-1',
-		ledgerId: 'template-1',
+		ledgerId: 'ledger-1',
 		categoryId: 'cat-1'
 	},
 	{
-		id: 'texp-2',
+		id: 'exp-9',
 		description: 'Utilities',
 		amount: 80,
 		userId: 'user-1',
-		ledgerId: 'template-1',
+		ledgerId: 'ledger-1',
 		categoryId: 'cat-1'
 	},
 	{
-		id: 'texp-3',
+		id: 'texp-10',
 		description: 'Internet',
 		amount: 40,
 		userId: 'user-2',
-		ledgerId: 'template-1',
+		ledgerId: 'ledger-1',
 		categoryId: 'cat-1'
 	}
 ];

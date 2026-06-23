@@ -20,7 +20,7 @@ export const load: PageServerLoad = async ({ url }) => {
 };
 
 export const actions = {
-	default: async ({ locals, request }) => {
+	default: async ({ request }) => {
 		const data = await request.formData();
 
 		const rawDescription = data.get('exp-description') as string;

@@ -9,6 +9,7 @@ export type Ledger = {
 	id: string;
 	name: string;
 	ownerFraction: number; // fraction paid by owner (0–1)
+	isTemplate: boolean;
 };
 export type NewLedger = Omit<Ledger, 'id'>;
 
