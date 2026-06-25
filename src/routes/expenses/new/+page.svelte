@@ -103,14 +103,27 @@
 			Ledger
 			<SelectWrapper>
 				<select name="ledger-id">
-					{#each data.ledgers as ledger (ledger.id)}
-						<option value={ledger.id} selected={ledger.id === data.ledgerId}>
-							{ledger.name}
-						</option>
-					{/each}
+					{#if data.ledgers.length > 0}
+						{#each data.ledgers as ledger (ledger.id)}
+							<option value={ledger.id} selected={ledger.id === data.ledgerId}>
+								{ledger.name}
+							</option>
+						{/each}
+					{/if}
+
+					{#if data.templates.length > 0}
+						<hr />
+						<optgroup label="Templates">
+							{#each data.templates as template (template.id)}
+								<option value={template.id}>
+									{template.name}
+								</option>
+							{/each}
+						</optgroup>
+					{/if}
 				</select>
 			</SelectWrapper>
-			
+
 			{#if form?.expenseLedgerIdMissing}<small>Ledger is required</small>{/if}
 		</label>
 

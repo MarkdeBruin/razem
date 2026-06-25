@@ -11,10 +11,6 @@ export async function getAllLedgerTemplates(): Promise<Ledger[]> {
 	return mockLedgers.filter((ledger) => ledger.isTemplate).toReversed();
 }
 
-export async function getAllLedgersAndTemplates(): Promise<Ledger[]> {
-	return mockLedgers.toReversed();
-}
-
 export async function getLedger(id: string): Promise<Ledger | undefined> {
 	return mockLedgers.find((ledger) => ledger.id === id);
 }

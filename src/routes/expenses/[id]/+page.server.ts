@@ -1,10 +1,9 @@
+import { getAllCategories, getAllKeywords, createKeyword } from '$lib/services/categories.js';
 import { getExpense, updateExpense, deleteExpense } from '$lib/services/expenses';
-import { getAllCategories, getAllKeywords } from '$lib/services/categories.js';
-import { createKeyword } from '$lib/services/categories.js';
+import { getAllLedgers, getAllLedgerTemplates } from '$lib/services/ledgers.js';
 import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types.js';
 import type { NewExpense, NewKeyword } from '$lib/types/index.js';
-import { getAllLedgers } from '$lib/services/ledgers.js';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const expense = await getExpense(params.id);
@@ -12,9 +11,10 @@ export const load: PageServerLoad = async ({ params }) => {
 
 	const ledgers = await getAllLedgers();
 	const categories = await getAllCategories();
+	const templates = await getAllLedgerTemplates();
 	const keywords = await getAllKeywords();
 
-	return { expense, ledgers, categories, keywords };
+	return { expense, ledgers, templates, categories, keywords };
 };
 
 export const actions = {
