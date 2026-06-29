@@ -19,24 +19,6 @@
 	let { children } = $props();
 </script>
 
-<svelte:head>
-	<title>Razem</title>
-	<link rel="icon" href={favicon} />
-	<link
-		rel="preload"
-		href="/assets/fonts/spaceGrotesk.woff2"
-		as="font"
-		type="font/woff2"
-		crossorigin="anonymous"
-	/>
-	<meta
-		name="theme-color"
-		content="oklch(94.9% 0.011 89.7)"
-		media="(prefers-color-scheme: light)"
-	/>
-	<meta name="theme-color" content="oklch(42.6% 0.162 26.9)" media="(prefers-color-scheme: dark)" />
-</svelte:head>
-
 <IconContext values={{ color: 'currentColor', size: '1.2em', mirrored: false, weight: 'bold' }}>
 	{@render children()}
 </IconContext>
