@@ -1,5 +1,4 @@
 <script lang="ts">
-	import favicon from '$lib/assets/favicon.svg';
 	import { IconContext } from 'phosphor-svelte';
 
 	import '/src/styles/_global.css';
