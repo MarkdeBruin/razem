@@ -124,10 +124,3 @@
 		</section>
 	{/if}
 </main>
-
-<footer hidden>
-	<ul>
-		<li><a href="/ledgers/{data.ledger.id}/delete">Delete ledger</a></li>
-		<li><a href="/ledgers/templates/new?from={data.ledger.id}">Create template from ledger</a></li>
-	</ul>
-</footer>
