@@ -29,7 +29,16 @@
 
 	header[class*='header-sticky--'] {
 		align-items: center;
-		background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg) 50%, transparent 100%);
+		background: linear-gradient(
+			180deg,
+			var(--color-bg) 0%,
+			var(--color-bg) 40%,
+			color-mix(in oklch, var(--color-bg) 80%, transparent) 55%,
+			color-mix(in oklch, var(--color-bg) 50%, transparent) 68%,
+			color-mix(in oklch, var(--color-bg) 20%, transparent) 82%,
+			color-mix(in oklch, var(--color-bg) 5%, transparent) 93%,
+			transparent 100%
+		);
 		display: flex;
 		gap: var(--inline-space);
 		margin-block-end: calc(var(--block-space) * -1);
