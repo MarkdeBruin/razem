@@ -66,6 +66,11 @@
 	--btn-color: var(--color-fg);
 	--btn-hover-color: var(--color-hover);
 	--btn-text-color: var(--color-bg);
+	--btn-font-weight: 350;
+	
+	@media (prefers-color-scheme: dark) {
+		--btn-font-weight: 400;
+	}
 
 	--btn-line-color: var(--color-bg);
 	--btn-line-hover-color: var(--color-hover);

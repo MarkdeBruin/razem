@@ -8,6 +8,7 @@
 		cursor: pointer;
 		display: grid;
 		font-size: var(--btn-text);
+		font-weight: var(--btn-font-weight);
 		letter-spacing: var(--uppercase-spacing);
 		min-height: 2.4rem;
 		padding: 0.5em var(--inline-space-double);
