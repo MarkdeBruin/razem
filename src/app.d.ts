@@ -1,4 +1,4 @@
-import type { User } from '$lib/types';
+import type { User } from '$lib/schemas/users';
 
 declare global {
 	namespace App {

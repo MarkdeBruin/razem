@@ -1,4 +1,4 @@
-import type { Keyword } from "$lib/types";
+import type { Keyword } from "$lib/schemas/category";
 
 function normaliseKeyword(keyword: string): string {
     return keyword.trim().toLowerCase();

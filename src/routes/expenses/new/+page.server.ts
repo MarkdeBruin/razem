@@ -3,7 +3,8 @@ import { createExpense } from '$lib/services/expenses';
 import { getAllLedgers, getAllLedgerTemplates } from '$lib/services/ledgers';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import type { NewExpense, NewKeyword } from '$lib/types';
+import type { NewExpense } from '$lib/schemas/expenses';
+import type { NewKeyword } from '$lib/schemas/category';
 
 export const load: PageServerLoad = async ({ url }) => {
 	const ledgers = await getAllLedgers();

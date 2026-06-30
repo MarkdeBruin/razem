@@ -7,7 +7,7 @@ import {
 } from '$lib/services/categories';
 import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import type { NewKeyword } from '$lib/types';
+import type { NewKeyword } from '$lib/schemas/category';
 import { keywordExists } from '$lib/utils/categories';
 
 export const load: PageServerLoad = async ({ params }) => {

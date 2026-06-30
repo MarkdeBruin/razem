@@ -1,5 +1,5 @@
 import { getBothUsers } from '$lib/services/users';
-import type { User } from '$lib/types';
+import type { User } from '$lib/schemas/users';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ locals }) => {

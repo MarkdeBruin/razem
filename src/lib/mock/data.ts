@@ -1,4 +1,7 @@
-import type { User, Ledger, Expense, Category } from '$lib/types';
+import type { Category } from '$lib/schemas/category';
+import type { Expense } from '$lib/schemas/expenses';
+import type { Ledger } from '$lib/schemas/ledgers';
+import type { User } from '$lib/schemas/users';
 
 export const mockUsers: User[] = [
 	{ id: 'user-1', name: 'Mark', email: 'mark@example.com', role: 'owner' },

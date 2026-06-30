@@ -1,4 +1,4 @@
-import type { Category, Keyword, NewKeyword } from '$lib/types';
+import type { Category, Keyword, NewKeyword } from '$lib/schemas/category';
 import { notFoundError } from '$lib/utils/errors';
 import { mockCategories, mockKeywords } from '$lib/mock/data';
 

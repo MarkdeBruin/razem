@@ -4,7 +4,7 @@ import { getAllExpenses } from '$lib/services/expenses';
 import { createLedger } from '$lib/services/ledgers';
 import { createExpense } from '$lib/services/expenses';
 import type { Actions, PageServerLoad } from './$types';
-import type { Expense } from '$lib/types';
+import type { Expense } from '$lib/schemas/expenses';
 
 export const load: PageServerLoad = async ({ url }) => {
 	const from = url.searchParams.get('from');

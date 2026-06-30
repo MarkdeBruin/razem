@@ -1,7 +1,7 @@
 import { getLedger, updateLedger, deleteLedger } from '$lib/services/ledgers';
 import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types.js';
-import type { NewLedger } from '$lib/types/index.js';
+import type { NewLedger } from '$lib/schemas/ledgers';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const ledger = await getLedger(params.id);

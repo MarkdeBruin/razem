@@ -1,4 +1,4 @@
-import type { Expense, NewExpense } from '$lib/types';
+import type { Expense, NewExpense } from '$lib/schemas/expenses';
 import { notFoundError } from '$lib/utils/errors';
 import { mockExpenses } from '$lib/mock/data';
 

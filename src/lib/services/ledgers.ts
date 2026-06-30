@@ -1,4 +1,4 @@
-import type { Ledger, NewLedger } from '$lib/types';
+import type { Ledger, NewLedger } from '$lib/schemas/ledgers';
 import { notFoundError } from '$lib/utils/errors';
 
 import { mockLedgers } from '$lib/mock/data';
