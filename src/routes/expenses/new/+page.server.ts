@@ -2,8 +2,9 @@ import { getAllCategories, getAllKeywords, createKeyword } from '$lib/services/c
 import { createExpense } from '$lib/services/expenses';
 import { getAllLedgers, getAllLedgerTemplates } from '$lib/services/ledgers';
 import { fail, redirect } from '@sveltejs/kit';
+import { newExpenseSchema } from '$lib/schemas/expenses';
+import * as z from 'zod';
 import type { Actions, PageServerLoad } from './$types';
-import type { NewExpense } from '$lib/schemas/expenses';
 import type { NewKeyword } from '$lib/schemas/category';
 
 export const load: PageServerLoad = async ({ url }) => {
@@ -24,36 +25,33 @@ export const actions = {
 	default: async ({ request }) => {
 		const data = await request.formData();
 
-		const rawDescription = data.get('exp-description') as string;
-		if (!rawDescription) return fail(422, { expenseDescMissing: true });
-		const description = rawDescription.trim().replace(/^\w/, (c) => c.toUpperCase());
+		const description = (data.get('exp-description') as string | null)
+			?.trim()
+			.replace(/^\w/, (c) => c.toUpperCase());
 
-		const amount = Number(data.get('exp-amount'));
-		if (!amount || amount <= 0) return fail(422, { expenseAmountMissing: true });
-
-		const categoryId = data.get('exp-category') as string;
-		if (!categoryId) return fail(422, { expenseCategoryMissing: true });
-
-		const userId = data.get('exp-user-id') as string;
-		if (!userId) return fail(422, { expenseUserIdMissing: true });
-
-		const ledgerId = data.get('ledger-id') as string;
-		if (!ledgerId) return fail(422, { expenseLedgerIdMissing: true });
-
-		const newExpense: NewExpense = {
+		const result = newExpenseSchema.safeParse({
 			description,
-			amount,
-			userId,
-			ledgerId,
-			categoryId
-		};
-		await createExpense(newExpense);
+			amount: Number(data.get('exp-amount')),
+			categoryId: data.get('exp-category'),
+			userId: data.get('exp-user-id'),
+			ledgerId: data.get('ledger-id')
+		});
+
+		if (!result.success) {
+			const { fieldErrors } = z.flattenError(result.error);
+			return fail(422, { errors: fieldErrors });
+		}
+
+		await createExpense(result.data);
 
 		if (data.get('save-keyword')) {
-			const newKeyword: NewKeyword = { name: description, categoryId };
+			const newKeyword: NewKeyword = {
+				name: result.data.description,
+				categoryId: result.data.categoryId
+			};
 			await createKeyword(newKeyword);
 		}
 
-		redirect(303, `/ledgers/${ledgerId}`);
+		redirect(303, `/ledgers/${result.data.ledgerId}`);
 	}
 } satisfies Actions;

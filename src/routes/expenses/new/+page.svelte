@@ -44,12 +44,12 @@
 				}}
 				onblur={() => (isNewKeyword = description.trim().length > 0 && !match)}
 			/>
-			{#if form?.expenseDescMissing}<small>Description is required</small>{/if}
+			{#if form?.errors?.description}<small>{form.errors.description[0]}</small>{/if}
 		</label>
 		<label>
 			Amount
 			<input type="number" name="exp-amount" min="1" inputmode="numeric" required />
-			{#if form?.expenseAmountMissing}<small>Amount is required</small>{/if}
+			{#if form?.errors?.amount}<small>{form.errors.amount[0]}</small>{/if}
 		</label>
 
 		<fieldset>
@@ -75,9 +75,7 @@
 					</label>
 				{/if}
 
-				{#if form?.expenseCategoryMissing}
-					<small>Please select a category</small>
-				{/if}
+				{#if form?.errors?.categoryId}<small>{form.errors.categoryId[0]}</small>{/if}
 			</div>
 		</fieldset>
 
@@ -93,9 +91,7 @@
 					{data.otherUser.name}
 				</label>
 
-				{#if form?.expenseUserIdMissing}
-					<small>Please select a user</small>
-				{/if}
+				{#if form?.errors?.userId}<small>{form.errors.userId[0]}</small>{/if}
 			</div>
 		</fieldset>
 
@@ -124,7 +120,7 @@
 				</select>
 			</SelectWrapper>
 
-			{#if form?.expenseLedgerIdMissing}<small>Ledger is required</small>{/if}
+			{#if form?.errors?.ledgerId}<small>{form.errors.ledgerId[0]}</small>{/if}
 		</label>
 
 		<button class="btn sticky" type="submit"><span>Add expense</span></button>
