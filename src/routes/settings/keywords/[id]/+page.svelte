@@ -8,7 +8,7 @@
 
 	let { data, form }: PageProps = $props();
 	const save = useSaveForm();
-	
+
 	// svelte-ignore state_referenced_locally
 	let keyword = $state(data.keyword.name);
 	let isDuplicate = $state(false);
@@ -43,13 +43,9 @@
 					isDuplicate = !!matchCategory(keyword, data.keywords, data.keyword.id);
 				}}
 			/>
-			{#if isDuplicate}
-				<small>“{keyword}” already exists</small>
-			{/if}
-			{#if form?.keywordDuplicate}
-				<small>{form.duplicateName} already exists</small>
-			{/if}
-			{#if form?.keywordMissing}<small>Keyword is required</small>{/if}
+			{#if isDuplicate}<small>“{keyword}” already exists</small>{/if}
+			{#if form?.keywordDuplicate}<small>"{form.duplicateName}" already exists</small>{/if}
+			{#if form?.errors?.name}<small>{form.errors.name[0]}</small>{/if}
 		</label>
 		<fieldset>
 			<legend><span>Category</span></legend>
@@ -66,9 +62,7 @@
 						{category.name}
 					</label>
 				{/each}
-				{#if form?.categoryMissing}
-					<small>Please select a category</small>
-				{/if}
+				{#if form?.errors?.categoryId}<small>{form.errors.categoryId[0]}</small>{/if}
 			</div>
 		</fieldset>
 		<SaveButton saveState={save.saveState} disabled={isDuplicate} />

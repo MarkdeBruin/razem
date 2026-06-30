@@ -34,15 +34,9 @@
 					isDuplicate = !!matchCategory(keyword, data.keywords);
 				}}
 			/>
-			{#if isDuplicate}
-				<small>“{keyword.trim()}” already exists</small>
-			{/if}
-			{#if form?.keywordMissing}
-				<small>Keyword is required</small>
-			{/if}
-			{#if form?.keywordDuplicate}
-				<small>{form.duplicateName} already exists</small>
-			{/if}
+			{#if isDuplicate}<small>“{keyword.trim()}” already exists</small>{/if}
+			{#if form?.keywordDuplicate}<small>"{form.duplicateName}" already exists</small>{/if}
+			{#if form?.errors?.name}<small>{form.errors.name[0]}</small>{/if}
 		</label>
 
 		<fieldset>
@@ -54,9 +48,7 @@
 						{category.name}
 					</label>
 				{/each}
-				{#if form?.categoryMissing}
-					<small>Please select a category</small>
-				{/if}
+				{#if form?.errors?.categoryId}<small>{form.errors.categoryId[0]}</small>{/if}
 			</div>
 		</fieldset>
 

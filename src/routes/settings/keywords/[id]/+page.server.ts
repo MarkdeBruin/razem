@@ -7,8 +7,9 @@ import {
 } from '$lib/services/categories';
 import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import type { NewKeyword } from '$lib/schemas/category';
+import { newKeywordSchema } from '$lib/schemas/category';
 import { keywordExists } from '$lib/utils/categories';
+import * as z from 'zod';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const keyword = await getKeyword(params.id);
@@ -22,21 +23,24 @@ export const actions = {
 	update: async ({ params, request }) => {
 		const data = await request.formData();
 
-		const rawKeyword = data.get('keyword') as string;
-		if (!rawKeyword) return fail(422, { keywordMissing: true });
-		const name = rawKeyword.trim().replace(/^\w/, (c) => c.toUpperCase());
+		const name = (data.get('keyword') as string | null)
+			?.trim()
+			.replace(/^\w/, (c) => c.toUpperCase());
 
-		const categoryId = data.get('category') as string;
-		if (!categoryId) return fail(422, { categoryMissing: true });
+		const result = newKeywordSchema.safeParse({ name, categoryId: data.get('category') });
 
-		const existingKeywords = await getAllKeywords();
-		if (keywordExists(name, existingKeywords, params.id)) {
-			return fail(422, { keywordDuplicate: true, duplicateName: name });
+		if (!result.success) {
+			const { fieldErrors } = z.flattenError(result.error);
+			return fail(422, { errors: fieldErrors });
 		}
 
-		const updatedKeyword: NewKeyword = { name, categoryId };
-		await updateKeyword(params.id, updatedKeyword);
+		const existingKeywords = await getAllKeywords();
+		if (keywordExists(result.data.name, existingKeywords, params.id)) {
+			return fail(422, { keywordDuplicate: true, duplicateName: result.data.name });
+		}
 
+    await updateKeyword(params.id, result.data);
+		
 		return { updated: true };
 	},
 	delete: async ({ params }) => {
