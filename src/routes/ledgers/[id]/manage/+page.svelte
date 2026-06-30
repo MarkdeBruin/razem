@@ -36,7 +36,7 @@
 				required
 				autocapitalize="sentences"
 			/>
-			{#if form?.nameMissing}<small>Name is required</small>{/if}
+			{#if form?.errors?.name}<small>{form.errors.name[0]}</small>{/if}
 		</label>
 		<label>
 			{data.owner.name}’s share
@@ -61,7 +61,7 @@
 					}
 				}}
 			/>
-			{#if form?.fractionMissing}<small>{data.owner.name}’s share is required</small>{/if}
+			{#if form?.errors?.ownerFraction}<small>{form.errors.ownerFraction[0]}</small>{/if}
 		</label>
 		<label>
 			{data.partner.name}’s share

@@ -36,8 +36,8 @@ export const actions = {
 		});
 
 		if (!result.success) {
-			const errors = z.flattenError(result.error).fieldErrors;
-			return fail(422, { errors: errors });
+      const { fieldErrors } = z.flattenError(result.error);
+			return fail(422, { errors: fieldErrors });
 		}
 
 		await updateExpense(params.id, result.data);

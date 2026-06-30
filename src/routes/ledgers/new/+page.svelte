@@ -21,7 +21,7 @@
 		<label>
 			Name
 			<input type="text" name="ledger-name" required autocapitalize="sentences" />
-			{#if form?.nameMissing}<small>Name is required</small>{/if}
+			{#if form?.errors?.name}<small>{form.errors.name[0]}</small>{/if}
 		</label>
 
 		<fieldset>
