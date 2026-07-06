@@ -5,7 +5,7 @@
 	let { data }: PageProps = $props();
 </script>
 
-<header class="header--home">
+<header class="header--logo">
 	<h1 class="sr-only">Home</h1>
 	<svg
 		width="108"
@@ -28,7 +28,7 @@
 	</svg>
 </header>
 
-<main class="stack">
+<main class="stack pad-block-start">
 	<section class="list--section">
 		<header>
 			<h2>Ledgers</h2>
