@@ -1,3 +1,4 @@
+import { dev } from '$app/env';
 import type { Actions } from './$types';
 import { redirect, fail } from '@sveltejs/kit';
 
@@ -19,7 +20,12 @@ export const actions = {
 			return fail(401, { error: 'Invalid credentials' });
 		}
 
-		cookies.set('session', 'placeholder', { path: '/', httpOnly: true });
+		cookies.set('session', 'placeholder', {
+			path: '/',
+			httpOnly: true,
+			secure: !dev
+    });
+		
 		redirect(303, '/');
 	}
 } satisfies Actions;
