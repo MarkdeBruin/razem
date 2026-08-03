@@ -8,6 +8,7 @@ export const newUserSchema = z.object({
 
 export const userSchema = newUserSchema.extend({
   id: z.string(),
+  teamId: z.string()
 });
 
 export type NewUser = z.infer<typeof newUserSchema>;

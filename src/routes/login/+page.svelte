@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import type { PageProps } from './$types';
+
+	let { form }: PageProps = $props();
 </script>
 
 <header class="header--logo">
@@ -36,6 +39,8 @@
 			Password
 			<input type="password" name="password" required autocapitalize="none" />
 		</label>
+
+		{#if form?.error}<small>{form.error}</small>{/if}
 
 		<button class="btn" type="submit"><span>Log in</span></button>
 	</form>

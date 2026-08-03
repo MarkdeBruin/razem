@@ -1,6 +1,7 @@
-import { dev } from '$app/env';
-import type { Actions } from './$types';
+import { dev } from '$app/environment';
 import { redirect, fail } from '@sveltejs/kit';
+import { createAdminClient, SESSION_COOKIE } from '$lib/server/appwrite';
+import type { Actions } from './$types';
 
 export const actions = {
 	default: async ({ request, cookies }) => {
@@ -12,20 +13,22 @@ export const actions = {
 			return fail(400, { error: 'Email and password are required' });
 		}
 
-		// TODO: replace with Appwrite account.createEmailPasswordSession()
-		// and set the a_session_<PROJECT_ID> cookie from the returned session.
-		const fakeLoginWorked = true;
+		const { account } = createAdminClient();
 
-		if (!fakeLoginWorked) {
+		try {
+			const session = await account.createEmailPasswordSession({ email, password });
+
+			cookies.set(SESSION_COOKIE, session.secret, {
+				path: '/',
+				httpOnly: true,
+				secure: !dev,
+				sameSite: 'strict',
+				expires: new Date(session.expire)
+			});
+		} catch {
 			return fail(401, { error: 'Invalid credentials' });
 		}
 
-		cookies.set('session', 'placeholder', {
-			path: '/',
-			httpOnly: true,
-			secure: !dev
-    });
-		
 		redirect(303, '/');
 	}
 } satisfies Actions;

@@ -1,26 +1,21 @@
 import { getBothUsers } from '$lib/services/users';
 import { redirect } from '@sveltejs/kit';
-import type { User } from '$lib/schemas/users';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ locals, cookies, url }) => {
-
-  const session = cookies.get('session');
+  const currentUser = locals.currentUser;
   
-	if (!session && url.pathname !== '/login') {
-		redirect(303, '/login');
+	if (!currentUser) {
+		if (url.pathname !== '/login') redirect(303, '/login');
+		return { currentUser: null };
 	}
   
-	if (session && url.pathname === '/login') {
-		redirect(303, '/');
-  }
-	
-	const currentUser = locals.currentUser;
-
+	if (url.pathname === '/login') redirect(303, '/');
+  
 	const users = await getBothUsers();
-	const owner = users.find((user: User) => user.role === 'owner')!;
-	const partner = users.find((user: User) => user.role === 'partner')!;
+	const owner = users.find((u) => u.role === 'owner')!;
+	const partner = users.find((u) => u.role === 'partner')!;
 	const otherUser = currentUser.id === owner.id ? partner : owner;
-
+  
 	return { currentUser, owner, partner, otherUser };
 };
