@@ -2,7 +2,7 @@ import { getLedger } from '$lib/services/ledgers';
 import { getAllExpenses } from '$lib/services/expenses';
 import { getAllCategories } from '$lib/services/categories.js';
 import { error } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types.js';
+import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals, parent, params, url }) => {
 	const ledger = await getLedger(params.id);
@@ -17,7 +17,7 @@ export const load: PageServerLoad = async ({ locals, parent, params, url }) => {
 		categoryName: categoryMap.get(expense.categoryId) ?? 'Uncategorised'
 	}));
 
-	const { owner, partner } = await parent();
+	const { owner, partner, currentUser } = await parent();
 
 	function totalByUser(userId: string): number {
 		return expenses
@@ -33,9 +33,10 @@ export const load: PageServerLoad = async ({ locals, parent, params, url }) => {
 	const partnerShare = totalExpenses * (1 - ledger.ownerFraction);
 
 	const ownerBalance = Math.round(ownerTotal - ownerShare);
-	const partnerBalance = Math.round(partnerTotal - partnerShare);
-	const currentBalance = locals.currentUser.id === owner.id ? ownerBalance : partnerBalance;
-	const otherBalance = locals.currentUser.id === owner.id ? partnerBalance : ownerBalance;
+  const partnerBalance = Math.round(partnerTotal - partnerShare);
+
+	const currentBalance = currentUser.id === owner.id ? ownerBalance : partnerBalance;
+	const otherBalance = currentUser.id === owner.id ? partnerBalance : ownerBalance;
 
 	const from = url.searchParams.get('from');
   const backUrl = from === 'overview' ? `/ledgers` : '/';

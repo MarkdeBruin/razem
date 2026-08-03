@@ -2,14 +2,13 @@ import { getBothUsers } from '$lib/services/users';
 import { redirect } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 
-export const load: LayoutServerLoad = async ({ locals, cookies, url }) => {
+export const load: LayoutServerLoad = async ({ locals, url }) => {
+  if (!locals.currentUser) {
+		redirect(303, '/login');
+  }
+	
   const currentUser = locals.currentUser;
-  
-	if (!currentUser) {
-		if (url.pathname !== '/login') redirect(303, '/login');
-		return { currentUser: null };
-	}
-  
+
 	if (url.pathname === '/login') redirect(303, '/');
   
 	const users = await getBothUsers();

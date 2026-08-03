@@ -1,7 +1,13 @@
 import { dev } from '$app/environment';
 import { redirect, fail } from '@sveltejs/kit';
 import { createAdminClient, SESSION_COOKIE } from '$lib/server/appwrite';
-import type { Actions } from './$types';
+import type { PageServerLoad, Actions } from './$types';
+
+export const load: PageServerLoad = async ({ locals }) => {
+	if (locals.currentUser) {
+		redirect(303, '/');
+	}
+};
 
 export const actions = {
 	default: async ({ request, cookies }) => {

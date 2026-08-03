@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
-	import { PlusIcon, ArrowLeftIcon, RecycleIcon } from 'phosphor-svelte';
+	import { PlusIcon, ArrowLeftIcon } from 'phosphor-svelte';
 	import EmptyState from '$lib/components/EmptyState.svelte';
 	let { data }: PageProps = $props();
 </script>

@@ -4,7 +4,7 @@ import { getAllLedgers, getAllLedgerTemplates } from '$lib/services/ledgers.js';
 import { newExpenseSchema } from '$lib/schemas/expenses';
 import { error, fail, redirect } from '@sveltejs/kit';
 import * as z from "zod";
-import type { Actions, PageServerLoad } from './$types.js';
+import type { Actions, PageServerLoad } from './$types';
 import type { NewKeyword } from '$lib/schemas/category';
 
 export const load: PageServerLoad = async ({ params }) => {
