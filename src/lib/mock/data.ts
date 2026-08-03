@@ -1,12 +1,6 @@
 import type { Category } from '$lib/schemas/category';
 import type { Expense } from '$lib/schemas/expenses';
 import type { Ledger } from '$lib/schemas/ledgers';
-import type { User } from '$lib/schemas/users';
-
-export const mockUsers: User[] = [
-	{ id: 'user-1', name: 'Mark', email: 'mark@example.com', teamId: 'team-1', role: 'owner' },
-	{ id: 'user-2', name: 'Anna', email: 'anna@example.com', teamId: 'team-1', role: 'partner' }
-];
 
 export const mockLedgers: Ledger[] = [
 	{

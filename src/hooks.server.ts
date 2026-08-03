@@ -3,15 +3,17 @@ import { createSessionClient, SESSION_COOKIE } from '$lib/server/appwrite';
 
 export const handle: Handle = async ({ event, resolve }) => {
   const sessionSecret = event.cookies.get(SESSION_COOKIE);
-	event.locals.currentUser = null;
-  
+	
+  event.locals.currentUser = null;
+	event.locals.teamMembers = null;
+
 	if (sessionSecret) {
 		try {
 			const { account, teams } = createSessionClient(sessionSecret);
 			const user = await account.get();
 			const { teams: myTeams } = await teams.list();
 			const team = myTeams[0];
-	
+
 			if (team) {
 				const { memberships } = await teams.listMemberships({ teamId: team.$id });
 				const membership = memberships.find((m) => m.userId === user.$id);
@@ -25,12 +27,20 @@ export const handle: Handle = async ({ event, resolve }) => {
 						role,
 						teamId: team.$id
 					};
+
+					event.locals.teamMembers = memberships.map((membership) => ({
+						id: membership.userId,
+						name: membership.userName,
+						email: membership.userEmail,
+						role: membership.roles[0] as 'owner' | 'partner',
+						teamId: team.$id
+					}));
 				}
 			}
 		} catch (err) {
 			console.error('hooks auth resolution failed:', err);
 		}
 	}
-  
+
 	return resolve(event);
 };
