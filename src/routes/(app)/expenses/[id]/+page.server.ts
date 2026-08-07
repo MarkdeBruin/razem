@@ -20,8 +20,13 @@ export const load: PageServerLoad = async ({ params }) => {
 };
 
 export const actions = {
-	update: async ({ params, request }) => {
-		const data = await request.formData();
+  update: async ({ locals, params, request }) => {
+    const currentUser = locals.currentUser;
+		if (!currentUser) {
+			return fail(401, { error: 'Not authenticated' });
+    }
+		
+    const data = await request.formData();
 
 		const description = (data.get('exp-description') as string | null)
 			?.trim()
@@ -32,7 +37,8 @@ export const actions = {
 			amount: Number(data.get('exp-amount')),
 			categoryId: data.get('exp-category'),
 			userId: data.get('exp-user-id'),
-			ledgerId: data.get('ledger-id')
+      ledgerId: data.get('ledger-id'),
+			teamId: currentUser.teamId
 		});
 
 		if (!result.success) {

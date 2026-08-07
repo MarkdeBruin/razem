@@ -21,7 +21,8 @@ export const mockExpenses: Expense[] = [
 		amount: 1200,
 		userId: '6a705fda002d335b2441',
 		ledgerId: 'ledger-2',
-		categoryId: 'cat-1'
+		categoryId: 'cat-1',
+		teamId: '6a70616d003aff03db73'
 	},
 	{
 		id: 'exp-2',
@@ -29,7 +30,8 @@ export const mockExpenses: Expense[] = [
 		amount: 150,
 		userId: '6a705fda002d335b2441',
 		ledgerId: 'ledger-1',
-		categoryId: 'cat-1'
+		categoryId: 'cat-1',
+		teamId: '6a70616d003aff03db73'
 	},
 	{
 		id: 'exp-3',
@@ -37,7 +39,8 @@ export const mockExpenses: Expense[] = [
 		amount: 80,
 		userId: '6a705fda002d335b2441',
 		ledgerId: 'ledger-2',
-		categoryId: 'cat-1'
+		categoryId: 'cat-1',
+		teamId: '6a70616d003aff03db73'
 	},
 	{
 		id: 'exp-4',
@@ -45,7 +48,8 @@ export const mockExpenses: Expense[] = [
 		amount: 40,
 		userId: '6a705fda002d335b2441',
 		ledgerId: 'ledger-2',
-		categoryId: 'cat-1'
+		categoryId: 'cat-1',
+		teamId: '6a70616d003aff03db73'
 	},
 	{
 		id: 'exp-5',
@@ -53,7 +57,8 @@ export const mockExpenses: Expense[] = [
 		amount: 20,
 		userId: '6a70601700249646ab62',
 		ledgerId: 'ledger-2',
-		categoryId: 'cat-2'
+		categoryId: 'cat-2',
+		teamId: '6a70616d003aff03db73'
 	},
 	{
 		id: 'exp-6',
@@ -61,7 +66,8 @@ export const mockExpenses: Expense[] = [
 		amount: 1200,
 		userId: '6a705fda002d335b2441',
 		ledgerId: 'ledger-3',
-		categoryId: 'cat-1'
+		categoryId: 'cat-1',
+		teamId: '6a70616d003aff03db73'
 	},
 	{
 		id: 'exp-7',
@@ -69,7 +75,8 @@ export const mockExpenses: Expense[] = [
 		amount: 130,
 		userId: '6a70601700249646ab62',
 		ledgerId: 'ledger-3',
-		categoryId: 'cat-4'
+		categoryId: 'cat-4',
+		teamId: '6a70616d003aff03db73'
 	},
 	{
 		id: 'exp-8',
@@ -77,7 +84,8 @@ export const mockExpenses: Expense[] = [
 		amount: 1200,
 		userId: '6a705fda002d335b2441',
 		ledgerId: 'ledger-1',
-		categoryId: 'cat-1'
+		categoryId: 'cat-1',
+		teamId: '6a70616d003aff03db73'
 	},
 	{
 		id: 'exp-9',
@@ -85,7 +93,8 @@ export const mockExpenses: Expense[] = [
 		amount: 80,
 		userId: '6a705fda002d335b2441',
 		ledgerId: 'ledger-1',
-		categoryId: 'cat-1'
+		categoryId: 'cat-1',
+		teamId: '6a70616d003aff03db73'
 	},
 	{
 		id: 'texp-10',
@@ -93,7 +102,8 @@ export const mockExpenses: Expense[] = [
 		amount: 40,
 		userId: '6a70601700249646ab62',
 		ledgerId: 'ledger-1',
-		categoryId: 'cat-1'
+    categoryId: 'cat-1',
+		teamId: '6a70616d003aff03db73'
 	}
 ];
 

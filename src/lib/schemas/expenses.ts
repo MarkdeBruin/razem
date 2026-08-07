@@ -6,6 +6,7 @@ export const newExpenseSchema = z.object({
   userId: z.string(),
   ledgerId: z.string(),
   categoryId: z.string(),
+  teamId: z.string()
 });
 
 export const expenseSchema = newExpenseSchema.extend({
