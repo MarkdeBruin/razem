@@ -12,13 +12,19 @@ export const load: PageServerLoad = async ({ params }) => {
 };
 
 export const actions = {
-	update: async ({ params, request }) => {
+  update: async ({ locals, params, request }) => {
+    const currentUser = locals.currentUser;
+		if (!currentUser) {
+			return fail(401, { error: 'Not authenticated' });
+    }
+		
 		const data = await request.formData();
 
 		const result = newLedgerSchema.safeParse({
 			name: data.get('ledger-name'),
 			ownerFraction: Number(data.get('owner-percentage')) / 100,
-			isTemplate: data.get('is-template') !== null
+      isTemplate: data.get('is-template') !== null,
+			teamId: currentUser.teamId
 		});
 
 		if (!result.success) {

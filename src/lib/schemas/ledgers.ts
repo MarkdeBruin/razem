@@ -4,6 +4,7 @@ export const newLedgerSchema = z.object({
 	name: z.string().min(1),
 	ownerFraction: z.coerce.number().min(0).max(1),
 	isTemplate: z.boolean(),
+	teamId: z.string(),
 });
 
 export const ledgerSchema = newLedgerSchema.extend({

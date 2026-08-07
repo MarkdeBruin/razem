@@ -16,14 +16,19 @@ export const load: PageServerLoad = async ({ url }) => {
 };
 
 export const actions = {
-	default: async ({ request }) => {
+	default: async ({ locals, request }) => {
+		const currentUser = locals.currentUser;
+		if (!currentUser) {
+			return fail(401, { error: 'Not authenticated' });
+		}
+
 		const data = await request.formData();
 
 		let ownerFraction = 0.5; // Default fraction (50%)
-    let templateExpenses: Expense[] = [];
-		
-    const templateId = data.get('ledger-template') as string;
-		
+		let templateExpenses: Expense[] = [];
+
+		const templateId = data.get('ledger-template') as string;
+
 		if (templateId !== 'blank') {
 			const template = await getLedger(templateId);
 			if (template) {
@@ -35,7 +40,8 @@ export const actions = {
 		const result = newLedgerSchema.safeParse({
 			name: data.get('ledger-name'),
 			ownerFraction,
-			isTemplate: data.get('is-template') !== null
+			isTemplate: data.get('is-template') !== null,
+			teamId: currentUser.teamId
 		});
 
 		if (!result.success) {
