@@ -20,14 +20,23 @@ export const load: PageServerLoad = async ({ params }) => {
 };
 
 export const actions = {
-	update: async ({ params, request }) => {
+	update: async ({ locals, params, request }) => {
+		const currentUser = locals.currentUser;
+		if (!currentUser) {
+			return fail(401, { error: 'Not authenticated' });
+		}
+
 		const data = await request.formData();
 
 		const name = (data.get('keyword') as string | null)
 			?.trim()
 			.replace(/^\w/, (c) => c.toUpperCase());
 
-		const result = newKeywordSchema.safeParse({ name, categoryId: data.get('category') });
+		const result = newKeywordSchema.safeParse({
+			name,
+			categoryId: data.get('category'),
+			teamId: currentUser.teamId
+		});
 
 		if (!result.success) {
 			const { fieldErrors } = z.flattenError(result.error);
@@ -39,11 +48,16 @@ export const actions = {
 			return fail(422, { keywordDuplicate: true, duplicateName: result.data.name });
 		}
 
-    await updateKeyword(params.id, result.data);
-		
+		await updateKeyword(params.id, result.data);
+
 		return { updated: true };
 	},
-	delete: async ({ params }) => {
+  delete: async ({ locals, params }) => {
+    const currentUser = locals.currentUser;
+		if (!currentUser) {
+			return fail(401, { error: 'Not authenticated' });
+    }
+
 		await deleteKeyword(params.id);
 		redirect(303, '/settings/categories');
 	}

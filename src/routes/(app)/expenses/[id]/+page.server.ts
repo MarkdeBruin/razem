@@ -51,14 +51,20 @@ export const actions = {
 		if (data.get('save-keyword')) {
 			const newKeyword: NewKeyword = {
 				name: result.data.description,
-				categoryId: result.data.categoryId
+        categoryId: result.data.categoryId,
+				teamId: currentUser.teamId
 			};
 			await createKeyword(newKeyword);
 		}
 
 		return { updated: true };
 	},
-	delete: async ({ params, request }) => {
+  delete: async ({ locals, params, request }) => {
+    const currentUser = locals.currentUser;
+		if (!currentUser) {
+			return fail(401, { error: 'Not authenticated' });
+    }
+		
 		const data = await request.formData();
 		const ledgerId = data.get('ledger-id') as string;
 

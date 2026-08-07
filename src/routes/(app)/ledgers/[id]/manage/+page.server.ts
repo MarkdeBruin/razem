@@ -12,18 +12,18 @@ export const load: PageServerLoad = async ({ params }) => {
 };
 
 export const actions = {
-  update: async ({ locals, params, request }) => {
-    const currentUser = locals.currentUser;
+	update: async ({ locals, params, request }) => {
+		const currentUser = locals.currentUser;
 		if (!currentUser) {
 			return fail(401, { error: 'Not authenticated' });
-    }
-		
+		}
+
 		const data = await request.formData();
 
 		const result = newLedgerSchema.safeParse({
 			name: data.get('ledger-name'),
 			ownerFraction: Number(data.get('owner-percentage')) / 100,
-      isTemplate: data.get('is-template') !== null,
+			isTemplate: data.get('is-template') !== null,
 			teamId: currentUser.teamId
 		});
 
@@ -35,7 +35,12 @@ export const actions = {
 		await updateLedger(params.id, result.data);
 		return { updated: true };
 	},
-	delete: async ({ params }) => {
+	delete: async ({ locals, params }) => {
+		const currentUser = locals.currentUser;
+		if (!currentUser) {
+			return fail(401, { error: 'Not authenticated' });
+		}
+
 		await deleteLedger(params.id);
 		redirect(303, '/');
 	}

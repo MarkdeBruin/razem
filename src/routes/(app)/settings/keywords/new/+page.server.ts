@@ -13,14 +13,23 @@ export const load: PageServerLoad = async () => {
 };
 
 export const actions = {
-	default: async ({ request }) => {
+	default: async ({ locals, request }) => {
+		const currentUser = locals.currentUser;
+		if (!currentUser) {
+			return fail(401, { error: 'Not authenticated' });
+		}
+
 		const data = await request.formData();
 
 		const name = (data.get('keyword') as string | null)
 			?.trim()
 			.replace(/^\w/, (c) => c.toUpperCase());
 
-		const result = newKeywordSchema.safeParse({ name, categoryId: data.get('category') });
+		const result = newKeywordSchema.safeParse({
+			name,
+			categoryId: data.get('category'),
+			teamId: currentUser.teamId
+		});
 
 		if (!result.success) {
 			const { fieldErrors } = z.flattenError(result.error);

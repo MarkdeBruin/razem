@@ -10,6 +10,7 @@ export type Category = z.infer<typeof categorySchema>;
 export const newKeywordSchema = z.object({
   name: z.string().min(1),
   categoryId: z.string(),
+  teamId: z.string()
 });
 
 export const keywordSchema = newKeywordSchema.extend({

@@ -53,7 +53,8 @@ export const actions = {
 		if (data.get('save-keyword')) {
 			const newKeyword: NewKeyword = {
 				name: result.data.description,
-				categoryId: result.data.categoryId
+        categoryId: result.data.categoryId,
+				teamId: currentUser.teamId
 			};
 			await createKeyword(newKeyword);
 		}
