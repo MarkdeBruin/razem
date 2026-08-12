@@ -4,9 +4,15 @@ import type { Actions, PageServerLoad } from './$types.js';
 import { newLedgerSchema } from '$lib/schemas/ledgers';
 import * as z from 'zod';
 
-export const load: PageServerLoad = async ({ params }) => {
-	const ledger = await getLedger(params.id);
-	if (!ledger) error(404, { message: 'Ledger not found' });
+export const load: PageServerLoad = async ({ locals, parent, params }) => {
+	const { currentUser } = await parent();
+
+	let ledger;
+	try {
+		ledger = await getLedger(locals.tablesDB!, params.id, currentUser.teamId);
+	} catch {
+		error(404, { message: 'Ledger not found' });
+	}
 
 	return { ledger };
 };
@@ -14,34 +20,35 @@ export const load: PageServerLoad = async ({ params }) => {
 export const actions = {
 	update: async ({ locals, params, request }) => {
 		const currentUser = locals.currentUser;
-		if (!currentUser) {
+		if (!currentUser || !locals.tablesDB) {
 			return fail(401, { error: 'Not authenticated' });
 		}
+		const tablesDB = locals.tablesDB;
 
 		const data = await request.formData();
-
 		const result = newLedgerSchema.safeParse({
 			name: data.get('ledger-name'),
 			ownerFraction: Number(data.get('owner-percentage')) / 100,
 			isTemplate: data.get('is-template') !== null,
 			teamId: currentUser.teamId
 		});
-
 		if (!result.success) {
 			const { fieldErrors } = z.flattenError(result.error);
 			return fail(422, { errors: fieldErrors });
 		}
 
-		await updateLedger(params.id, result.data);
+		await updateLedger(tablesDB, params.id, currentUser.teamId, result.data);
 		return { updated: true };
 	},
+
 	delete: async ({ locals, params }) => {
 		const currentUser = locals.currentUser;
-		if (!currentUser) {
+		if (!currentUser || !locals.tablesDB) {
 			return fail(401, { error: 'Not authenticated' });
 		}
+		const tablesDB = locals.tablesDB;
 
-		await deleteLedger(params.id);
+		await deleteLedger(tablesDB, params.id, currentUser.teamId);
 		redirect(303, '/');
 	}
 } satisfies Actions;

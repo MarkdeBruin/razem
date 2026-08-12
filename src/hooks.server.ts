@@ -6,10 +6,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 	
   event.locals.currentUser = null;
 	event.locals.teamMembers = null;
+	event.locals.tablesDB = null;
 
 	if (sessionSecret) {
 		try {
-			const { account, teams } = createSessionClient(sessionSecret);
+			const { account, teams, tablesDB } = createSessionClient(sessionSecret);
 			const user = await account.get();
 			const { teams: myTeams } = await teams.list();
 			const team = myTeams[0];
@@ -34,7 +35,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 						email: membership.userEmail,
 						role: membership.roles[0] as 'owner' | 'partner',
 						teamId: team.$id
-					}));
+          }));
+					
+          event.locals.tablesDB = tablesDB;
 				}
 			}
 		} catch (err) {

@@ -1,48 +1,109 @@
+import type { Models, TablesDB } from 'node-appwrite';
+import { Query, Permission, Role, ID } from 'node-appwrite';
 import type { Ledger, NewLedger } from '$lib/schemas/ledgers';
 import { notFoundError } from '$lib/utils/errors';
+import { DB_ID } from '$env/static/private';
 
-import { mockLedgers } from '$lib/mock/data';
+const TABLE_ID = 'ledgers';
 
-export async function getAllLedgers(): Promise<Ledger[]> {
-  return mockLedgers.filter((ledger) => !ledger.isTemplate).toReversed();
-}
+type LedgerRow = Models.Row & {
+	teamId: string;
+	name: string;
+	ownerFraction: number;
+	isTemplate: boolean;
+};
 
-export async function getAllLedgerTemplates(): Promise<Ledger[]> {
-	return mockLedgers.filter((ledger) => ledger.isTemplate).toReversed();
-}
-
-export async function getLedger(id: string): Promise<Ledger | undefined> {
-	return mockLedgers.find((ledger) => ledger.id === id);
-}
-
-export async function createLedger(ledger: NewLedger): Promise<Ledger> {
-	const newLedger: Ledger = {
-		...ledger,
-		id: `ledger-${crypto.randomUUID()}`
+function toLedger(row: LedgerRow): Ledger {
+	return {
+		id: row.$id,
+		teamId: row.teamId,
+		name: row.name,
+		ownerFraction: row.ownerFraction,
+		isTemplate: row.isTemplate
 	};
-
-	mockLedgers.push(newLedger);
-
-	return newLedger;
 }
 
-export async function updateLedger(id: string, data: NewLedger): Promise<Ledger> {
-	const index = mockLedgers.findIndex((ledger) => ledger.id === id);
-
-	if (index === -1) throw notFoundError('Ledger', id);
-
-	const updatedLedger: Ledger = { ...data, id };
-	mockLedgers[index] = updatedLedger;
-
-	return mockLedgers[index];
+export async function getAllLedgers(tablesDB: TablesDB, teamId: string): Promise<Ledger[]> {
+	const { rows } = await tablesDB.listRows<LedgerRow>({
+		databaseId: DB_ID,
+		tableId: TABLE_ID,
+		queries: [
+			Query.equal('teamId', teamId),
+			Query.equal('isTemplate', false),
+			Query.orderDesc('$createdAt')
+		]
+	});
+	return rows.map(toLedger);
 }
 
-export async function deleteLedger(id: string): Promise<void> {
-	const index = mockLedgers.findIndex((ledger) => ledger.id === id);
+export async function getAllLedgerTemplates(tablesDB: TablesDB, teamId: string): Promise<Ledger[]> {
+	const { rows } = await tablesDB.listRows<LedgerRow>({
+		databaseId: DB_ID,
+		tableId: TABLE_ID,
+		queries: [
+			Query.equal('teamId', teamId),
+			Query.equal('isTemplate', true),
+			Query.orderDesc('$createdAt')
+		]
+	});
+	return rows.map(toLedger);
+}
 
-	if (index === -1) throw notFoundError('Ledger', id);
+export async function getLedger(tablesDB: TablesDB, id: string, teamId: string): Promise<Ledger> {
+	let row: LedgerRow;
+	try {
+		row = await tablesDB.getRow({ databaseId: DB_ID, tableId: TABLE_ID, rowId: id });
+	} catch {
+		throw notFoundError('Ledger', id);
+	}
+	if (row.teamId !== teamId) {
+		throw notFoundError('Ledger', id);
+	}
+	return toLedger(row);
+}
 
-  mockLedgers.splice(index, 1);
-	
-	// TODO: Delete all expenses matching the ledgerID
+export async function createLedger(tablesDB: TablesDB, ledger: NewLedger): Promise<Ledger> {
+	const row = await tablesDB.createRow<LedgerRow>({
+		databaseId: DB_ID,
+		tableId: TABLE_ID,
+		rowId: ID.unique(),
+		data: ledger,
+		permissions: [
+			Permission.read(Role.team(ledger.teamId)),
+			Permission.update(Role.team(ledger.teamId)),
+			Permission.delete(Role.team(ledger.teamId))
+		]
+	});
+	return toLedger(row);
+}
+
+export async function updateLedger(
+	tablesDB: TablesDB,
+	id: string,
+	teamId: string,
+	data: NewLedger
+): Promise<Ledger> {
+	const existing = await tablesDB.getRow<LedgerRow>({ databaseId: DB_ID, tableId: TABLE_ID, rowId: id }).catch(() => null);
+	if (!existing || existing.teamId !== teamId) {
+		throw notFoundError('Ledger', id);
+	}
+
+	const row = await tablesDB.updateRow<LedgerRow>({
+		databaseId: DB_ID,
+		tableId: TABLE_ID,
+		rowId: id,
+		data
+	});
+	return toLedger(row);
+}
+
+export async function deleteLedger(tablesDB: TablesDB, id: string, teamId: string): Promise<void> {
+	const existing = await tablesDB.getRow<LedgerRow>({ databaseId: DB_ID, tableId: TABLE_ID, rowId: id }).catch(() => null);
+	if (!existing || existing.teamId !== teamId) {
+		throw notFoundError('Ledger', id);
+	}
+
+  await tablesDB.deleteRow({ databaseId: DB_ID, tableId: TABLE_ID, rowId: id });
+
+  // Expenses are cleaned up via Appwrite relationship
 }

@@ -1,4 +1,4 @@
-import { Client, Account, Teams } from 'node-appwrite';
+import { Client, Account, Teams, TablesDB } from 'node-appwrite';
 import { PUBLIC_APPWRITE_ENDPOINT, PUBLIC_APPWRITE_PROJECT_ID } from '$env/static/public';
 import { APPWRITE_API_KEY } from '$env/static/private';
 
@@ -28,6 +28,7 @@ export function createSessionClient(sessionSecret: string) {
 
 	return {
 		account: new Account(client),
-		teams: new Teams(client)
+    teams: new Teams(client),
+		tablesDB: new TablesDB(client)
 	};
 }
