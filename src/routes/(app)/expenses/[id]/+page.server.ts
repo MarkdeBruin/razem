@@ -1,78 +1,78 @@
 import { getAllCategories, getAllKeywords, createKeyword } from '$lib/services/categories.js';
 import { getExpense, updateExpense, deleteExpense } from '$lib/services/expenses';
-import { getAllLedgers, splitLedgersAndTemplates} from '$lib/services/ledgers.js';
+import { getAllLedgers, splitLedgersAndTemplates } from '$lib/services/ledgers.js';
 import { newExpenseSchema } from '$lib/schemas/expenses';
 import { error, fail, redirect } from '@sveltejs/kit';
-import * as z from "zod";
+import * as z from 'zod';
 import type { Actions, PageServerLoad } from './$types';
 import type { NewKeyword } from '$lib/schemas/category';
 
 export const load: PageServerLoad = async ({ locals, parent, params }) => {
-	const expense = await getExpense(params.id);
-  if (!expense) error(404, { message: 'Expense not found' });
+	const { currentUser } = await parent();
 
-  const { currentUser } = await parent();
-  
+	let expense;
+	try {
+		expense = await getExpense(locals.tablesDB!, params.id, currentUser.teamId);
+	} catch {
+		error(404, { message: 'Expense not found' });
+	}
+
 	const all = await getAllLedgers(locals.tablesDB!, currentUser.teamId);
-  const { ledgers, templates } = splitLedgersAndTemplates(all)
-
-	const categories = await getAllCategories();
-	const keywords = await getAllKeywords();
+	const { ledgers, templates } = splitLedgersAndTemplates(all);
+	const categories = await getAllCategories(); // still mock — unchanged
+	const keywords = await getAllKeywords(); // still mock — unchanged
 
 	return { expense, ledgers, templates, categories, keywords };
 };
 
 export const actions = {
-  update: async ({ locals, params, request }) => {
-    const currentUser = locals.currentUser;
-		if (!currentUser) {
+	update: async ({ locals, params, request }) => {
+		const currentUser = locals.currentUser;
+		if (!currentUser || !locals.tablesDB) {
 			return fail(401, { error: 'Not authenticated' });
-    }
-		
-    const data = await request.formData();
+		}
+		const tablesDB = locals.tablesDB;
 
+		const data = await request.formData();
 		const description = (data.get('exp-description') as string | null)
 			?.trim()
 			.replace(/^\w/, (c) => c.toUpperCase());
-
 		const result = newExpenseSchema.safeParse({
 			description,
 			amount: Number(data.get('exp-amount')),
 			categoryId: data.get('exp-category'),
 			userId: data.get('exp-user-id'),
-      ledgerId: data.get('ledger-id'),
+			ledgerId: data.get('ledger-id'),
 			teamId: currentUser.teamId
 		});
-
 		if (!result.success) {
-      const { fieldErrors } = z.flattenError(result.error);
+			const { fieldErrors } = z.flattenError(result.error);
 			return fail(422, { errors: fieldErrors });
 		}
 
-		await updateExpense(params.id, result.data);
+		await updateExpense(tablesDB, params.id, currentUser.teamId, result.data);
 
 		if (data.get('save-keyword')) {
 			const newKeyword: NewKeyword = {
 				name: result.data.description,
-        categoryId: result.data.categoryId,
+				categoryId: result.data.categoryId,
 				teamId: currentUser.teamId
 			};
-			await createKeyword(newKeyword);
+			await createKeyword(newKeyword); // still mock — unchanged
 		}
-
 		return { updated: true };
 	},
-  delete: async ({ locals, params, request }) => {
-    const currentUser = locals.currentUser;
-		if (!currentUser) {
+
+	delete: async ({ locals, params, request }) => {
+		const currentUser = locals.currentUser;
+		if (!currentUser || !locals.tablesDB) {
 			return fail(401, { error: 'Not authenticated' });
-    }
-		
+		}
+		const tablesDB = locals.tablesDB;
+
 		const data = await request.formData();
 		const ledgerId = data.get('ledger-id') as string;
-
-		await deleteExpense(params.id);
-
+		await deleteExpense(tablesDB, params.id, currentUser.teamId);
 		redirect(303, `/ledgers/${ledgerId}`);
 	}
 } satisfies Actions;

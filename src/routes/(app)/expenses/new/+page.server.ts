@@ -1,6 +1,6 @@
 import { getAllCategories, getAllKeywords, createKeyword } from '$lib/services/categories.js';
 import { createExpense } from '$lib/services/expenses';
-import { getAllLedgers, splitLedgersAndTemplates} from '$lib/services/ledgers';
+import { getAllLedgers, splitLedgersAndTemplates } from '$lib/services/ledgers';
 import { fail, redirect } from '@sveltejs/kit';
 import { newExpenseSchema } from '$lib/schemas/expenses';
 import * as z from 'zod';
@@ -8,17 +8,15 @@ import type { Actions, PageServerLoad } from './$types';
 import type { NewKeyword } from '$lib/schemas/category';
 
 export const load: PageServerLoad = async ({ locals, parent, url }) => {
-  const { currentUser } = await parent();
-  
-	const all = await getAllLedgers(locals.tablesDB!, currentUser.teamId);
-  const { ledgers, templates } = splitLedgersAndTemplates(all)
-  
-	const categories = await getAllCategories();
-	const keywords = await getAllKeywords();
+	const { currentUser } = await parent();
 
+	const all = await getAllLedgers(locals.tablesDB!, currentUser.teamId);
+	const { ledgers, templates } = splitLedgersAndTemplates(all);
+
+	const categories = await getAllCategories(); // still mock — unchanged
+	const keywords = await getAllKeywords(); // still mock — unchanged
 	const ledgerId = url.searchParams.get('ledger') ?? ledgers[0]?.id;
 	const from = url.searchParams.get('from');
-
 	const backUrl = from === 'ledger' ? `/ledgers/${ledgerId}` : '/';
 
 	return { ledgers, templates, ledgerId, categories, keywords, backUrl };
@@ -26,17 +24,16 @@ export const load: PageServerLoad = async ({ locals, parent, url }) => {
 
 export const actions = {
 	default: async ({ locals, request }) => {
-	const currentUser = locals.currentUser;
-	if (!currentUser) {
-		return fail(401, { error: 'Not authenticated' });
-  }
-    
-	const data = await request.formData();
+		const currentUser = locals.currentUser;
+		if (!currentUser || !locals.tablesDB) {
+			return fail(401, { error: 'Not authenticated' });
+		}
+		const tablesDB = locals.tablesDB;
 
+		const data = await request.formData();
 		const description = (data.get('exp-description') as string | null)
 			?.trim()
 			.replace(/^\w/, (c) => c.toUpperCase());
-
 		const result = newExpenseSchema.safeParse({
 			description,
 			amount: Number(data.get('exp-amount')),
@@ -45,23 +42,21 @@ export const actions = {
 			ledgerId: data.get('ledger-id'),
 			teamId: currentUser.teamId
 		});
-
 		if (!result.success) {
 			const { fieldErrors } = z.flattenError(result.error);
 			return fail(422, { errors: fieldErrors });
 		}
 
-		await createExpense(result.data);
+		await createExpense(tablesDB, result.data);
 
 		if (data.get('save-keyword')) {
 			const newKeyword: NewKeyword = {
 				name: result.data.description,
-        categoryId: result.data.categoryId,
+				categoryId: result.data.categoryId,
 				teamId: currentUser.teamId
 			};
-			await createKeyword(newKeyword);
+			await createKeyword(newKeyword); // still mock — unchanged
 		}
-
 		redirect(303, `/ledgers/${result.data.ledgerId}`);
 	}
 } satisfies Actions;

@@ -31,7 +31,7 @@ export const actions = {
 			try {
 				const template = await getLedger(tablesDB, templateId, currentUser.teamId);
 				ownerFraction = template.ownerFraction;
-				templateExpenses = await getAllExpenses(template.id); // still mock — unchanged signature
+				templateExpenses = await getAllExpenses(tablesDB, template.id, currentUser.teamId);
 			} catch {
 				return fail(404, { error: 'Template not found' });
 			}
@@ -50,14 +50,10 @@ export const actions = {
 
 		const newLedger = await createLedger(tablesDB, result.data);
 
-		await Promise.all(
-			templateExpenses.toReversed().map((expense) =>
-				createExpense({ // still mock — unchanged signature
-					...expense,
-					ledgerId: newLedger.id
-				})
-			)
-		);
+		for (const expense of templateExpenses) {
+			const { id, ...rest } = expense;
+			await createExpense(tablesDB, { ...rest, ledgerId: newLedger.id });
+		}
 
 		redirect(303, `/ledgers/${newLedger.id}`);
 	}

@@ -1,22 +1,29 @@
-import { getLedger } from '$lib/services/ledgers';
-import { getAllExpenses } from '$lib/services/expenses';
+import { getLedgerWithExpenses } from '$lib/services/ledgers';
 import { getAllCategories } from '$lib/services/categories.js';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import type { Ledger } from '$lib/schemas/ledgers';
+import type { Expense } from '$lib/schemas/expenses';
 
 export const load: PageServerLoad = async ({ locals, parent, params, url }) => {
 	const { owner, partner, currentUser } = await parent();
 
-	let ledger;
+	let ledger: Ledger;
+	let expenses: Expense[];
+
 	try {
-		ledger = await getLedger(locals.tablesDB!, params.id, currentUser.teamId);
-	} catch {
+		({ ledger, expenses } = await getLedgerWithExpenses(
+			locals.tablesDB!,
+			params.id,
+			currentUser.teamId
+		));
+	} catch (err) {
+		console.error('getLedgerWithExpenses failed:', err);
 		error(404, { message: 'Ledger not found' });
 	}
 
 	const categories = await getAllCategories(); // still mock — unchanged
 	const categoryMap = new Map(categories.map((c) => [c.id, c.name]));
-	const expenses = await getAllExpenses(params.id); // still mock — unchanged
 
 	const expensesWithCategory = expenses.map((expense) => ({
 		...expense,
