@@ -43,8 +43,8 @@
 						<a href="ledgers/{ledger.id}">{ledger.name}</a>
 					</li>
 				{/each}
-				{#if data.ledgers.length > 4 || data.templates.length > 0}
-					<li><a href="/ledgers">All ledgers & templates</a></li>
+				{#if data.ledgers.length > 4}
+					<li><a href="/ledgers">View all ledgers</a></li>
 				{/if}
 			</ul>
 		{:else}

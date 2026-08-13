@@ -29,8 +29,21 @@ export async function getAllLedgers(tablesDB: TablesDB, teamId: string): Promise
 		tableId: TABLE_ID,
 		queries: [
 			Query.equal('teamId', teamId),
-			Query.equal('isTemplate', false),
-			Query.orderDesc('$createdAt')
+      Query.orderDesc('$createdAt'),
+			Query.limit(999)
+		]
+	});
+	return rows.map(toLedger);
+}
+
+export async function getHomeLedgers(tablesDB: TablesDB, teamId: string): Promise<Ledger[]> {
+	const { rows } = await tablesDB.listRows<LedgerRow>({
+		databaseId: DB_ID,
+		tableId: TABLE_ID,
+		queries: [
+			Query.equal('teamId', teamId),
+      Query.orderDesc('$createdAt'),
+			Query.limit(5)
 		]
 	});
 	return rows.map(toLedger);
@@ -43,10 +56,18 @@ export async function getAllLedgerTemplates(tablesDB: TablesDB, teamId: string):
 		queries: [
 			Query.equal('teamId', teamId),
 			Query.equal('isTemplate', true),
-			Query.orderDesc('$createdAt')
+      Query.orderDesc('$createdAt'),
+      Query.limit(999)
 		]
 	});
 	return rows.map(toLedger);
+}
+
+export function splitLedgersAndTemplates(ledgers: Ledger[]): { ledgers: Ledger[]; templates: Ledger[] } {
+	return {
+		ledgers: ledgers.filter((ledger) => !ledger.isTemplate),
+		templates: ledgers.filter((ledger) => ledger.isTemplate)
+	};
 }
 
 export async function getLedger(tablesDB: TablesDB, id: string, teamId: string): Promise<Ledger> {

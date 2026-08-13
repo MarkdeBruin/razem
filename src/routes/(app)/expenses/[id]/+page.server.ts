@@ -1,19 +1,22 @@
 import { getAllCategories, getAllKeywords, createKeyword } from '$lib/services/categories.js';
 import { getExpense, updateExpense, deleteExpense } from '$lib/services/expenses';
-import { getAllLedgers, getAllLedgerTemplates } from '$lib/services/ledgers.js';
+import { getAllLedgers, splitLedgersAndTemplates} from '$lib/services/ledgers.js';
 import { newExpenseSchema } from '$lib/schemas/expenses';
 import { error, fail, redirect } from '@sveltejs/kit';
 import * as z from "zod";
 import type { Actions, PageServerLoad } from './$types';
 import type { NewKeyword } from '$lib/schemas/category';
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ locals, parent, params }) => {
 	const expense = await getExpense(params.id);
-	if (!expense) error(404, { message: 'Expense not found' });
+  if (!expense) error(404, { message: 'Expense not found' });
 
-	const ledgers = await getAllLedgers();
+  const { currentUser } = await parent();
+  
+	const all = await getAllLedgers(locals.tablesDB!, currentUser.teamId);
+  const { ledgers, templates } = splitLedgersAndTemplates(all)
+
 	const categories = await getAllCategories();
-	const templates = await getAllLedgerTemplates();
 	const keywords = await getAllKeywords();
 
 	return { expense, ledgers, templates, categories, keywords };

@@ -1,15 +1,18 @@
 import { getAllCategories, getAllKeywords, createKeyword } from '$lib/services/categories.js';
 import { createExpense } from '$lib/services/expenses';
-import { getAllLedgers, getAllLedgerTemplates } from '$lib/services/ledgers';
+import { getAllLedgers, splitLedgersAndTemplates} from '$lib/services/ledgers';
 import { fail, redirect } from '@sveltejs/kit';
 import { newExpenseSchema } from '$lib/schemas/expenses';
 import * as z from 'zod';
 import type { Actions, PageServerLoad } from './$types';
 import type { NewKeyword } from '$lib/schemas/category';
 
-export const load: PageServerLoad = async ({ url }) => {
-	const ledgers = await getAllLedgers();
-	const templates = await getAllLedgerTemplates();
+export const load: PageServerLoad = async ({ locals, parent, url }) => {
+  const { currentUser } = await parent();
+  
+	const all = await getAllLedgers(locals.tablesDB!, currentUser.teamId);
+  const { ledgers, templates } = splitLedgersAndTemplates(all)
+  
 	const categories = await getAllCategories();
 	const keywords = await getAllKeywords();
 
