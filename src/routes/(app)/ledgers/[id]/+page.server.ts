@@ -17,8 +17,7 @@ export const load: PageServerLoad = async ({ locals, parent, params, url }) => {
 			params.id,
 			currentUser.teamId
 		));
-	} catch (err) {
-		console.error('getLedgerWithExpenses failed:', err);
+	} catch {
 		error(404, { message: 'Ledger not found' });
 	}
 

@@ -94,8 +94,7 @@ export async function getLedgerWithExpenses(
 			rowId: id,
 			queries: [Query.select(['*', 'expenses.*'])]
 		});
-  } catch (err) {
-    console.error('getLedgerWithExpenses failed:', err);
+	} catch {
 		throw notFoundError('Ledger', id);
 	}
 	if (row.teamId !== teamId) {
