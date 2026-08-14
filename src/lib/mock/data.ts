@@ -120,10 +120,10 @@ export const mockExpenses: Expense[] = [
 ];
 
 export const mockCategories: Category[] = [
-	{ id: 'cat-1', name: 'Housing' },
-	{ id: 'cat-2', name: 'Groceries' },
-	{ id: 'cat-3', name: 'Leisure' },
-	{ id: 'cat-4', name: 'Other' }
+	{ id: 'cat-1', name: 'Housing', teamId: '6a70616d003aff03db73'  },
+	{ id: 'cat-2', name: 'Groceries', teamId: '6a70616d003aff03db73'  },
+	{ id: 'cat-3', name: 'Leisure', teamId: '6a70616d003aff03db73'  },
+	{ id: 'cat-4', name: 'Other', teamId: '6a70616d003aff03db73'  }
 ];
 
 export const mockKeywords: Keyword[] = [
