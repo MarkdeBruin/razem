@@ -1,4 +1,4 @@
-import type { SaveState } from '$lib/components/SaveButton.svelte';
+export type SaveState = 'idle' | 'saving';
 
 export function useSaveForm() {
   let saveState = $state<SaveState>('idle');

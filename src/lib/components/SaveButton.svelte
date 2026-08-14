@@ -1,10 +1,7 @@
-<script lang="ts" module>
-  export type SaveState = 'idle' | 'saving';
-</script>
-
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
+	import type { SaveState } from '$lib/utils/saveFrom.svelte';
 
 	let { saveState = 'idle', disabled = false }: { saveState: SaveState, disabled?: boolean } = $props();
 </script>
