@@ -1,4 +1,8 @@
-import { getAllCategoriesAndKeywords, createKeyword } from '$lib/services/categories.js';
+import {
+	getAllCategoriesAndKeywords,
+	createKeyword,
+	keywordNameExists
+} from '$lib/services/categories.js';
 import { createExpense } from '$lib/services/expenses';
 import { getAllLedgers, splitLedgersAndTemplates } from '$lib/services/ledgers';
 import { fail, redirect } from '@sveltejs/kit';
@@ -9,18 +13,15 @@ import type { NewKeyword } from '$lib/schemas/category';
 
 export const load: PageServerLoad = async ({ locals, parent, url }) => {
 	const { currentUser } = await parent();
-
 	const all = await getAllLedgers(locals.tablesDB!, currentUser.teamId);
 	const { ledgers, templates } = splitLedgersAndTemplates(all);
 	const { categories, keywords } = await getAllCategoriesAndKeywords(
 		locals.tablesDB!,
 		currentUser.teamId
 	);
-
 	const ledgerId = url.searchParams.get('ledger') ?? ledgers[0]?.id;
 	const from = url.searchParams.get('from');
 	const backUrl = from === 'ledger' ? `/ledgers/${ledgerId}` : '/';
-
 	return { ledgers, templates, ledgerId, categories, keywords, backUrl };
 };
 
@@ -31,7 +32,6 @@ export const actions = {
 			return fail(401, { error: 'Not authenticated' });
 		}
 		const tablesDB = locals.tablesDB;
-
 		const data = await request.formData();
 		const description = (data.get('exp-description') as string | null)
 			?.trim()
@@ -52,13 +52,21 @@ export const actions = {
 		await createExpense(tablesDB, result.data);
 
 		if (data.get('save-keyword')) {
-			const newKeyword: NewKeyword = {
-				name: result.data.description,
-				categoryId: result.data.categoryId,
-				teamId: currentUser.teamId
-			};
-			await createKeyword(tablesDB, newKeyword);
+			const isDuplicate = await keywordNameExists(
+				tablesDB,
+				result.data.description,
+				currentUser.teamId
+			);
+			if (!isDuplicate) {
+				const newKeyword: NewKeyword = {
+					name: result.data.description,
+					categoryId: result.data.categoryId,
+					teamId: currentUser.teamId
+				};
+				await createKeyword(tablesDB, newKeyword);
+			}
 		}
+
 		redirect(303, `/ledgers/${result.data.ledgerId}`);
 	}
 } satisfies Actions;

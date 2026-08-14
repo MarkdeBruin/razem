@@ -1,4 +1,8 @@
-import { getAllCategoriesAndKeywords, createKeyword } from '$lib/services/categories.js';
+import {
+	getAllCategoriesAndKeywords,
+	createKeyword,
+	keywordNameExists
+} from '$lib/services/categories.js';
 import { getExpense, updateExpense, deleteExpense } from '$lib/services/expenses';
 import { getAllLedgers, splitLedgersAndTemplates } from '$lib/services/ledgers.js';
 import { newExpenseSchema } from '$lib/schemas/expenses';
@@ -9,21 +13,18 @@ import type { NewKeyword } from '$lib/schemas/category';
 
 export const load: PageServerLoad = async ({ locals, parent, params }) => {
 	const { currentUser } = await parent();
-
 	let expense;
 	try {
 		expense = await getExpense(locals.tablesDB!, params.id, currentUser.teamId);
 	} catch {
 		error(404, { message: 'Expense not found' });
 	}
-
 	const all = await getAllLedgers(locals.tablesDB!, currentUser.teamId);
 	const { ledgers, templates } = splitLedgersAndTemplates(all);
 	const { categories, keywords } = await getAllCategoriesAndKeywords(
 		locals.tablesDB!,
 		currentUser.teamId
 	);
-
 	return { expense, ledgers, templates, categories, keywords };
 };
 
@@ -34,7 +35,6 @@ export const actions = {
 			return fail(401, { error: 'Not authenticated' });
 		}
 		const tablesDB = locals.tablesDB;
-
 		const data = await request.formData();
 		const description = (data.get('exp-description') as string | null)
 			?.trim()
@@ -54,15 +54,26 @@ export const actions = {
 
 		await updateExpense(tablesDB, params.id, currentUser.teamId, result.data);
 
+		let keywordSaved = true;
 		if (data.get('save-keyword')) {
-			const newKeyword: NewKeyword = {
-				name: result.data.description,
-				categoryId: result.data.categoryId,
-				teamId: currentUser.teamId
-			};
-			await createKeyword(tablesDB, newKeyword);
+			const isDuplicate = await keywordNameExists(
+				tablesDB,
+				result.data.description,
+				currentUser.teamId
+			);
+			if (isDuplicate) {
+				keywordSaved = false;
+			} else {
+				const newKeyword: NewKeyword = {
+					name: result.data.description,
+					categoryId: result.data.categoryId,
+					teamId: currentUser.teamId
+				};
+				await createKeyword(tablesDB, newKeyword);
+			}
 		}
-		return { updated: true };
+
+		return { updated: true, keywordSaved };
 	},
 
 	delete: async ({ locals, params, request }) => {
@@ -71,7 +82,6 @@ export const actions = {
 			return fail(401, { error: 'Not authenticated' });
 		}
 		const tablesDB = locals.tablesDB;
-
 		const data = await request.formData();
 		const ledgerId = data.get('ledger-id') as string;
 		await deleteExpense(tablesDB, params.id, currentUser.teamId);

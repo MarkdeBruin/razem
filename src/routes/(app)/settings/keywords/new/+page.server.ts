@@ -1,4 +1,4 @@
-import { getAllCategoriesAndKeywords, createKeyword } from '$lib/services/categories';
+import { getAllCategoriesAndKeywords, createKeyword, keywordNameExists } from '$lib/services/categories';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { newKeywordSchema } from '$lib/schemas/category';
@@ -35,12 +35,11 @@ export const actions = {
 			return fail(422, { errors: fieldErrors });
 		}
 
-		let createdKeyword;
-		try {
-			createdKeyword = await createKeyword(tablesDB, result.data);
-		} catch {
+		const isDuplicate = await keywordNameExists(tablesDB, result.data.name, currentUser.teamId);
+		if (isDuplicate) {
 			return fail(422, { keywordDuplicate: true, duplicateName: result.data.name });
 		}
+		const createdKeyword = await createKeyword(tablesDB, result.data);
 
 		redirect(303, `/settings/keywords/${createdKeyword.id}`);
 	}

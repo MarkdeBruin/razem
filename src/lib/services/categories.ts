@@ -85,14 +85,6 @@ export async function getKeyword(tablesDB: TablesDB, id: string, teamId: string)
 }
 
 export async function createKeyword(tablesDB: TablesDB, keyword: NewKeyword): Promise<Keyword> {
-	const { rows: existing } = await tablesDB.listRows<KeywordRow>({
-		databaseId: DB_ID,
-		tableId: KEYWORDS_TABLE_ID,
-		queries: [Query.equal('teamId', keyword.teamId), Query.limit(999)]
-	});
-	const duplicate = existing.find((row) => row.name.toLowerCase() === keyword.name.toLowerCase());
-	if (duplicate) throw new Error(`Keyword "${keyword.name}" already exists`);
-
 	const row = await tablesDB.createRow<KeywordRow>({
 		databaseId: DB_ID,
 		tableId: KEYWORDS_TABLE_ID,
