@@ -1,48 +1,153 @@
+import type { TablesDB } from 'node-appwrite';
+import { Query, Permission, Role, ID, type Models } from 'node-appwrite';
 import type { Category, Keyword, NewKeyword } from '$lib/schemas/category';
 import { notFoundError } from '$lib/utils/errors';
-import { mockCategories, mockKeywords } from '$lib/mock/data';
+import { DB_ID } from '$env/static/private';
 
-export async function getAllCategories(): Promise<Category[]> {
-	return mockCategories;
+const CATEGORIES_TABLE_ID = 'categories';
+const KEYWORDS_TABLE_ID = 'keywords';
+
+type CategoryRow = Models.Row & {
+	name: string;
+	teamId: string;
+	keywords?: (string | KeywordRow)[]; // present on read (expanded query only), never on write
+};
+
+type KeywordRow = Models.Row & {
+	name: string;
+	categoryId: string | CategoryRow;
+	teamId: string;
+};
+
+function toCategory(row: CategoryRow): Category {
+	return { id: row.$id, name: row.name, teamId: row.teamId };
 }
 
-export async function getAllKeywords(): Promise<Keyword[]> {
-	const keywords = mockKeywords;
-	return keywords.sort((a, b) => a.name.localeCompare(b.name));
+function toKeyword(row: KeywordRow, knownCategoryId?: string): Keyword {
+	return {
+		id: row.$id,
+		name: row.name,
+		categoryId:
+			knownCategoryId ?? (typeof row.categoryId === 'string' ? row.categoryId : row.categoryId.$id),
+		teamId: row.teamId
+	};
 }
 
-export async function getKeyword(id: string): Promise<Keyword | undefined> {
-	return mockKeywords.find((keyword) => keyword.id === id);
+export async function getAllCategories(tablesDB: TablesDB, teamId: string): Promise<Category[]> {
+	const { rows } = await tablesDB.listRows<CategoryRow>({
+		databaseId: DB_ID,
+		tableId: CATEGORIES_TABLE_ID,
+		queries: [Query.equal('teamId', teamId), Query.orderAsc('name'), Query.limit(999)]
+	});
+	return rows.map(toCategory);
 }
 
-export async function createKeyword(keyword: NewKeyword): Promise<Keyword> {
-	const duplicate = mockKeywords.find(
-		(existingKeyword) => existingKeyword.name.toLowerCase() === keyword.name.toLowerCase()
-	);
+export async function getAllCategoriesAndKeywords(
+	tablesDB: TablesDB,
+	teamId: string
+): Promise<{ categories: Category[]; keywords: Keyword[] }> {
+	const { rows } = await tablesDB.listRows<CategoryRow>({
+		databaseId: DB_ID,
+		tableId: CATEGORIES_TABLE_ID,
+		queries: [
+			Query.equal('teamId', teamId),
+			Query.orderAsc('name'),
+			Query.limit(999),
+			Query.select(['*', 'keywords.*'])
+		]
+	});
 
+	const categories = rows.map(toCategory);
+	const keywords = rows.flatMap((row) => {
+		const keywordRows = (row.keywords ?? []) as KeywordRow[];
+		return keywordRows.map((kwRow) => toKeyword(kwRow, row.$id));
+	});
+	keywords.sort((a, b) => a.name.localeCompare(b.name));
+
+	return { categories, keywords };
+}
+
+export async function getKeyword(tablesDB: TablesDB, id: string, teamId: string): Promise<Keyword> {
+	let row: KeywordRow;
+	try {
+		row = await tablesDB.getRow<KeywordRow>({
+			databaseId: DB_ID,
+			tableId: KEYWORDS_TABLE_ID,
+			rowId: id
+		});
+	} catch {
+		throw notFoundError('Keyword', id);
+	}
+	if (row.teamId !== teamId) {
+		throw notFoundError('Keyword', id);
+	}
+	return toKeyword(row);
+}
+
+export async function createKeyword(tablesDB: TablesDB, keyword: NewKeyword): Promise<Keyword> {
+	const { rows: existing } = await tablesDB.listRows<KeywordRow>({
+		databaseId: DB_ID,
+		tableId: KEYWORDS_TABLE_ID,
+		queries: [Query.equal('teamId', keyword.teamId), Query.limit(999)]
+	});
+	const duplicate = existing.find((row) => row.name.toLowerCase() === keyword.name.toLowerCase());
 	if (duplicate) throw new Error(`Keyword "${keyword.name}" already exists`);
 
-	const newKeyword: Keyword = { ...keyword, id: `kw-${crypto.randomUUID()}` };
-	mockKeywords.push(newKeyword);
-
-	return newKeyword;
+	const row = await tablesDB.createRow<KeywordRow>({
+		databaseId: DB_ID,
+		tableId: KEYWORDS_TABLE_ID,
+		rowId: ID.unique(),
+		data: keyword,
+		permissions: [
+			Permission.read(Role.team(keyword.teamId)),
+			Permission.update(Role.team(keyword.teamId)),
+			Permission.delete(Role.team(keyword.teamId))
+		]
+	});
+	return toKeyword(row);
 }
 
-export async function updateKeyword(id: string, data: NewKeyword): Promise<Keyword> {
-	const index = mockKeywords.findIndex((keyword) => keyword.id === id);
-
-	if (index === -1) throw notFoundError('Keyword', id);
-
-	const updatedKeyword: Keyword = { ...data, id };
-	mockKeywords[index] = updatedKeyword;
-
-	return updatedKeyword;
+export async function updateKeyword(
+	tablesDB: TablesDB,
+	id: string,
+	teamId: string,
+	data: NewKeyword
+): Promise<Keyword> {
+	const existing = await tablesDB
+		.getRow<KeywordRow>({ databaseId: DB_ID, tableId: KEYWORDS_TABLE_ID, rowId: id })
+		.catch(() => null);
+	if (!existing || existing.teamId !== teamId) {
+		throw notFoundError('Keyword', id);
+	}
+	const row = await tablesDB.updateRow<KeywordRow>({
+		databaseId: DB_ID,
+		tableId: KEYWORDS_TABLE_ID,
+		rowId: id,
+		data
+	});
+	return toKeyword(row);
 }
 
-export async function deleteKeyword(id: string): Promise<void> {
-	const index = mockKeywords.findIndex((keyword) => keyword.id === id);
+export async function deleteKeyword(tablesDB: TablesDB, id: string, teamId: string): Promise<void> {
+	const existing = await tablesDB
+		.getRow<KeywordRow>({ databaseId: DB_ID, tableId: KEYWORDS_TABLE_ID, rowId: id })
+		.catch(() => null);
+	if (!existing || existing.teamId !== teamId) {
+		throw notFoundError('Keyword', id);
+	}
+	await tablesDB.deleteRow({ databaseId: DB_ID, tableId: KEYWORDS_TABLE_ID, rowId: id });
+}
 
-	if (index === -1) throw notFoundError('Keyword', id);
-
-	mockKeywords.splice(index, 1);
+export async function keywordNameExists(
+	tablesDB: TablesDB,
+	name: string,
+	teamId: string,
+	excludeId?: string
+): Promise<boolean> {
+	const { rows } = await tablesDB.listRows<KeywordRow>({
+		databaseId: DB_ID,
+		tableId: KEYWORDS_TABLE_ID,
+		queries: [Query.equal('teamId', teamId), Query.limit(999)]
+	});
+	return rows.some((row) => row.name.toLowerCase() === name.toLowerCase() && row.$id !== excludeId);
 }

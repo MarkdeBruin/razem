@@ -10,7 +10,6 @@ export const load: PageServerLoad = async ({ locals, parent, params, url }) => {
 
 	let ledger: Ledger;
 	let expenses: Expense[];
-
 	try {
 		({ ledger, expenses } = await getLedgerWithExpenses(
 			locals.tablesDB!,
@@ -21,9 +20,8 @@ export const load: PageServerLoad = async ({ locals, parent, params, url }) => {
 		error(404, { message: 'Ledger not found' });
 	}
 
-	const categories = await getAllCategories(); // still mock — unchanged
+	const categories = await getAllCategories(locals.tablesDB!, currentUser.teamId);
 	const categoryMap = new Map(categories.map((c) => [c.id, c.name]));
-
 	const expensesWithCategory = expenses.map((expense) => ({
 		...expense,
 		categoryName: categoryMap.get(expense.categoryId) ?? 'Uncategorised'

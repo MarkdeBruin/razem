@@ -1,9 +1,11 @@
-import { getAllCategories, getAllKeywords } from '$lib/services/categories';
+import { getAllCategoriesAndKeywords } from '$lib/services/categories';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async () => {
-	return {
-		categories: await getAllCategories(),
-		keywords: await getAllKeywords()
-	};
+export const load: PageServerLoad = async ({ locals, parent }) => {
+  const { currentUser } = await parent();
+	const { categories, keywords } = await getAllCategoriesAndKeywords(
+		locals.tablesDB!,
+		currentUser.teamId
+	);
+	return { categories, keywords };
 };

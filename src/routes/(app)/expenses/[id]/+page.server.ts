@@ -1,4 +1,4 @@
-import { getAllCategories, getAllKeywords, createKeyword } from '$lib/services/categories.js';
+import { getAllCategoriesAndKeywords, createKeyword } from '$lib/services/categories.js';
 import { getExpense, updateExpense, deleteExpense } from '$lib/services/expenses';
 import { getAllLedgers, splitLedgersAndTemplates } from '$lib/services/ledgers.js';
 import { newExpenseSchema } from '$lib/schemas/expenses';
@@ -19,8 +19,10 @@ export const load: PageServerLoad = async ({ locals, parent, params }) => {
 
 	const all = await getAllLedgers(locals.tablesDB!, currentUser.teamId);
 	const { ledgers, templates } = splitLedgersAndTemplates(all);
-	const categories = await getAllCategories(); // still mock — unchanged
-	const keywords = await getAllKeywords(); // still mock — unchanged
+	const { categories, keywords } = await getAllCategoriesAndKeywords(
+		locals.tablesDB!,
+		currentUser.teamId
+	);
 
 	return { expense, ledgers, templates, categories, keywords };
 };
@@ -58,7 +60,7 @@ export const actions = {
 				categoryId: result.data.categoryId,
 				teamId: currentUser.teamId
 			};
-			await createKeyword(newKeyword); // still mock — unchanged
+			await createKeyword(tablesDB, newKeyword);
 		}
 		return { updated: true };
 	},

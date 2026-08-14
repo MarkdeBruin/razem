@@ -1,47 +1,47 @@
-import { getAllCategories, getAllKeywords, createKeyword } from '$lib/services/categories';
+import { getAllCategoriesAndKeywords, createKeyword } from '$lib/services/categories';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { newKeywordSchema } from '$lib/schemas/category';
-import { keywordExists } from '$lib/utils/categories';
 import * as z from 'zod';
 
-export const load: PageServerLoad = async () => {
-	return {
-		categories: await getAllCategories(),
-		keywords: await getAllKeywords()
-	};
+export const load: PageServerLoad = async ({ locals, parent }) => {
+	const { currentUser } = await parent();
+	const { categories, keywords } = await getAllCategoriesAndKeywords(
+		locals.tablesDB!,
+		currentUser.teamId
+	);
+	return { categories, keywords };
 };
 
 export const actions = {
 	default: async ({ locals, request }) => {
 		const currentUser = locals.currentUser;
-		if (!currentUser) {
+		if (!currentUser || !locals.tablesDB) {
 			return fail(401, { error: 'Not authenticated' });
 		}
+		const tablesDB = locals.tablesDB;
 
 		const data = await request.formData();
-
 		const name = (data.get('keyword') as string | null)
 			?.trim()
 			.replace(/^\w/, (c) => c.toUpperCase());
-
 		const result = newKeywordSchema.safeParse({
 			name,
 			categoryId: data.get('category'),
 			teamId: currentUser.teamId
 		});
-
 		if (!result.success) {
 			const { fieldErrors } = z.flattenError(result.error);
 			return fail(422, { errors: fieldErrors });
 		}
 
-		const existingKeywords = await getAllKeywords();
-		if (keywordExists(result.data.name, existingKeywords)) {
+		let createdKeyword;
+		try {
+			createdKeyword = await createKeyword(tablesDB, result.data);
+		} catch {
 			return fail(422, { keywordDuplicate: true, duplicateName: result.data.name });
 		}
 
-		const createdKeyword = await createKeyword(result.data);
 		redirect(303, `/settings/keywords/${createdKeyword.id}`);
 	}
 } satisfies Actions;

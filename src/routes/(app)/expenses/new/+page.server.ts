@@ -1,4 +1,4 @@
-import { getAllCategories, getAllKeywords, createKeyword } from '$lib/services/categories.js';
+import { getAllCategoriesAndKeywords, createKeyword } from '$lib/services/categories.js';
 import { createExpense } from '$lib/services/expenses';
 import { getAllLedgers, splitLedgersAndTemplates } from '$lib/services/ledgers';
 import { fail, redirect } from '@sveltejs/kit';
@@ -12,9 +12,11 @@ export const load: PageServerLoad = async ({ locals, parent, url }) => {
 
 	const all = await getAllLedgers(locals.tablesDB!, currentUser.teamId);
 	const { ledgers, templates } = splitLedgersAndTemplates(all);
+	const { categories, keywords } = await getAllCategoriesAndKeywords(
+		locals.tablesDB!,
+		currentUser.teamId
+	);
 
-	const categories = await getAllCategories(); // still mock — unchanged
-	const keywords = await getAllKeywords(); // still mock — unchanged
 	const ledgerId = url.searchParams.get('ledger') ?? ledgers[0]?.id;
 	const from = url.searchParams.get('from');
 	const backUrl = from === 'ledger' ? `/ledgers/${ledgerId}` : '/';
@@ -55,7 +57,7 @@ export const actions = {
 				categoryId: result.data.categoryId,
 				teamId: currentUser.teamId
 			};
-			await createKeyword(newKeyword); // still mock — unchanged
+			await createKeyword(tablesDB, newKeyword);
 		}
 		redirect(303, `/ledgers/${result.data.ledgerId}`);
 	}
