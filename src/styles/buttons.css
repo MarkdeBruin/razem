@@ -11,6 +11,7 @@
 		font-weight: var(--btn-font-weight);
 		letter-spacing: var(--uppercase-spacing);
 		min-height: 2.4rem;
+		overflow: hidden;
 		padding: 0.5em var(--inline-space-double);
 		place-items: center;
 		pointer-events: auto;
@@ -31,7 +32,7 @@
 			scale: 1 !important;
 		}
 
-		&.line {
+		&[data-variant='line'] {
 			background-color: var(--btn-line-color);
 			border-color: var(--color-border);
 			color: var(--btn-line-text-color);
@@ -47,7 +48,7 @@
 				background-color: var(--btn-hover-color);
 			}
 
-			&.line:hover {
+			&[data-variant='line']:hover {
 				border-color: transparent;
 				color: var(--btn-line-text-hover-color);
 			}
@@ -56,6 +57,7 @@
 		span {
 			text-box-edge: cap alphabetic;
 			text-box-trim: trim-both;
+			grid-area: 1/1;
 		}
 	}
 

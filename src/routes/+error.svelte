@@ -9,5 +9,5 @@
 			<p>{page.error.message}</p>
 		{/if}
 	</header>
-	<a class="btn line" href="/">Back to home</a>
+	<a class="btn" data-variant="line" href="/">Back to home</a>
 </error-message>

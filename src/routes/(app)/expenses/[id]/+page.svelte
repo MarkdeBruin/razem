@@ -31,7 +31,13 @@
 		<h2>Edit expense</h2>
 
 		<span class="sr-only" aria-live="polite" aria-atomic="true">
-			{#if form?.updated}Changes saved{/if}
+			{#if save.saveState === 'saving'}
+				Saving changes
+			{:else if save.saveState === 'error'}
+				Error saving changes, please try again
+			{:else if form?.updated}
+				Changes saved
+			{/if}
 		</span>
 
 		<label>
@@ -160,6 +166,6 @@
 			Permanently delete expense
 		</label>
 		<input type="hidden" name="ledger-id" value={data.expense.ledgerId} />
-		<button class="btn line" type="submit"><span>Delete expense</span></button>
+		<button class="btn" data-variant="line" type="submit"><span>Delete expense</span></button>
 	</form>
 </main>

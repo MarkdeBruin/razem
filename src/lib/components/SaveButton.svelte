@@ -3,19 +3,27 @@
 	import { cubicOut } from 'svelte/easing';
 	import type { SaveState } from '$lib/utils/saveFrom.svelte';
 
-	let { saveState = 'idle', disabled = false }: { saveState: SaveState, disabled?: boolean } = $props();
+	interface Props {
+		saveState: SaveState;
+		disabled?: boolean;
+	}
+
+	let { saveState = 'idle', disabled = false }: Props = $props();
 </script>
 
-<button class="btn sticky" type="submit" disabled={saveState !== 'idle' || disabled}>
-	<span style="display: grid; overflow: hidden;">
-		{#key saveState}
-			<span
-				style="grid-area: 1/1"
-				in:fly={{ y: -8, duration: 200, delay: 150, easing: cubicOut }}
-				out:fly={{ y: 8, duration: 150 }}
-			>
-				{saveState === 'saving' ? 'Saving…' : 'Save changes'}
-			</span>
-		{/key}
-	</span>
+<button class="btn sticky" type="submit" disabled={saveState === 'saving' || disabled}>
+	{#key saveState}
+		<span
+			in:fly={{ y: -8, duration: 200, delay: 150, easing: cubicOut }}
+			out:fly={{ y: 8, duration: 150 }}
+		>
+			{#if saveState === 'saving'}
+				Saving…
+			{:else if saveState === 'error'}
+				Try again
+			{:else}
+				Save changes
+			{/if}
+		</span>
+	{/key}
 </button>

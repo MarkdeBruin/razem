@@ -16,6 +16,6 @@
 
 <main>
 	<form method="POST" action="?/logout" use:enhance>
-		<button class="btn" type="submit"><span>Log out</span></button>
+		<button class="btn" data-variant="line" type="submit"><span>Log out</span></button>
 	</form>
 </main>

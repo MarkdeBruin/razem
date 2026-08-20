@@ -25,7 +25,13 @@
 	<form method="POST" action="?/update" use:enhance={save.enhance}>
 		<h2>Edit ledger</h2>
 		<span class="sr-only" aria-live="polite" aria-atomic="true">
-			{#if form?.updated}Changes saved{/if}
+			{#if save.saveState === 'saving'}
+				Saving changes
+			{:else if save.saveState === 'error'}
+				Error saving changes, please try again
+			{:else if form?.updated}
+				Changes saved
+			{/if}
 		</span>
 		<label>
 			Name
@@ -103,6 +109,6 @@
 			<input type="checkbox" name="confirm-delete" required />
 			Permanently delete ledger
 		</label>
-		<button class="btn line" type="submit"><span>Delete ledger</span></button>
+		<button class="btn" data-variant="line" type="submit"><span>Delete ledger</span></button>
 	</form>
 </main>
