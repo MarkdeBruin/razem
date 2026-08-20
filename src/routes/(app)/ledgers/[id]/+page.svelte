@@ -60,16 +60,26 @@
 		</h2>
 	</section>
 
-	<label class="margin-block-end-half hide-no-js">
-		<span class="sr-only">Filter expenses</span>
-		<SelectWrapper>
-			<select name="expenses-filter" bind:value={filter}>
-				<option value="all">All expenses</option>
-				<option value="current">{data.currentUser.name}'s expenses</option>
-				<option value="other">{data.otherUser.name}'s expenses</option>
-			</select>
-		</SelectWrapper>
-	</label>
+	<fieldset class="segmented">
+		<legend><span class="sr-only">Filter expenses</span></legend>
+
+		<label>
+			<input type="radio" name="expenses-filter" value="all" bind:group={filter} />
+			<span>All</span>
+		</label>
+
+		<label>
+			<input type="radio" name="expenses-filter" value="current" bind:group={filter} />
+			<span>{data.currentUser.name}{data.currentUser.name.endsWith('s') ? '’' : '’s'}</span>
+		</label>
+
+		<label>
+			<input type="radio" name="expenses-filter" value="other" bind:group={filter} />
+			<span>
+				{data.otherUser.name}{data.otherUser.name.endsWith('s') ? '’' : '’s'}
+			</span>
+		</label>
+	</fieldset>
 
 	{#if !filteredExpenses.length}
 		<EmptyState

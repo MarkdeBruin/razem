@@ -32,15 +32,19 @@
 
 <main class="stack">
 	<section class="list--section margin-block-start" id="ledgers">
-		<label class="margin-block-end hide-no-js">
-			<span class="sr-only">Filter ledgers and templates</span>
-			<SelectWrapper>
-				<select name="expenses-filter" bind:value={filter}>
-					<option value="all">All ledgers</option>
-					<option value="templates">Templates</option>
-				</select>
-			</SelectWrapper>
-		</label>
+		<fieldset class="segmented margin-block-end hide-no-js">
+			<legend><span class="sr-only">Filter ledgers and templates</span></legend>
+
+			<label>
+				<input type="radio" name="ledgers-filter" value="all" bind:group={filter} />
+				<span>All ledgers</span>
+			</label>
+
+			<label>
+				<input type="radio" name="ledgers-filter" value="templates" bind:group={filter} />
+				<span>Templates</span>
+			</label>
+		</fieldset>
 
 		{#if filteredLedgers.length}
 			<ul>
