@@ -23,7 +23,7 @@
 			margin-inline-start: var(--btn-circle-neg-margin);
 		}
 
-		&last-child {
+		*:last-child {
 			margin-inline-end: var(--btn-circle-neg-margin);
 		}
 	}
