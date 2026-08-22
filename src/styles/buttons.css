@@ -4,7 +4,6 @@
 		border: 2px solid transparent;
 		border-radius: var(--border-radius);
 		color: var(--btn-text-color);
-		corner-shape: squircle;
 		cursor: pointer;
 		display: grid;
 		font-size: var(--btn-text);
@@ -18,7 +17,6 @@
 		text-align: center;
 		text-decoration: none;
 		text-transform: uppercase;
-		transition: 100ms ease-out;
 		transition-property: background-color, border, color, scale;
 		user-select: none;
 		-webkit-tap-highlight-color: transparent;
@@ -73,7 +71,6 @@
 		inline-size: var(--btn-circle-size);
 		place-content: center;
 		pointer-events: auto;
-		transition: 100ms ease-out;
 		transition-property: background-color, border, color, opacity, scale;
 		user-select: none;
 		-webkit-tap-highlight-color: transparent;

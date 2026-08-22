@@ -60,7 +60,7 @@
 		</h2>
 	</section>
 
-	<fieldset class="segmented">
+	<fieldset class="segmented hide-no-js">
 		<legend><span class="sr-only">Filter expenses</span></legend>
 
 		<label>

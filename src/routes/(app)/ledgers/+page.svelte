@@ -31,7 +31,7 @@
 </header>
 
 <main class="stack">
-	<section class="list--section margin-block-start" id="ledgers">
+	<section class="list--section margin-block-start">
 		<fieldset class="segmented margin-block-end hide-no-js">
 			<legend><span class="sr-only">Filter ledgers and templates</span></legend>
 
