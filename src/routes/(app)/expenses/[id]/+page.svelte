@@ -6,6 +6,7 @@
 	import SelectWrapper from '$lib/components/SelectWrapper.svelte';
 	import SaveButton from '$lib/components/SaveButton.svelte';
 	import { useSaveForm } from '$lib/utils/saveFrom.svelte';
+	import { resolve } from '$app/paths';
 
 	let { data, form }: PageProps = $props();
 	const save = useSaveForm();
@@ -20,7 +21,7 @@
 </script>
 
 <header class="header-sticky--back">
-	<a href="/ledgers/{data.expense.ledgerId}" class="btn--circle" aria-label="Back to ledger">
+	<a href={resolve('/(app)/ledgers/[id]', { id: data.expense.ledgerId })} class="btn--circle" aria-label="Back to ledger">
 		<ArrowLeftIcon />
 	</a>
 	<h1>Manage {data.expense.description}</h1>

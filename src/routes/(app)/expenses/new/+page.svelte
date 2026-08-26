@@ -5,6 +5,7 @@
 	import { ArrowLeftIcon } from 'phosphor-svelte';
 	import SelectWrapper from '$lib/components/SelectWrapper.svelte';
 	import { attachObserveHeader } from '$lib/utils/headerObserver';
+	import { resolve } from '$app/paths';
 
 	let { data, form }: PageProps = $props();
 
@@ -17,7 +18,12 @@
 </script>
 
 <header class="header-sticky--back">
-	<a href={data.backUrl} class="btn--circle" aria-label="Back">
+	<a href={data.backTo.params
+			? resolve(data.backTo.route, data.backTo.params)
+			: resolve(data.backTo.route)}
+		class="btn--circle"
+		aria-label="Back"
+	>
 		<ArrowLeftIcon />
 	</a>
 	<span bind:this={headerSpan} aria-hidden="true">New expense</span>

@@ -43,7 +43,8 @@ export const load: PageServerLoad = async ({ locals, parent, params, url }) => {
 	const currentBalance = currentUser.id === owner.id ? ownerBalance : partnerBalance;
 	const otherBalance = currentUser.id === owner.id ? partnerBalance : ownerBalance;
 	const from = url.searchParams.get('from');
-	const backUrl = from === 'overview' ? `/ledgers` : '/';
+	const backTo =
+		from === 'overview' ? ({ route: '/(app)/ledgers' } as const) : ({ route: '/' } as const);
 
 	return {
 		ledger,
@@ -58,6 +59,6 @@ export const load: PageServerLoad = async ({ locals, parent, params, url }) => {
 		partnerBalance,
 		currentBalance,
 		otherBalance,
-		backUrl
+		backTo
 	};
 };

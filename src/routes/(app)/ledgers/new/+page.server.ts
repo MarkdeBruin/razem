@@ -8,10 +8,14 @@ import * as z from 'zod';
 
 export const load: PageServerLoad = async ({ url, locals, parent }) => {
 	const { currentUser } = await parent();
+  const templates = await getAllLedgerTemplates(locals.tablesDB!, currentUser.teamId);
+  
 	const from = url.searchParams.get('from');
-	const backUrl = from === 'overview' ? '/ledgers' : '/';
-	const templates = await getAllLedgerTemplates(locals.tablesDB!, currentUser.teamId);
-	return { templates, backUrl };
+	const backTo = from === 'overview'
+		? { route: '/(app)/ledgers' } as const
+		: { route: '/' } as const;
+	
+	return { templates, backTo };
 };
 
 export const actions = {
@@ -51,7 +55,7 @@ export const actions = {
 		const newLedger = await createLedger(tablesDB, result.data);
 
 		for (const expense of templateExpenses) {
-			const { id, ...rest } = expense;
+			const { id: _id, ...rest } = expense;
 			await createExpense(tablesDB, { ...rest, ledgerId: newLedger.id });
 		}
 

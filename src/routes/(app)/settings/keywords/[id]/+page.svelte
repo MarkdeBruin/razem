@@ -5,6 +5,7 @@
 	import { matchCategory } from '$lib/utils/categories';
 	import SaveButton from '$lib/components/SaveButton.svelte';
 	import { useSaveForm } from '$lib/utils/saveFrom.svelte';
+	import { resolve } from '$app/paths';
 
 	let { data, form }: PageProps = $props();
 	const save = useSaveForm();
@@ -15,7 +16,11 @@
 </script>
 
 <header class="header-sticky--back">
-	<a href="/settings/categories" class="btn--circle" aria-label="Back to categories">
+	<a
+		href={resolve('/(app)/settings/categories')}
+		class="btn--circle"
+		aria-label="Back to categories"
+	>
 		<ArrowLeftIcon />
 	</a>
 	<h1>Manage {data.keyword.name}</h1>

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
 	import { ArrowLeftIcon, FadersHorizontalIcon } from 'phosphor-svelte';
-	import SelectWrapper from '$lib/components/SelectWrapper.svelte';
 	import EmptyState from '$lib/components/EmptyState.svelte';
+	import { resolve } from '$app/paths';
 
 	let { data }: PageProps = $props();
 
@@ -34,9 +34,13 @@
 </script>
 
 <header class="header-sticky--ledger">
-	<a href={data.backUrl} class="btn--circle" aria-label="Go home"><ArrowLeftIcon /></a>
+	<a href={resolve(data.backTo.route)} class="btn--circle" aria-label="Back"><ArrowLeftIcon /></a>
 	<h1>{data.ledger.name}</h1>
-	<a href="{data.ledger.id}/manage" class="btn--circle" aria-label="Edit ledger">
+	<a
+		href={resolve('/(app)/ledgers/[id]/manage', { id: data.ledger.id })}
+		class="btn--circle"
+		aria-label="Edit ledger"
+	>
 		<FadersHorizontalIcon />
 	</a>
 </header>
@@ -86,7 +90,7 @@
 			title="Nothing here yet"
 			subtitle="Expenses and their totals will show here."
 			cta="Add expense"
-			url="/expenses/new?ledger={data.ledger.id}&from=ledger"
+			url={resolve(`/(app)/expenses/new?ledger=${data.ledger.id}&from=ledger`)}
 		/>
 	{:else}
 		<section class="list--section tabular-nums">
@@ -113,7 +117,7 @@
 			</ul>
 		</section>
 
-		<a class="btn" href="/expenses/new?ledger={data.ledger.id}&from=ledger">
+		<a class="btn" href={resolve(`/(app)/expenses/new?ledger=${data.ledger.id}&from=ledger`)}>
 			<span>Add expense</span>
 		</a>
 
@@ -124,7 +128,7 @@
 			<ul>
 				{#each filteredExpenses as expense (expense.id)}
 					<li>
-						<a href="/expenses/{expense.id}">
+						<a href={resolve('/(app)/expenses/[id]', { id: expense.id })}>
 							<span>{expense.description}</span>
 							<span>{expense.amount}</span>
 						</a>

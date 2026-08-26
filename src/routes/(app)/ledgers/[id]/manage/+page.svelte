@@ -4,6 +4,7 @@
 	import { ArrowLeftIcon } from 'phosphor-svelte';
 	import SaveButton from '$lib/components/SaveButton.svelte';
 	import { useSaveForm } from '$lib/utils/saveFrom.svelte';
+	import { resolve } from '$app/paths';
 
 	let { data, form }: PageProps = $props();
 	const save = useSaveForm();
@@ -15,7 +16,7 @@
 </script>
 
 <header class="header-sticky--back">
-	<a href="/ledgers/{data.ledger.id}" class="btn--circle" aria-label="Back to ledger">
+	<a href={resolve('/(app)/ledgers/[id]', { id: data.ledger.id })} class="btn--circle" aria-label="Back to ledger">
 		<ArrowLeftIcon />
 	</a>
 	<h1><span class="sr-only">Manage</span> {data.ledger.name}</h1>

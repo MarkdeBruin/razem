@@ -4,6 +4,7 @@
 	import { matchCategory } from '$lib/utils/categories';
 	import { ArrowLeftIcon } from 'phosphor-svelte';
 	import { attachObserveHeader } from '$lib/utils/headerObserver';
+	import { resolve } from '$app/paths';
 
 	let { data, form }: PageProps = $props();
 	let headerSpan = $state<HTMLElement>();
@@ -13,9 +14,13 @@
 </script>
 
 <header class="header-sticky--back">
-	<a href="/settings/categories" class="btn--circle" aria-label="Categories & Keywords"
-		><ArrowLeftIcon /></a
+	<a
+		href={resolve('/(app)/settings/categories')}
+		class="btn--circle"
+		aria-label="Categories & Keywords"
 	>
+		<ArrowLeftIcon />
+	</a>
 	<span bind:this={headerSpan} aria-hidden="true">New keyword</span>
 </header>
 

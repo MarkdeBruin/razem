@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { resolve } from '$app/paths';
 </script>
 
 <error-message>
@@ -9,5 +10,5 @@
 			<p>{page.error.message}</p>
 		{/if}
 	</header>
-	<a class="btn" data-variant="line" href="/">Back to home</a>
+	<a class="btn" data-variant="line" href={resolve('/')}>Back to home</a>
 </error-message>

@@ -3,13 +3,14 @@
 	import type { PageProps } from './$types';
 	import { ArrowLeftIcon } from 'phosphor-svelte';
 	import { attachObserveHeader } from '$lib/utils/headerObserver';
+	import { resolve } from '$app/paths';
 
 	let { data, form }: PageProps = $props();
 	let headerSpan = $state<HTMLElement>();
 </script>
 
 <header class="header-sticky--back">
-	<a href={data.backUrl} class="btn--circle" aria-label="Back home">
+	<a href={resolve(data.backTo.route)} class="btn--circle" aria-label="Back">
 		<ArrowLeftIcon />
 	</a>
 	<span bind:this={headerSpan} aria-hidden="true">New ledger</span>

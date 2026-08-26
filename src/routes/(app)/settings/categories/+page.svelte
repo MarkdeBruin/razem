@@ -2,15 +2,18 @@
 	import EmptyState from '$lib/components/EmptyState.svelte';
 	import type { PageProps } from './$types';
 	import { ArrowLeftIcon, PlusIcon } from 'phosphor-svelte';
+	import { resolve } from '$app/paths';
 
 	let { data }: PageProps = $props();
 </script>
 
 <header class="header-sticky--back">
-	<a href="/" class="btn--circle" aria-label="Back home"><ArrowLeftIcon /></a>
+	<a href={resolve('/')} class="btn--circle" aria-label="Back home"><ArrowLeftIcon /></a>
 	<h1>Categories & Keywords</h1>
 	{#if data.keywords.length}
-		<a class="btn--circle" href="/settings/keywords/new" aria-label="Add keyword"><PlusIcon /></a>
+		<a class="btn--circle" href={resolve('/(app)/settings/keywords/new')} aria-label="Add keyword">
+			<PlusIcon />
+		</a>
 	{/if}
 </header>
 
@@ -27,7 +30,11 @@
 					</header>
 					<ul>
 						{#each [...categoryKeywords] as keyword (keyword.id)}
-							<li><a href="/settings/keywords/{keyword.id}">{keyword.name}</a></li>
+							<li>
+								<a href={resolve('/(app)/settings/keywords/[id]', { id: keyword.id })}>
+									{keyword.name}
+								</a>
+							</li>
 						{/each}
 					</ul>
 				{/if}
@@ -38,7 +45,7 @@
 			title="Keywords auto-fill expense categories"
 			subtitle="You can also create them while adding expenses."
 			cta="Add keyword"
-			url="keywords/new"
+			url={resolve('/(app)/settings/keywords/new')}
 		/>
 	{/if}
 </main>

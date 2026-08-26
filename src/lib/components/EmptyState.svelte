@@ -1,11 +1,12 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import type { ResolvedPathname } from '$app/types';
 
 	interface Props {
 		title: string;
 		subtitle: string;
 		cta?: string;
-		url?: string;
+		url?: ResolvedPathname;
 		children?: Snippet;
 	}
 

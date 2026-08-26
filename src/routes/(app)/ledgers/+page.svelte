@@ -2,7 +2,7 @@
 	import type { PageProps } from './$types';
 	import { PlusIcon, ArrowLeftIcon } from 'phosphor-svelte';
 	import EmptyState from '$lib/components/EmptyState.svelte';
-	import SelectWrapper from '$lib/components/SelectWrapper.svelte';
+	import { resolve } from '$app/paths';
 
 	let { data }: PageProps = $props();
 
@@ -23,10 +23,14 @@
 </script>
 
 <header class="header-sticky--back">
-	<a href="/" class="btn--circle" aria-label="Back home"><ArrowLeftIcon /></a>
+	<a href={resolve('/')} class="btn--circle" aria-label="Back home"><ArrowLeftIcon /></a>
 	<h1>Ledgers overview</h1>
 	{#if data.ledgers.length}
-		<a class="btn--circle" href="ledgers/new?from=overview" aria-label="Add ledger"><PlusIcon /></a>
+		<a
+			class="btn--circle"
+			href={resolve('/(app)/ledgers/new?from=overview')}
+			aria-label="Add ledger"><PlusIcon /></a
+		>
 	{/if}
 </header>
 
@@ -50,7 +54,9 @@
 			<ul>
 				{#each filteredLedgers as ledger (ledger.id)}
 					<li>
-						<a href="ledgers/{ledger.id}?from=overview">{ledger.name}</a>
+						<a href={resolve(`/(app)/ledgers/[id]?from=overview`, { id: ledger.id })}>
+							{ledger.name}
+						</a>
 					</li>
 				{/each}
 			</ul>
@@ -59,7 +65,7 @@
 				title="Nothing here yet"
 				subtitle={emptySubtitle}
 				cta="Add ledger"
-				url="ledgers/new"
+				url={resolve('/(app)/ledgers/new')}
 			/>
 		{/if}
 	</section>

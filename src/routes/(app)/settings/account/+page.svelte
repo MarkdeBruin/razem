@@ -1,14 +1,12 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import type { PageProps } from './$types';
 	import { ArrowLeftIcon } from 'phosphor-svelte';
-
-	let { data, form }: PageProps = $props();
+	import { resolve } from '$app/paths';
 
 </script>
 
 <header class="header-sticky--back">
-	<a href="/" class="btn--circle" aria-label="Back home">
+	<a href={resolve('/')} class="btn--circle" aria-label="Back home">
 		<ArrowLeftIcon />
 	</a>
 	<h1>Account</h1>

@@ -21,8 +21,10 @@ export const load: PageServerLoad = async ({ locals, parent, url }) => {
 	);
 	const ledgerId = url.searchParams.get('ledger') ?? ledgers[0]?.id;
 	const from = url.searchParams.get('from');
-	const backUrl = from === 'ledger' ? `/ledgers/${ledgerId}` : '/';
-	return { ledgers, templates, ledgerId, categories, keywords, backUrl };
+	const backTo = from === 'ledger'
+			? ({ route: '/(app)/ledgers/[id]', params: { id: ledgerId } } as const)
+			: ({ route: '/' } as const);
+	return { ledgers, templates, ledgerId, categories, keywords, backTo };
 };
 
 export const actions = {
