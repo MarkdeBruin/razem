@@ -21,7 +21,11 @@
 </script>
 
 <header class="header-sticky--back">
-	<a href={resolve('/(app)/ledgers/[id]', { id: data.expense.ledgerId })} class="btn--circle" aria-label="Back to ledger">
+	<a
+		href={resolve('/(app)/ledgers/[id]', { id: data.expense.ledgerId })}
+		class="btn--circle"
+		aria-label="Back to ledger"
+	>
 		<ArrowLeftIcon />
 	</a>
 	<h1>Manage {data.expense.description}</h1>
@@ -146,7 +150,7 @@
 						<hr />
 						<optgroup label="Templates">
 							{#each data.templates as template (template.id)}
-								<option value={template.id}>
+								<option value={template.id} selected={template.id === data.expense.ledgerId}>
 									{template.name}
 								</option>
 							{/each}

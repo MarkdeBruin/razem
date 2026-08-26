@@ -117,7 +117,7 @@
 						<hr />
 						<optgroup label="Templates">
 							{#each data.templates as template (template.id)}
-								<option value={template.id}>
+								<option value={template.id} selected={template.id === data.ledgerId}>
 									{template.name}
 								</option>
 							{/each}
