@@ -28,7 +28,7 @@ export const actions = {
 				path: '/',
 				httpOnly: true,
 				secure: !dev,
-				sameSite: 'strict',
+				sameSite: 'lax',
 				expires: new Date(session.expire)
 			});
 		} catch {
