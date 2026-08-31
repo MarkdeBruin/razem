@@ -33,7 +33,7 @@
 			{#if submit.submitState === 'submitting'}
 				Saving changes
 			{:else if submit.submitState === 'error'}
-				Error saving changes, please try again
+				Something went wrong, please try again
 			{:else if form?.updated}
 				Changes saved
 			{/if}
@@ -76,7 +76,9 @@
 				{#if form?.errors?.categoryId}<small>{form.errors.categoryId[0]}</small>{/if}
 			</div>
 		</fieldset>
+		
 		<SubmitButton submitState={submit.submitState} disabled={isDuplicate} />
+		{#if submit.submitState === 'error'}<small>Something went wrong, please try again</small>{/if}
 	</form>
 
 	<form method="POST" action="?/delete" use:enhance>

@@ -29,7 +29,7 @@
 			{#if submit.submitState === 'submitting'}
 				Saving changes
 			{:else if submit.submitState === 'error'}
-				Error saving changes, please try again
+				Something went wrong, please try again
 			{:else if form?.updated}
 				Changes saved
 			{/if}
@@ -99,6 +99,7 @@
 		</label>
 
 		<SubmitButton submitState={submit.submitState} />
+		{#if submit.submitState === 'error'}<small>Something went wrong, please try again</small>{/if}
 	</form>
 
 	<form method="POST" action="?/delete" use:enhance>
