@@ -5,6 +5,9 @@
 	import { ArrowLeftIcon } from 'phosphor-svelte';
 	import SelectWrapper from '$lib/components/SelectWrapper.svelte';
 	import { attachObserveHeader } from '$lib/utils/headerObserver';
+	import SubmitAnnouncer from '$lib/components/SubmitAnnouncer.svelte';
+	import SubmitButton from '$lib/components/SubmitButton.svelte';
+	import { useSubmitForm, addAnnounce, addLabels } from '$lib/utils/submitForm.svelte';
 	import { resolve } from '$app/paths';
 
 	let { data, form }: PageProps = $props();
@@ -15,10 +18,15 @@
 	let match: string;
 
 	let headerSpan = $state<HTMLElement>();
+
+	const submit = useSubmitForm();
+	const buttonLabels = addLabels('expense');
+	const announceLabels = addAnnounce('expense');
 </script>
 
 <header class="header-sticky--back">
-	<a href={data.backTo.params
+	<a
+		href={data.backTo.params
 			? resolve(data.backTo.route, data.backTo.params)
 			: resolve(data.backTo.route)}
 		class="btn--circle"
@@ -30,7 +38,7 @@
 </header>
 
 <main>
-	<form method="POST" use:enhance>
+	<form method="POST" use:enhance={submit.enhance}>
 		<h1 {@attach attachObserveHeader(headerSpan)}>New Expense</h1>
 
 		<label>
@@ -129,6 +137,7 @@
 			{#if form?.errors?.ledgerId}<small>{form.errors.ledgerId[0]}</small>{/if}
 		</label>
 
-		<button class="btn sticky" type="submit"><span>Add expense</span></button>
+		<SubmitButton submitState={submit.submitState} {...buttonLabels} />
+		<SubmitAnnouncer submitState={submit.submitState} labels={announceLabels} />
 	</form>
 </main>
