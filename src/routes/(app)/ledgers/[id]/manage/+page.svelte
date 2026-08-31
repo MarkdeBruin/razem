@@ -3,11 +3,15 @@
 	import type { PageProps } from './$types';
 	import { ArrowLeftIcon } from 'phosphor-svelte';
 	import SubmitButton from '$lib/components/SubmitButton.svelte';
-	import { useSubmitForm } from '$lib/utils/submitFrom.svelte';
+	import SubmitAnnouncer from '$lib/components/SubmitAnnouncer.svelte';
+	import { useSubmitForm, editAnnounce, editLabels } from '$lib/utils/submitForm.svelte';
 	import { resolve } from '$app/paths';
 
 	let { data, form }: PageProps = $props();
-	const submit = useSubmitForm();
+
+	const editSubmit = useSubmitForm();
+	const editButtonLabels = editLabels();
+	const editAnnounceLabels = editAnnounce();
 
 	// svelte-ignore state_referenced_locally
 	let fraction = data.ledger.ownerFraction;
@@ -16,24 +20,20 @@
 </script>
 
 <header class="header-sticky--back">
-	<a href={resolve('/(app)/ledgers/[id]', { id: data.ledger.id })} class="btn--circle" aria-label="Back to ledger">
+	<a
+		href={resolve('/(app)/ledgers/[id]', { id: data.ledger.id })}
+		class="btn--circle"
+		aria-label="Back to ledger"
+	>
 		<ArrowLeftIcon />
 	</a>
 	<h1><span class="sr-only">Manage</span> {data.ledger.name}</h1>
 </header>
 
 <main class="stack">
-	<form method="POST" action="?/update" use:enhance={submit.enhance}>
+	<form method="POST" action="?/update" use:enhance={editSubmit.enhance}>
 		<h2>Edit ledger</h2>
-		<span class="sr-only" aria-live="polite" aria-atomic="true">
-			{#if submit.submitState === 'submitting'}
-				Saving changes
-			{:else if submit.submitState === 'error'}
-				Something went wrong, please try again
-			{:else if form?.updated}
-				Changes saved
-			{/if}
-		</span>
+
 		<label>
 			Name
 			<input
@@ -98,8 +98,8 @@
 			Use as template
 		</label>
 
-		<SubmitButton submitState={submit.submitState} />
-		{#if submit.submitState === 'error'}<small>Something went wrong, please try again</small>{/if}
+		<SubmitButton submitState={editSubmit.submitState} {...editButtonLabels} />
+		<SubmitAnnouncer submitState={editSubmit.submitState} labels={editAnnounceLabels} />
 	</form>
 
 	<form method="POST" action="?/delete" use:enhance>

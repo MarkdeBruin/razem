@@ -5,11 +5,15 @@
 	import { ArrowLeftIcon } from 'phosphor-svelte';
 	import SelectWrapper from '$lib/components/SelectWrapper.svelte';
 	import SubmitButton from '$lib/components/SubmitButton.svelte';
-	import { useSubmitForm } from '$lib/utils/submitFrom.svelte';
+	import SubmitAnnouncer from '$lib/components/SubmitAnnouncer.svelte'
+	import { useSubmitForm, editLabels, editAnnounce } from '$lib/utils/submitForm.svelte';
 	import { resolve } from '$app/paths';
 
 	let { data, form }: PageProps = $props();
-	const submit = useSubmitForm();
+	
+	const editSubmit = useSubmitForm();
+	const editButtonLabels = editLabels();
+	const editAnnounceLabels = editAnnounce();
 
 	// svelte-ignore state_referenced_locally
 	let description = $state(data.expense.description);
@@ -32,19 +36,8 @@
 </header>
 
 <main class="stack">
-	<form method="POST" action="?/update" use:enhance={submit.enhance}>
+	<form method="POST" action="?/update" use:enhance={editSubmit.enhance}>
 		<h2>Edit expense</h2>
-
-		<span class="sr-only" aria-live="polite" aria-atomic="true">
-			{#if submit.submitState === 'submitting'}
-				Saving changes
-			{:else if submit.submitState === 'error'}
-				Something went wrong, please try again
-			{:else if form?.updated}
-				Changes saved
-			{/if}
-		</span>
-
 		<label>
 			Description
 			<input
@@ -161,8 +154,8 @@
 			{#if form?.errors?.ledgerId}<small>{form.errors.ledgerId[0]}</small>{/if}
 		</label>
 
-		<SubmitButton submitState={submit.submitState} />
-		{#if submit.submitState === 'error'}<small>Something went wrong, please try again</small>{/if}
+		<SubmitButton submitState={editSubmit.submitState} {...editButtonLabels} />
+		<SubmitAnnouncer submitState={editSubmit.submitState} labels={editAnnounceLabels} />
 	</form>
 
 	<form method="POST" action="?/delete" use:enhance>
