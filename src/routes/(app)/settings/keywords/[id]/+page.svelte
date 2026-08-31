@@ -5,7 +5,13 @@
 	import { matchCategory } from '$lib/utils/categories';
 	import SubmitButton from '$lib/components/SubmitButton.svelte';
 	import SubmitAnnouncer from '$lib/components/SubmitAnnouncer.svelte';
-	import { useSubmitForm, editAnnounce, editLabels } from '$lib/utils/submitForm.svelte';
+	import {
+			useSubmitForm,
+			editAnnounce,
+			editLabels,
+			deleteAnnounce,
+			deleteLabels
+		} from '$lib/utils/submitForm.svelte';
 	import { resolve } from '$app/paths';
 
 	let { data, form }: PageProps = $props();
@@ -13,6 +19,10 @@
 	const editSubmit = useSubmitForm();
 	const editButtonLabels = editLabels();
 	const editAnnounceLabels = editAnnounce();
+
+	const deleteSubmit = useSubmitForm();
+	const deleteButtonLabels = deleteLabels('keyword');
+	const deleteAnnounceLabels = deleteAnnounce('keyword');
 
 	// svelte-ignore state_referenced_locally
 	let keyword = $state(data.keyword.name);
@@ -77,12 +87,15 @@
 		<SubmitAnnouncer submitState={editSubmit.submitState} labels={editAnnounceLabels} />
 	</form>
 
-	<form method="POST" action="?/delete" use:enhance>
+	<form method="POST" action="?/delete" use:enhance={deleteSubmit.enhance}>
 		<h2>Delete keyword</h2>
+		
 		<label>
 			<input type="checkbox" name="confirm-delete" required />
 			Permanently delete keyword
 		</label>
-		<button class="btn" data-variant="line" type="submit"><span>Delete keyword</span></button>
+		
+		<SubmitButton submitState={deleteSubmit.submitState} {...deleteButtonLabels} />
+		<SubmitAnnouncer submitState={deleteSubmit.submitState} labels={deleteAnnounceLabels} />
 	</form>
 </main>

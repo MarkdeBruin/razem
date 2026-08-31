@@ -5,15 +5,25 @@
 	import { ArrowLeftIcon } from 'phosphor-svelte';
 	import SelectWrapper from '$lib/components/SelectWrapper.svelte';
 	import SubmitButton from '$lib/components/SubmitButton.svelte';
-	import SubmitAnnouncer from '$lib/components/SubmitAnnouncer.svelte'
-	import { useSubmitForm, editLabels, editAnnounce } from '$lib/utils/submitForm.svelte';
+	import SubmitAnnouncer from '$lib/components/SubmitAnnouncer.svelte';
+	import {
+		useSubmitForm,
+		editAnnounce,
+		editLabels,
+		deleteAnnounce,
+		deleteLabels
+	} from '$lib/utils/submitForm.svelte';
 	import { resolve } from '$app/paths';
 
 	let { data, form }: PageProps = $props();
-	
+
 	const editSubmit = useSubmitForm();
 	const editButtonLabels = editLabels();
 	const editAnnounceLabels = editAnnounce();
+
+	const deleteSubmit = useSubmitForm();
+	const deleteButtonLabels = deleteLabels('expense');
+	const deleteAnnounceLabels = deleteAnnounce('expense');
 
 	// svelte-ignore state_referenced_locally
 	let description = $state(data.expense.description);
@@ -158,13 +168,16 @@
 		<SubmitAnnouncer submitState={editSubmit.submitState} labels={editAnnounceLabels} />
 	</form>
 
-	<form method="POST" action="?/delete" use:enhance>
+	<form method="POST" action="?/delete" use:enhance={deleteSubmit.enhance}>
 		<h2>Delete expense</h2>
+
 		<label>
 			<input type="checkbox" name="confirm-delete" required />
 			Permanently delete expense
 		</label>
 		<input type="hidden" name="ledger-id" value={data.expense.ledgerId} />
-		<button class="btn" data-variant="line" type="submit"><span>Delete expense</span></button>
+
+		<SubmitButton submitState={deleteSubmit.submitState} {...deleteButtonLabels} />
+		<SubmitAnnouncer submitState={deleteSubmit.submitState} labels={deleteAnnounceLabels} />
 	</form>
 </main>

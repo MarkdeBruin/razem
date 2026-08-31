@@ -4,7 +4,13 @@
 	import { ArrowLeftIcon } from 'phosphor-svelte';
 	import SubmitButton from '$lib/components/SubmitButton.svelte';
 	import SubmitAnnouncer from '$lib/components/SubmitAnnouncer.svelte';
-	import { useSubmitForm, editAnnounce, editLabels } from '$lib/utils/submitForm.svelte';
+	import {
+		useSubmitForm,
+		editAnnounce,
+		editLabels,
+		deleteAnnounce,
+		deleteLabels
+	} from '$lib/utils/submitForm.svelte';
 	import { resolve } from '$app/paths';
 
 	let { data, form }: PageProps = $props();
@@ -12,6 +18,10 @@
 	const editSubmit = useSubmitForm();
 	const editButtonLabels = editLabels();
 	const editAnnounceLabels = editAnnounce();
+
+	const deleteSubmit = useSubmitForm();
+	const deleteButtonLabels = deleteLabels('ledger');
+	const deleteAnnounceLabels = deleteAnnounce('ledger');
 
 	// svelte-ignore state_referenced_locally
 	let fraction = data.ledger.ownerFraction;
@@ -102,15 +112,18 @@
 		<SubmitAnnouncer submitState={editSubmit.submitState} labels={editAnnounceLabels} />
 	</form>
 
-	<form method="POST" action="?/delete" use:enhance>
+	<form method="POST" action="?/delete" use:enhance={deleteSubmit.enhance}>
 		<header>
 			<h2>Delete ledger</h2>
 			<p class="text-subtle">And all expenses</p>
 		</header>
+		
 		<label>
 			<input type="checkbox" name="confirm-delete" required />
 			Permanently delete ledger
 		</label>
-		<button class="btn" data-variant="line" type="submit"><span>Delete ledger</span></button>
+		
+		<SubmitButton submitState={deleteSubmit.submitState} {...deleteButtonLabels} />
+		<SubmitAnnouncer submitState={deleteSubmit.submitState} labels={deleteAnnounceLabels} />
 	</form>
 </main>
