@@ -4,12 +4,12 @@
 	import { matchCategory } from '$lib/utils/categories';
 	import { ArrowLeftIcon } from 'phosphor-svelte';
 	import SelectWrapper from '$lib/components/SelectWrapper.svelte';
-	import SaveButton from '$lib/components/SaveButton.svelte';
-	import { useSaveForm } from '$lib/utils/saveFrom.svelte';
+	import SubmitButton from '$lib/components/SubmitButton.svelte';
+	import { useSubmitForm } from '$lib/utils/submitFrom.svelte';
 	import { resolve } from '$app/paths';
 
 	let { data, form }: PageProps = $props();
-	const save = useSaveForm();
+	const submit = useSubmitForm();
 
 	// svelte-ignore state_referenced_locally
 	let description = $state(data.expense.description);
@@ -32,13 +32,13 @@
 </header>
 
 <main class="stack">
-	<form method="POST" action="?/update" use:enhance={save.enhance}>
+	<form method="POST" action="?/update" use:enhance={submit.enhance}>
 		<h2>Edit expense</h2>
 
 		<span class="sr-only" aria-live="polite" aria-atomic="true">
-			{#if save.saveState === 'saving'}
+			{#if submit.submitState === 'submitting'}
 				Saving changes
-			{:else if save.saveState === 'error'}
+			{:else if submit.submitState === 'error'}
 				Error saving changes, please try again
 			{:else if form?.updated}
 				Changes saved
@@ -161,7 +161,7 @@
 			{#if form?.errors?.ledgerId}<small>{form.errors.ledgerId[0]}</small>{/if}
 		</label>
 
-		<SaveButton saveState={save.saveState} />
+		<SubmitButton submitState={submit.submitState} />
 	</form>
 
 	<form method="POST" action="?/delete" use:enhance>

@@ -3,12 +3,12 @@
 	import type { PageProps } from './$types';
 	import { ArrowLeftIcon } from 'phosphor-svelte';
 	import { matchCategory } from '$lib/utils/categories';
-	import SaveButton from '$lib/components/SaveButton.svelte';
-	import { useSaveForm } from '$lib/utils/saveFrom.svelte';
+	import SubmitButton from '$lib/components/SubmitButton.svelte';
+	import { useSubmitForm } from '$lib/utils/submitFrom.svelte';
 	import { resolve } from '$app/paths';
 
 	let { data, form }: PageProps = $props();
-	const save = useSaveForm();
+	const submit = useSubmitForm();
 
 	// svelte-ignore state_referenced_locally
 	let keyword = $state(data.keyword.name);
@@ -27,12 +27,12 @@
 </header>
 
 <main class="stack">
-	<form method="POST" action="?/update" use:enhance={save.enhance}>
+	<form method="POST" action="?/update" use:enhance={submit.enhance}>
 		<h2>Edit keyword</h2>
 		<span class="sr-only" aria-live="polite" aria-atomic="true">
-			{#if save.saveState === 'saving'}
+			{#if submit.submitState === 'submitting'}
 				Saving changes
-			{:else if save.saveState === 'error'}
+			{:else if submit.submitState === 'error'}
 				Error saving changes, please try again
 			{:else if form?.updated}
 				Changes saved
@@ -76,7 +76,7 @@
 				{#if form?.errors?.categoryId}<small>{form.errors.categoryId[0]}</small>{/if}
 			</div>
 		</fieldset>
-		<SaveButton saveState={save.saveState} disabled={isDuplicate} />
+		<SubmitButton submitState={submit.submitState} disabled={isDuplicate} />
 	</form>
 
 	<form method="POST" action="?/delete" use:enhance>
