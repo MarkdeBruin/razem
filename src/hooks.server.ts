@@ -2,19 +2,18 @@ import type { Handle } from '@sveltejs/kit';
 import { createSessionClient, SESSION_COOKIE } from '$lib/server/appwrite';
 
 export const handle: Handle = async ({ event, resolve }) => {
-  const sessionSecret = event.cookies.get(SESSION_COOKIE);
-	
-  event.locals.currentUser = null;
+	const sessionSecret = event.cookies.get(SESSION_COOKIE);
+
+	event.locals.currentUser = null;
 	event.locals.teamMembers = null;
 	event.locals.tablesDB = null;
 
 	if (sessionSecret) {
 		try {
 			const { account, teams, tablesDB } = createSessionClient(sessionSecret);
-			const user = await account.get();
-			const { teams: myTeams } = await teams.list();
-			const team = myTeams[0];
-
+			const [user, { teams: myTeams}] = await Promise.all([account.get(), teams.list()]);
+      const team = myTeams[0];
+      
 			if (team) {
 				const { memberships } = await teams.listMemberships({ teamId: team.$id });
 				const membership = memberships.find((m) => m.userId === user.$id);
@@ -27,8 +26,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 						email: user.email,
 						role,
 						teamId: team.$id
-					};
-
+          };
+					
 					event.locals.teamMembers = memberships.map((membership) => ({
 						id: membership.userId,
 						name: membership.userName,
@@ -37,13 +36,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 						teamId: team.$id
           }));
 					
-          event.locals.tablesDB = tablesDB;
+					event.locals.tablesDB = tablesDB;
 				}
 			}
 		} catch (err) {
 			console.error('hooks auth resolution failed:', err);
 		}
 	}
-
 	return resolve(event);
 };
