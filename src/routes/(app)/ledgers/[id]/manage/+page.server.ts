@@ -4,12 +4,10 @@ import type { Actions, PageServerLoad } from './$types.js';
 import { newLedgerSchema } from '$lib/schemas/ledgers';
 import * as z from 'zod';
 
-export const load: PageServerLoad = async ({ locals, parent, params }) => {
-	const { currentUser } = await parent();
-
+export const load: PageServerLoad = async ({ locals, params }) => {
 	let ledger;
 	try {
-		ledger = await getLedger(locals.tablesDB!, params.id, currentUser.teamId);
+		ledger = await getLedger(locals.tablesDB!, params.id, locals.currentUser!.teamId);
 	} catch {
 		error(404, { message: 'Ledger not found' });
 	}

@@ -5,8 +5,9 @@ import type { PageServerLoad } from './$types';
 import type { Ledger } from '$lib/schemas/ledgers';
 import type { Expense } from '$lib/schemas/expenses';
 
-export const load: PageServerLoad = async ({ locals, parent, params, url }) => {
-	const { owner, partner, currentUser } = await parent();
+export const load: PageServerLoad = async ({ locals, params, parent, url }) => {
+  const { owner, partner } = await parent();
+  const categoriesPromise = getAllCategories(locals.tablesDB!, locals.currentUser!.teamId);
 
 	let ledger: Ledger;
 	let expenses: Expense[];
@@ -14,13 +15,13 @@ export const load: PageServerLoad = async ({ locals, parent, params, url }) => {
 		({ ledger, expenses } = await getLedgerWithExpenses(
 			locals.tablesDB!,
 			params.id,
-			currentUser.teamId
+			locals.currentUser!.teamId
 		));
 	} catch {
 		error(404, { message: 'Ledger not found' });
 	}
 
-	const categories = await getAllCategories(locals.tablesDB!, currentUser.teamId);
+  const categories = await categoriesPromise
 	const categoryMap = new Map(categories.map((c) => [c.id, c.name]));
 	const expensesWithCategory = expenses.map((expense) => ({
 		...expense,
@@ -40,8 +41,8 @@ export const load: PageServerLoad = async ({ locals, parent, params, url }) => {
 	const partnerShare = totalExpenses * (1 - ledger.ownerFraction);
 	const ownerBalance = Math.round(ownerTotal - ownerShare);
 	const partnerBalance = Math.round(partnerTotal - partnerShare);
-	const currentBalance = currentUser.id === owner.id ? ownerBalance : partnerBalance;
-	const otherBalance = currentUser.id === owner.id ? partnerBalance : ownerBalance;
+	const currentBalance = locals.currentUser!.id === owner.id ? ownerBalance : partnerBalance;
+	const otherBalance = locals.currentUser!.id === owner.id ? partnerBalance : ownerBalance;
 	const from = url.searchParams.get('from');
 	const backTo =
 		from === 'overview' ? ({ route: '/(app)/ledgers' } as const) : ({ route: '/' } as const);

@@ -11,19 +11,21 @@ import * as z from 'zod';
 import type { Actions, PageServerLoad } from './$types';
 import type { NewKeyword } from '$lib/schemas/category';
 
-export const load: PageServerLoad = async ({ locals, parent, url }) => {
-	const { currentUser } = await parent();
-	const all = await getAllLedgers(locals.tablesDB!, currentUser.teamId);
+export const load: PageServerLoad = async ({ locals, url }) => {
+	const [all, { categories, keywords }] = await Promise.all([
+		getAllLedgers(locals.tablesDB!, locals.currentUser!.teamId),
+		getAllCategoriesAndKeywords(locals.tablesDB!, locals.currentUser!.teamId)
+	]);
+
 	const { ledgers, templates } = splitLedgersAndTemplates(all);
-	const { categories, keywords } = await getAllCategoriesAndKeywords(
-		locals.tablesDB!,
-		currentUser.teamId
-	);
+
 	const ledgerId = url.searchParams.get('ledger') ?? ledgers[0]?.id;
 	const from = url.searchParams.get('from');
-	const backTo = from === 'ledger'
+	const backTo =
+		from === 'ledger'
 			? ({ route: '/(app)/ledgers/[id]', params: { id: ledgerId } } as const)
 			: ({ route: '/' } as const);
+
 	return { ledgers, templates, ledgerId, categories, keywords, backTo };
 };
 

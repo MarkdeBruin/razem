@@ -6,9 +6,8 @@ import type { Expense } from '$lib/schemas/expenses';
 import { newLedgerSchema } from '$lib/schemas/ledgers';
 import * as z from 'zod';
 
-export const load: PageServerLoad = async ({ url, locals, parent }) => {
-	const { currentUser } = await parent();
-  const templates = await getAllLedgerTemplates(locals.tablesDB!, currentUser.teamId);
+export const load: PageServerLoad = async ({ url, locals }) => {
+  const templates = await getAllLedgerTemplates(locals.tablesDB!, locals.currentUser!.teamId);
   
 	const from = url.searchParams.get('from');
 	const backTo = from === 'overview'
