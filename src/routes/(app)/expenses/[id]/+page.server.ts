@@ -11,20 +11,24 @@ import * as z from 'zod';
 import type { Actions, PageServerLoad } from './$types';
 import type { NewKeyword } from '$lib/schemas/category';
 
-export const load: PageServerLoad = async ({ locals, parent, params }) => {
-	const { currentUser } = await parent();
+export const load: PageServerLoad = async ({ locals, params }) => {
+	const ledgersPromise = getAllLedgers(locals.tablesDB!, locals.currentUser!.teamId);
+	const categoriesAndKeywordsPromise = getAllCategoriesAndKeywords(
+		locals.tablesDB!,
+		locals.currentUser!.teamId
+	);
+
 	let expense;
 	try {
-		expense = await getExpense(locals.tablesDB!, params.id, currentUser.teamId);
+		expense = await getExpense(locals.tablesDB!, params.id, locals.currentUser!.teamId);
 	} catch {
 		error(404, { message: 'Expense not found' });
 	}
-	const all = await getAllLedgers(locals.tablesDB!, currentUser.teamId);
+
+	const all = await ledgersPromise;
 	const { ledgers, templates } = splitLedgersAndTemplates(all);
-	const { categories, keywords } = await getAllCategoriesAndKeywords(
-		locals.tablesDB!,
-		currentUser.teamId
-	);
+	const { categories, keywords } = await categoriesAndKeywordsPromise;
+
 	return { expense, ledgers, templates, categories, keywords };
 };
 

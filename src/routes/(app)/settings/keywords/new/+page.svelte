@@ -4,13 +4,20 @@
 	import { matchCategory } from '$lib/utils/categories';
 	import { ArrowLeftIcon } from 'phosphor-svelte';
 	import { attachObserveHeader } from '$lib/utils/headerObserver';
+	import SubmitAnnouncer from '$lib/components/SubmitAnnouncer.svelte';
+	import SubmitButton from '$lib/components/SubmitButton.svelte';
+	import { useSubmitForm, addAnnounce, addLabels } from '$lib/utils/submitForm.svelte';
 	import { resolve } from '$app/paths';
 
 	let { data, form }: PageProps = $props();
 	let headerSpan = $state<HTMLElement>();
-
+	
 	let keyword = $state('');
 	let isDuplicate = $state(false);
+
+	const submit = useSubmitForm();
+	const buttonLabels = addLabels('keyword');
+	const announceLabels = addAnnounce('keyword');
 </script>
 
 <header class="header-sticky--back">
@@ -25,7 +32,7 @@
 </header>
 
 <main class="stack">
-	<form method="POST" use:enhance>
+	<form method="POST" use:enhance={submit.enhance}>
 		<h1 {@attach attachObserveHeader(headerSpan)}>New keyword</h1>
 		<label>
 			Keyword
@@ -57,6 +64,7 @@
 			</div>
 		</fieldset>
 
-		<button class="btn" type="submit" disabled={isDuplicate}><span>Add keyword</span></button>
+		<SubmitButton submitState={submit.submitState} {...buttonLabels} />
+		<SubmitAnnouncer submitState={submit.submitState} labels={announceLabels} />
 	</form>
 </main>

@@ -10,20 +10,20 @@ import type { Actions, PageServerLoad } from './$types';
 import { newKeywordSchema } from '$lib/schemas/category';
 import * as z from 'zod';
 
-export const load: PageServerLoad = async ({ locals, parent, params }) => {
-	const { currentUser } = await parent();
+export const load: PageServerLoad = async ({ locals, params }) => {
+	const categoriesAndKeywordsPromise = getAllCategoriesAndKeywords(
+		locals.tablesDB!,
+		locals.currentUser!.teamId
+	);
 
 	let keyword;
 	try {
-		keyword = await getKeyword(locals.tablesDB!, params.id, currentUser.teamId);
+		keyword = await getKeyword(locals.tablesDB!, params.id, locals.currentUser!.teamId);
 	} catch {
 		error(404, { message: 'Keyword not found' });
 	}
 
-	const { categories, keywords } = await getAllCategoriesAndKeywords(
-		locals.tablesDB!,
-		currentUser.teamId
-	);
+	const { categories, keywords } = await categoriesAndKeywordsPromise;
 
 	return { keyword, categories, keywords };
 };

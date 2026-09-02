@@ -1,14 +1,17 @@
-import { getAllCategoriesAndKeywords, createKeyword, keywordNameExists } from '$lib/services/categories';
+import {
+	getAllCategoriesAndKeywords,
+	createKeyword,
+	keywordNameExists
+} from '$lib/services/categories';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { newKeywordSchema } from '$lib/schemas/category';
 import * as z from 'zod';
 
-export const load: PageServerLoad = async ({ locals, parent }) => {
-	const { currentUser } = await parent();
+export const load: PageServerLoad = async ({ locals }) => {
 	const { categories, keywords } = await getAllCategoriesAndKeywords(
 		locals.tablesDB!,
-		currentUser.teamId
+		locals.currentUser!.teamId
 	);
 	return { categories, keywords };
 };

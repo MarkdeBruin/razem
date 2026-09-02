@@ -2,12 +2,26 @@
 	import { enhance } from '$app/forms';
 	import type { PageProps } from './$types';
 	import { ArrowLeftIcon } from 'phosphor-svelte';
-	import SaveButton from '$lib/components/SaveButton.svelte';
-	import { useSaveForm } from '$lib/utils/saveFrom.svelte';
+	import SubmitButton from '$lib/components/SubmitButton.svelte';
+	import SubmitAnnouncer from '$lib/components/SubmitAnnouncer.svelte';
+	import {
+		useSubmitForm,
+		editAnnounce,
+		editLabels,
+		deleteAnnounce,
+		deleteLabels
+	} from '$lib/utils/submitForm.svelte';
 	import { resolve } from '$app/paths';
 
 	let { data, form }: PageProps = $props();
-	const save = useSaveForm();
+
+	const editSubmit = useSubmitForm();
+	const editButtonLabels = editLabels();
+	const editAnnounceLabels = editAnnounce();
+
+	const deleteSubmit = useSubmitForm();
+	const deleteButtonLabels = deleteLabels('ledger');
+	const deleteAnnounceLabels = deleteAnnounce('ledger');
 
 	// svelte-ignore state_referenced_locally
 	let fraction = data.ledger.ownerFraction;
@@ -16,24 +30,20 @@
 </script>
 
 <header class="header-sticky--back">
-	<a href={resolve('/(app)/ledgers/[id]', { id: data.ledger.id })} class="btn--circle" aria-label="Back to ledger">
+	<a
+		href={resolve('/(app)/ledgers/[id]', { id: data.ledger.id })}
+		class="btn--circle"
+		aria-label="Back to ledger"
+	>
 		<ArrowLeftIcon />
 	</a>
 	<h1><span class="sr-only">Manage</span> {data.ledger.name}</h1>
 </header>
 
 <main class="stack">
-	<form method="POST" action="?/update" use:enhance={save.enhance}>
+	<form method="POST" action="?/update" use:enhance={editSubmit.enhance}>
 		<h2>Edit ledger</h2>
-		<span class="sr-only" aria-live="polite" aria-atomic="true">
-			{#if save.saveState === 'saving'}
-				Saving changes
-			{:else if save.saveState === 'error'}
-				Error saving changes, please try again
-			{:else if form?.updated}
-				Changes saved
-			{/if}
-		</span>
+
 		<label>
 			Name
 			<input
@@ -98,18 +108,22 @@
 			Use as template
 		</label>
 
-		<SaveButton saveState={save.saveState} />
+		<SubmitButton submitState={editSubmit.submitState} {...editButtonLabels} />
+		<SubmitAnnouncer submitState={editSubmit.submitState} labels={editAnnounceLabels} />
 	</form>
 
-	<form method="POST" action="?/delete" use:enhance>
+	<form method="POST" action="?/delete" use:enhance={deleteSubmit.enhance}>
 		<header>
 			<h2>Delete ledger</h2>
 			<p class="text-subtle">And all expenses</p>
 		</header>
+		
 		<label>
 			<input type="checkbox" name="confirm-delete" required />
 			Permanently delete ledger
 		</label>
-		<button class="btn" data-variant="line" type="submit"><span>Delete ledger</span></button>
+		
+		<SubmitButton submitState={deleteSubmit.submitState} {...deleteButtonLabels} />
+		<SubmitAnnouncer submitState={deleteSubmit.submitState} labels={deleteAnnounceLabels} />
 	</form>
 </main>

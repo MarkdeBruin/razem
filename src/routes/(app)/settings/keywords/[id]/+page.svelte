@@ -3,12 +3,26 @@
 	import type { PageProps } from './$types';
 	import { ArrowLeftIcon } from 'phosphor-svelte';
 	import { matchCategory } from '$lib/utils/categories';
-	import SaveButton from '$lib/components/SaveButton.svelte';
-	import { useSaveForm } from '$lib/utils/saveFrom.svelte';
+	import SubmitButton from '$lib/components/SubmitButton.svelte';
+	import SubmitAnnouncer from '$lib/components/SubmitAnnouncer.svelte';
+	import {
+			useSubmitForm,
+			editAnnounce,
+			editLabels,
+			deleteAnnounce,
+			deleteLabels
+		} from '$lib/utils/submitForm.svelte';
 	import { resolve } from '$app/paths';
 
 	let { data, form }: PageProps = $props();
-	const save = useSaveForm();
+
+	const editSubmit = useSubmitForm();
+	const editButtonLabels = editLabels();
+	const editAnnounceLabels = editAnnounce();
+
+	const deleteSubmit = useSubmitForm();
+	const deleteButtonLabels = deleteLabels('keyword');
+	const deleteAnnounceLabels = deleteAnnounce('keyword');
 
 	// svelte-ignore state_referenced_locally
 	let keyword = $state(data.keyword.name);
@@ -27,17 +41,9 @@
 </header>
 
 <main class="stack">
-	<form method="POST" action="?/update" use:enhance={save.enhance}>
+	<form method="POST" action="?/update" use:enhance={editSubmit.enhance}>
 		<h2>Edit keyword</h2>
-		<span class="sr-only" aria-live="polite" aria-atomic="true">
-			{#if save.saveState === 'saving'}
-				Saving changes
-			{:else if save.saveState === 'error'}
-				Error saving changes, please try again
-			{:else if form?.updated}
-				Changes saved
-			{/if}
-		</span>
+
 		<label>
 			Keyword
 			<input
@@ -76,15 +82,20 @@
 				{#if form?.errors?.categoryId}<small>{form.errors.categoryId[0]}</small>{/if}
 			</div>
 		</fieldset>
-		<SaveButton saveState={save.saveState} disabled={isDuplicate} />
+		
+		<SubmitButton submitState={editSubmit.submitState} {...editButtonLabels} />
+		<SubmitAnnouncer submitState={editSubmit.submitState} labels={editAnnounceLabels} />
 	</form>
 
-	<form method="POST" action="?/delete" use:enhance>
+	<form method="POST" action="?/delete" use:enhance={deleteSubmit.enhance}>
 		<h2>Delete keyword</h2>
+		
 		<label>
 			<input type="checkbox" name="confirm-delete" required />
 			Permanently delete keyword
 		</label>
-		<button class="btn" data-variant="line" type="submit"><span>Delete keyword</span></button>
+		
+		<SubmitButton submitState={deleteSubmit.submitState} {...deleteButtonLabels} />
+		<SubmitAnnouncer submitState={deleteSubmit.submitState} labels={deleteAnnounceLabels} />
 	</form>
 </main>
