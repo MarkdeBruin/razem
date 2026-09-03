@@ -17,6 +17,10 @@
 			}
 		}
 
+		li {
+			background-color: var(--color-bg);
+		}
+
 		li > * {
 			align-items: center;
 			border-block-start: 1px solid var(--color-border-subtle);

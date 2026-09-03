@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { flip } from 'svelte/animate';
 	import type { PageProps } from './$types';
 	import { ArrowLeftIcon, FadersHorizontalIcon } from 'phosphor-svelte';
 	import EmptyState from '$lib/components/EmptyState.svelte';
@@ -100,7 +101,7 @@
 			</header>
 			<ul>
 				{#each filteredByCategory as category (category.id)}
-					<li>
+					<li animate:flip={{ duration: 180 }}>
 						<p>
 							<span>{category.name}</span>
 							<NumberFlow value={category.total} format={{ useGrouping: false }} />
@@ -128,7 +129,7 @@
 			</header>
 			<ul>
 				{#each filteredExpenses as expense (expense.id)}
-					<li>
+					<li animate:flip={{ duration: 180 }}>
 						<a href={resolve('/(app)/expenses/[id]', { id: expense.id })}>
 							<span>{expense.description}</span>
 							<span>{expense.amount}</span>
