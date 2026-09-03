@@ -1,6 +1,8 @@
 @layer base {
 	html {
 		font-size: clamp(125%, 0.254vw + 1.174rem, 150%);
+		scrollbar-color: var(--color-scrollbar) transparent;
+		scrollbar-width: thin;
 	}
 
 	body {
@@ -56,7 +58,7 @@
 	*:hover {
 		transition-duration: 0ms;
 	}
-	
+
 	*:not(:hover) {
 		transition-duration: 180ms;
 	}

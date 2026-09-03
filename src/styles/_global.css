@@ -49,7 +49,6 @@
 
 	--color-bg: var(--color-light);
 	--color-fg: var(--color-dark);
-	--color-fg-subtle: color-mix(in oklch, var(--color-fg) 77.5%, var(--color-bg));
 	--color-hover: oklch(from var(--color-fg) calc(l - 0.1) c h);
 
 	@media (prefers-color-scheme: dark) {
@@ -58,16 +57,20 @@
 		--color-hover: oklch(from var(--color-fg) calc(l + 0.5) c h);
 	}
 
+	--color-fg-subtle: color-mix(in oklch, var(--color-fg) 77.5%, var(--color-bg));
+
 	--color-border: var(--color-fg);
 	--color-border-subtle: color-mix(in oklch, var(--color-border) 20%, var(--color-bg));
 	--color-border-input-icon: color-mix(in oklch, var(--color-border) 30%, var(--color-bg));
+
+	--color-scrollbar: color-mix(in oklch, var(--color-fg) 25%, var(--color-bg));
 
 	--btn-text: 0.8935rem;
 	--btn-color: var(--color-fg);
 	--btn-hover-color: var(--color-hover);
 	--btn-text-color: var(--color-bg);
 	--btn-font-weight: 350;
-	
+
 	@media (prefers-color-scheme: dark) {
 		--btn-font-weight: 400;
 	}
