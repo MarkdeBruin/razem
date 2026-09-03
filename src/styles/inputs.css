@@ -189,7 +189,7 @@
 		label:has(input[type='radio']) {
 			background-color: transparent;
 			border-color: transparent;
-			border-radius: var(--border-radius) - var(--segmented-padding);
+			border-radius: calc(var(--border-radius) - var(--segmented-padding));
 			flex: 1 1 auto;
 			justify-content: center;
 			min-width: 4rem;
