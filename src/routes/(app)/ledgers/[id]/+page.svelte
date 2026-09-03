@@ -3,6 +3,7 @@
 	import { ArrowLeftIcon, FadersHorizontalIcon } from 'phosphor-svelte';
 	import EmptyState from '$lib/components/EmptyState.svelte';
 	import { resolve } from '$app/paths';
+	import NumberFlow from '@number-flow/svelte';
 
 	let { data }: PageProps = $props();
 
@@ -102,7 +103,7 @@
 					<li>
 						<p>
 							<span>{category.name}</span>
-							<span>{Math.round(category.total)}</span>
+							<NumberFlow value={category.total} format={{ useGrouping: false }} />
 						</p>
 					</li>
 				{/each}
@@ -110,7 +111,7 @@
 					<li>
 						<p>
 							<strong>Sum</strong>
-							<strong>{filteredTotal}</strong>
+							<strong><NumberFlow value={filteredTotal} format={{ useGrouping: false }}/></strong>
 						</p>
 					</li>
 				{/if}
