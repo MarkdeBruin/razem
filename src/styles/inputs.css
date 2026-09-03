@@ -203,6 +203,11 @@
 					background-color: var(--input-hover-color);
 				}
 			}
+
+			span {
+				text-box-edge: cap alphabetic;
+				text-box-trim: trim-both;
+			}
 		}
 
 		input[type='radio'] {
