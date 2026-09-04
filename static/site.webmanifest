@@ -4,7 +4,7 @@
   "description": "Expense tracker for couples",
   "start_url": "/",
   "theme_color": "#9A1B1B",
-  "background_color": "#9A1B1B,
+  "background_color": "#9A1B1B",
   "display": "standalone",
   "icons": [
     {
