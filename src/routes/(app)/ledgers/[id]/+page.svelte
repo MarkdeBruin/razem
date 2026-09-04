@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { flip } from 'svelte/animate';
+	import { fly } from 'svelte/transition';
+	import { cubicOut } from 'svelte/easing';
 	import type { PageProps } from './$types';
 	import { ArrowLeftIcon, FadersHorizontalIcon } from 'phosphor-svelte';
 	import EmptyState from '$lib/components/EmptyState.svelte';
@@ -7,6 +9,20 @@
 	import NumberFlow from '@number-flow/svelte';
 
 	let { data }: PageProps = $props();
+
+	let copied = $state(false);
+	let copyTimeout: ReturnType<typeof setTimeout>;
+
+	async function copyBalance() {
+		try {
+			await navigator.clipboard.writeText(String(Math.abs(data.currentBalance)));
+			copied = true;
+			clearTimeout(copyTimeout);
+			copyTimeout = setTimeout(() => (copied = false), 1500);
+		} catch (error) {
+			console.error('Copy failed:', error);
+		}
+	}
 
 	let filter = $state<'all' | 'current' | 'other'>('all');
 
@@ -49,21 +65,33 @@
 
 <main class="stack">
 	<section class="balance--section">
-		<div aria-hidden="true">
-			{(data.currentBalance > 0 ? '+' : '') + data.currentBalance}<span
-				class="visibility-hidden"
-				aria-hidden="true"
-			>
+		<h2 class="sr-only">Balance</h2>
+
+		<div>
+			<span aria-hidden="true">{(data.currentBalance > 0 ? '+' : '') + data.currentBalance}</span>
+			<span class="visibility-hidden" aria-hidden="true">
 				{data.currentBalance === 0 ? '' : data.currentBalance > 0 ? '+' : '-'}
 			</span>
+			<button type="button" onclick={copyBalance}>
+				<span class="sr-only">{copied ? 'Copied to clipboard' : 'Copy balance to clipboard'}</span>
+			</button>
 		</div>
 
-		<h2>
-			{data.currentBalance > 0
-				? `${data.otherUser.name} owes you`
-				: `You owe ${data.otherUser.name}`}
+		<p>
+			{#key copied}
+				<span
+					in:fly={{ y: -8, duration: 200, delay: 150, easing: cubicOut }}
+					out:fly={{ y: 8, duration: 150 }}
+				>
+					{copied
+						? 'Copied to clipboard'
+						: data.currentBalance > 0
+							? `${data.otherUser.name} owes you`
+							: `You owe ${data.otherUser.name}`}
+				</span>
+			{/key}
 			<span class="sr-only">{Math.abs(data.currentBalance)}</span>
-		</h2>
+		</p>
 	</section>
 
 	<fieldset class="segmented hide-no-js">
@@ -112,7 +140,7 @@
 					<li>
 						<p>
 							<strong>Sum</strong>
-							<strong><NumberFlow value={filteredTotal} format={{ useGrouping: false }}/></strong>
+							<strong><NumberFlow value={filteredTotal} format={{ useGrouping: false }} /></strong>
 						</p>
 					</li>
 				{/if}
