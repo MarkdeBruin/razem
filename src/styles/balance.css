@@ -3,10 +3,16 @@
 		padding-block-start: var(--block-space-half);
 		text-align: center;
 
-		h2 {
+		p {
 			color: var(--color-fg-subtle);
+			display: grid;
 			font-size: var(--text-small);
 			font-weight: var(--font-weight-normal);
+			overflow: hidden;
+
+			span {
+				grid-area: 1/1;
+			}
 		}
 
 		div {
@@ -15,9 +21,16 @@
 			line-height: 1;
 			margin-inline: auto;
 			max-width: fit-content;
+			position: relative;
 			font-feature-settings:
 				'tnum' 1,
 				'zero' 1;
+
+			button {
+				cursor: copy;
+				inset: 0;
+				position: absolute;
+			}
 		}
 	}
 }
