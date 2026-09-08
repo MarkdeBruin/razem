@@ -4,10 +4,11 @@ import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import type { Ledger } from '$lib/schemas/ledgers';
 import type { Expense } from '$lib/schemas/expenses';
+import { NotFoundError } from '$lib/utils/errors';
 
 export const load: PageServerLoad = async ({ locals, params, parent, url }) => {
-  const { owner, partner } = await parent();
-  const categoriesPromise = getAllCategories(locals.tablesDB!, locals.currentUser!.teamId);
+	const { owner, partner } = await parent();
+	const categoriesPromise = getAllCategories(locals.tablesDB!, locals.currentUser!.teamId);
 
 	let ledger: Ledger;
 	let expenses: Expense[];
@@ -17,11 +18,12 @@ export const load: PageServerLoad = async ({ locals, params, parent, url }) => {
 			params.id,
 			locals.currentUser!.teamId
 		));
-	} catch {
-		error(404, { message: 'Ledger not found' });
+	} catch (err) {
+		if (err instanceof NotFoundError) error(404, { message: err.message });
+		throw err;
 	}
 
-  const categories = await categoriesPromise
+	const categories = await categoriesPromise;
 	const categoryMap = new Map(categories.map((c) => [c.id, c.name]));
 	const expensesWithCategory = expenses.map((expense) => ({
 		...expense,
