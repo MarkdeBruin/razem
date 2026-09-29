@@ -68,8 +68,8 @@
 		<h2 class="sr-only">Balance</h2>
 
 		<div>
-			<span aria-hidden="true">{(data.currentBalance > 0 ? '+' : '') + data.currentBalance}</span>
-			<span class="visibility-hidden" aria-hidden="true">
+			<span aria-hidden="true">{(data.currentBalance > 0 ? '+' : '') + data.currentBalance}</span
+			><span class="visibility-hidden" aria-hidden="true">
 				{data.currentBalance === 0 ? '' : data.currentBalance > 0 ? '+' : '-'}
 			</span>
 			<button type="button" onclick={copyBalance}>
