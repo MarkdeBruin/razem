@@ -10,6 +10,7 @@ import { error, fail, redirect } from '@sveltejs/kit';
 import * as z from 'zod';
 import type { Actions, PageServerLoad } from './$types';
 import type { NewKeyword } from '$lib/schemas/category';
+import { NotFoundError } from '$lib/utils/errors';
 
 export const load: PageServerLoad = async ({ locals, params }) => {
 	const ledgersPromise = getAllLedgers(locals.tablesDB!, locals.currentUser!.teamId);
@@ -21,8 +22,9 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 	let expense;
 	try {
 		expense = await getExpense(locals.tablesDB!, params.id, locals.currentUser!.teamId);
-	} catch {
-		error(404, { message: 'Expense not found' });
+	} catch (err) {
+		if (err instanceof NotFoundError) error(404, { message: err.message });
+		throw err;
 	}
 
 	const all = await ledgersPromise;

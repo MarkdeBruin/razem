@@ -9,6 +9,7 @@ import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { newKeywordSchema } from '$lib/schemas/category';
 import * as z from 'zod';
+import { NotFoundError } from '$lib/utils/errors';
 
 export const load: PageServerLoad = async ({ locals, params }) => {
 	const categoriesAndKeywordsPromise = getAllCategoriesAndKeywords(
@@ -19,8 +20,9 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 	let keyword;
 	try {
 		keyword = await getKeyword(locals.tablesDB!, params.id, locals.currentUser!.teamId);
-	} catch {
-		error(404, { message: 'Keyword not found' });
+	} catch (err) {
+		if (err instanceof NotFoundError) error(404, { message: err.message });
+		throw err;
 	}
 
 	const { categories, keywords } = await categoriesAndKeywordsPromise;

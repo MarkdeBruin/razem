@@ -3,13 +3,15 @@ import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types.js';
 import { newLedgerSchema } from '$lib/schemas/ledgers';
 import * as z from 'zod';
+import { NotFoundError } from '$lib/utils/errors.js';
 
 export const load: PageServerLoad = async ({ locals, params }) => {
 	let ledger;
 	try {
 		ledger = await getLedger(locals.tablesDB!, params.id, locals.currentUser!.teamId);
-	} catch {
-		error(404, { message: 'Ledger not found' });
+	} catch (err) {
+		if (err instanceof NotFoundError) error(404, { message: err.message });
+		throw err;
 	}
 
 	return { ledger };
